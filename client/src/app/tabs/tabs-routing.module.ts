@@ -8,7 +8,8 @@ const routes: Routes = [
     component: TabsComponent,
     children:[
       {
-        path: '/browse',
+        path: 'browse',
+        loadChildren: () => import('../features/browse/browser.module').then(m => m.BrowserModule)
       }
     ]
   }
