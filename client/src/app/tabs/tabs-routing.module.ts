@@ -17,8 +17,8 @@ const routes: Routes = [
         loadChildren: () => import('../features/chats/chats.module').then(m => m.ChatsModule)
       },
       {
-        path: 'profile',
-        loadChildren: () => import('../features/profile/profile.module').then(m => m.ProfileModule )
+        path: 'account',
+        loadChildren: () => import('../features/account/account.module').then(m => m.AccountModule)
       },
       {
         path: 'matches',
@@ -29,7 +29,11 @@ const routes: Routes = [
   {
     path: 'chat',
     loadChildren: () => import('../features/chat/chat.module').then(m => m.ChatModule)
-  }
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('../features/profile/profile.module').then(m => m.ProfileModule )
+  },
 ]
 @NgModule({
   imports: [
