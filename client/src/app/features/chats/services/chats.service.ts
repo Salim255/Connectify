@@ -14,7 +14,6 @@ export class ChatsService {
       lastSeen: new Date(),
       roles: ['member'],
       isBot: false,
-      preferences: { notificationsMuted: false, theme: 'light' },
       createdAt: new Date('2023-01-10'),
       updatedAt: new Date('2023-09-01'),
       customStatus: 'Excited for the weekend!',
@@ -28,7 +27,6 @@ export class ChatsService {
       lastSeen: new Date(Date.now() - 10 * 60 * 1000),
       roles: ['member'],
       isBot: false,
-      preferences: { notificationsMuted: true, theme: 'dark' },
       createdAt: new Date('2023-03-22'),
       updatedAt: new Date('2023-09-02'),
       customStatus: 'Working remotely',
@@ -42,7 +40,6 @@ export class ChatsService {
       lastSeen: new Date(),
       roles: ['admin'],
       isBot: true,
-      preferences: { notificationsMuted: false },
       createdAt: new Date('2022-11-01'),
       updatedAt: new Date('2023-09-05'),
       customStatus: 'I am here to help!',
@@ -57,7 +54,7 @@ export class ChatsService {
       messages: [
         {
           id: 'm1',
-          conversationId: 'c1',
+          chatId: 'c1',
           senderId: 'u1',
           senderName: 'Alice Johnson',
           content: 'Hey Bob, did you check the latest update?',
@@ -68,7 +65,7 @@ export class ChatsService {
         },
         {
           id: 'm2',
-          conversationId: 'c1',
+          chatId: 'c1',
           senderId: 'u2',
           senderName: 'Bob Smith',
           content: 'Yes! Looks great. Let’s deploy it today.',
@@ -93,7 +90,7 @@ export class ChatsService {
       messages: [
         {
           id: 'm3',
-          conversationId: 'c2',
+          chatId: 'c2',
           senderId: 'u3',
           senderName: 'ChatBot',
           content: 'Hello Bob! How can I assist you today?',
@@ -104,7 +101,7 @@ export class ChatsService {
         },
         {
           id: 'm4',
-          conversationId: 'c2',
+          chatId: 'c2',
           senderId: 'u2',
           senderName: 'Bob Smith',
           content: 'I need help with my last order.',
@@ -129,7 +126,7 @@ export class ChatsService {
       messages: [
         {
           id: 'm5',
-          conversationId: 'c3',
+          chatId: 'c3',
           senderId: 'u1',
           senderName: 'Alice Johnson',
           content: 'Hello team! Meeting at 3 PM today.',
@@ -140,7 +137,7 @@ export class ChatsService {
         },
         {
           id: 'm6',
-          conversationId: 'c3',
+          chatId: 'c3',
           senderId: 'u2',
           senderName: 'Bob Smith',
           content: 'Got it!',
@@ -151,7 +148,7 @@ export class ChatsService {
         },
         {
           id: 'm7',
-          conversationId: 'c3',
+          chatId: 'c3',
           senderId: 'u3',
           senderName: 'ChatBot',
           content: 'Reminder: Don’t forget to submit your reports.',
