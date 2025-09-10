@@ -1,0 +1,10 @@
+<ion-item class="chat-item" lines="full" (click)="viewProfile()">
+  <ion-avatar class="chat-item__avatar" slot="start">
+    <img alt="avatar" [src]="avatar" />
+  </ion-avatar>
+
+  <ion-label class="chat-item__label">
+    <h2 class="user-name">{{ match?.user?.username }}</h2>
+     <p >{{ match?.user.age }} years old</p>
+  </ion-label>
+</ion-item>
