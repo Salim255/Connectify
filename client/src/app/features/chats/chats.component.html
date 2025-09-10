@@ -1,1 +1,5 @@
-<ion-text routerLink="/chat">Hello world chats</ion-text>
+<ion-list>
+  @for(chat of chats; track chat.id){
+    <app-chat-item (click)="selectChat()"></app-chat-item>
+  }
+</ion-list>
