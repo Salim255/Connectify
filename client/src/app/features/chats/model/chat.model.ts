@@ -21,6 +21,7 @@ export interface ChatUser {
   username?: string;                     // Optional username/handle
   email?: string;                        // Optional email
   avatarUrl?: string;                    // Profile picture URL
+  age: number;
   status?: 'online' | 'offline' | 'away' | 'busy' | 'invisible'; // Presence status
   lastSeen?: Date;                       // Last time user was active
   roles?: ('admin' | 'moderator' | 'member')[]; // Roles in group chats
