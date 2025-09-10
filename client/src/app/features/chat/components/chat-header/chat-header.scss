@@ -1,0 +1,35 @@
+/* chat-header.component.scss */
+ion-toolbar {
+  --background: #4a90e2;
+  color: #fff;
+  display: flex;
+  align-items: center;
+
+  .chat-status {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 400;
+    margin-left: 0.5rem;
+
+    ion-icon {
+      font-size: 0.6rem;
+      margin-right: 0.25rem;
+
+      &.online {
+        color: #2ecc71;
+      }
+      &.offline {
+        color: #e74c3c;
+      }
+    }
+  }
+}
+
+ion-back-button {
+  color: #fff;
+}
+
+ion-button {
+  color: #fff;
+}
