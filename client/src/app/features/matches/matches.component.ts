@@ -1,4 +1,6 @@
 import { Component } from "@angular/core";
+import { MatchesService } from "./services/matches.service";
+import { Match } from "./model/match.model";
 
 @Component({
   selector: 'app-matches',
@@ -7,4 +9,10 @@ import { Component } from "@angular/core";
   standalone: false
 })
 
-export class MatchesComponent {}
+export class MatchesComponent {
+  matches: Match [];
+
+  constructor(private matchesService: MatchesService){
+    this.matches = this.matchesService.MATCHES_PLACEHOLDER;
+  }
+}
