@@ -16,10 +16,8 @@ export class ChatFomComponent {
   }
 
   onChange(event: string): void{
-      console.log(event);
+    console.log(event);
   }
 
-  onSend():void{
-
-  }
+  onSend():void{}
 }
