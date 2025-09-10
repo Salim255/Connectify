@@ -6,6 +6,7 @@ import { ChatRoutingModule } from "./chat-routing.module";
 import { ChatComponent } from "./chat.component";
 import { ChatFomComponent } from "./components/chat-form/chat-form.component";
 import { MessageBubbleComponent } from "./components/message-bubble/message-bubble.component";
+import { MessagesComponent } from "./components/messages/messages.component";
 
 @NgModule({
   imports: [
@@ -14,6 +15,11 @@ import { MessageBubbleComponent } from "./components/message-bubble/message-bubb
     FormsModule,
     ChatRoutingModule
   ],
-  declarations: [MessageBubbleComponent ,ChatFomComponent, ChatComponent]
+  declarations: [
+    MessagesComponent,
+    MessageBubbleComponent,
+    ChatFomComponent,
+    ChatComponent,
+  ]
 })
 export class ChatModule {}
