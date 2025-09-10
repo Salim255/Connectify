@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>
+      {{ chatTitle }}
+     @if(chatStatus){
+       <div class="chat-status">
+        <ion-icon name="ellipse" [class.online]="chatStatus === 'online'" [class.offline]="chatStatus !== 'online'"></ion-icon>
+        <span>{{ chatStatus }}</span>
+      </div>
+     }
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="onOptions()">
+        <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
