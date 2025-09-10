@@ -13,5 +13,5 @@ export interface Message {
   edited?: boolean;                // true if the message was edited
   deleted?: boolean;               // true if deleted (can still show "message deleted")
   type: 'text' | 'media' | 'system'; // helps rendering differently
-  isOwn?: boolean;                 // flag for UI (sender === currentUser)
+  isOwn: boolean;                 // flag for UI (sender === currentUser)
 }
