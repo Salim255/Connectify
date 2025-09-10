@@ -1,3 +1,5 @@
 <div>
-
+  @for(message of messages(); track message.id) {
+    <app-message-bubble [message]="message" ></app-message-bubble>
+  }
 </div>
