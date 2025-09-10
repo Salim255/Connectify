@@ -5,6 +5,7 @@ import { IonicModule } from "@ionic/angular";
 import { ChatRoutingModule } from "./chat-routing.module";
 import { ChatComponent } from "./chat.component";
 import { ChatFomComponent } from "./components/chat-form/chat-form.component";
+import { MessageBubbleComponent } from "./components/message-bubble/message-bubble.component";
 
 @NgModule({
   imports: [
@@ -13,6 +14,6 @@ import { ChatFomComponent } from "./components/chat-form/chat-form.component";
     FormsModule,
     ChatRoutingModule
   ],
-  declarations: [ChatFomComponent, ChatComponent]
+  declarations: [MessageBubbleComponent ,ChatFomComponent, ChatComponent]
 })
 export class ChatModule {}
