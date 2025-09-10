@@ -8,4 +8,18 @@ import { Component } from "@angular/core";
 })
 
 
-export class ChatFomComponent {}
+export class ChatFomComponent {
+  textMessage: string = '';
+  constructor(){}
+
+  onSubmit(event: any): void {
+  }
+
+  onChange(event: string): void{
+      console.log(event);
+  }
+
+  onSend():void{
+
+  }
+}
