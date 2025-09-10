@@ -1,6 +1,7 @@
 import { ChatUser } from "../../chats/model/chat.model";
 
 export interface Profile {
+  id: number;
   user: ChatUser;                       // always include ChatUser block                          // required for browsing/dating
   bio?: string;                          // personal description
   photos: string[];                      // gallery

@@ -1,1 +1,6 @@
-<ion-text routerLink="/profile">Hello from browse</ion-text>
+<ion-content>
+  @for(item of  browseProfiles; track item.id) {
+     <app-browse-item></app-browse-item>
+  }
+
+</ion-content>

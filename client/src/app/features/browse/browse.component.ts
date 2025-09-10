@@ -1,4 +1,6 @@
 import { Component } from "@angular/core";
+import { BrowseService } from "./services/browse.serve";
+import { BrowseProfile } from "./model/browse.model";
 
 @Component({
   selector: 'app-browse',
@@ -7,4 +9,9 @@ import { Component } from "@angular/core";
   standalone: false
 })
 
-export class BrowseComponent {}
+export class BrowseComponent {
+  browseProfiles: BrowseProfile [];
+  constructor(private browseService: BrowseService){
+    this.browseProfiles = this.browseService.placeholderBrowseProfiles
+  }
+}
