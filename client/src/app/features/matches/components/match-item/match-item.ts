@@ -2,7 +2,6 @@ import { Component, input } from "@angular/core";
 import { Router } from "@angular/router";
 import { Match } from "../../model/match.model";
 
-
 @Component({
   selector: 'app-match-item',
   templateUrl: './match-item.html',
