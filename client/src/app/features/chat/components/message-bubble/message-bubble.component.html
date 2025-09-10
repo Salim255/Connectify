@@ -1,6 +1,6 @@
-<div class="message-bubble" [ngClass]="{ 'own': message.isOwn}">
-  <div class="bubble-content">
-    <p>{{ message.content }}</p>
-    <small>{{ message.timestamp | date:'shortTime' }}</small>
+<div class="message" [ngClass]="{ 'own': message()?.isOwn}">
+  <div class="message__content">
+    <p>{{ message()?.content }}</p>
+    <small>{{ message()?.timestamp | date:'shortTime' }}</small>
   </div>
 </div>

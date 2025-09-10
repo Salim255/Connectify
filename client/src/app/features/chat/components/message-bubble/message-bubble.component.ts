@@ -1,5 +1,5 @@
-import { Component, Input } from "@angular/core";
-import { Message } from "src/app/features/messages/model/message.model";
+import { Component, input} from "@angular/core";
+import { Message } from "src/app/features/chat/model/message.model";
 
 @Component({
   selector: 'app-message-bubble',
@@ -9,5 +9,5 @@ import { Message } from "src/app/features/messages/model/message.model";
 })
 
 export class MessageBubbleComponent {
-  @Input() message!: Message
+  message = input<Message>()
 }
