@@ -7,7 +7,7 @@ export class ChatService{
  placeholderMessages: Message[] = [
   {
     id: 'msg1',
-    conversationId: 'conv1',
+    chatId: 'conv1',
     senderId: 'u1',
     senderName: 'Alice',
     content: 'Hey! 👋 How are you doing today?',
@@ -18,7 +18,7 @@ export class ChatService{
   },
   {
     id: 'msg2',
-    conversationId: 'conv1',
+    chatId: 'conv1',
     senderId: 'u2',
     senderName: 'You',
     content: 'I’m doing great, just working on the new project 🚀',
@@ -29,7 +29,7 @@ export class ChatService{
   },
   {
     id: 'msg3',
-    conversationId: 'conv1',
+    chatId: 'conv1',
     senderId: 'u1',
     senderName: 'Alice',
     content: 'Check out this screenshot from the project.',
@@ -42,7 +42,7 @@ export class ChatService{
   },
   {
     id: 'msg4',
-    conversationId: 'conv1',
+    chatId: 'conv1',
     senderId: 'system',
     senderName: 'System',
     content: 'Alice joined the chat.',
@@ -53,7 +53,7 @@ export class ChatService{
   },
   {
     id: 'msg5',
-    conversationId: 'conv1',
+    chatId: 'conv1',
     senderId: 'u2',
     senderName: 'You',
     content: 'Got it! Looks great 👍',
@@ -65,7 +65,7 @@ export class ChatService{
   },
   {
     id: 'msg6',
-    conversationId: 'conv1',
+    chatId: 'conv1',
     senderId: 'u1',
     senderName: 'Alice',
     content: 'Oops, I made a typo in the previous message.',
@@ -78,7 +78,7 @@ export class ChatService{
 
     {
       id: 'msg12',
-    conversationId: 'conv1',
+    chatId: 'conv1',
     senderId: 'u1',
     senderName: 'Alice',
     content: 'Hey! 👋 How are you doing today?',
@@ -89,7 +89,7 @@ export class ChatService{
   },
   {
     id: 'msg22',
-    conversationId: 'conv1',
+    chatId: 'conv1',
     senderId: 'u2',
     senderName: 'You',
     content: 'I’m doing great, just working on the new project 🚀',
@@ -100,7 +100,7 @@ export class ChatService{
   },
   {
     id: 'msg32',
-    conversationId: 'conv1',
+    chatId: 'conv1',
     senderId: 'u1',
     senderName: 'Alice',
     content: 'Check out this screenshot from the project.',
@@ -113,7 +113,7 @@ export class ChatService{
   },
   {
     id: 'msg42',
-    conversationId: 'conv1',
+    chatId: 'conv1',
     senderId: 'system',
     senderName: 'System',
     content: 'Alice joined the chat.',
@@ -124,7 +124,7 @@ export class ChatService{
   },
   {
     id: 'msg52',
-    conversationId: 'conv1',
+    chatId: 'conv1',
     senderId: 'u2',
     senderName: 'You',
     content: 'Got it! Looks great 👍',
@@ -136,7 +136,7 @@ export class ChatService{
   },
   {
     id: 'msg62',
-    conversationId: 'conv1',
+    chatId: 'conv1',
     senderId: 'u1',
     senderName: 'Alice',
     content: 'Oops, I made a typo in the previous message.',

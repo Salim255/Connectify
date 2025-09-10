@@ -1,9 +1,11 @@
 import { Message } from "../../chat/model/message.model";
+import { Profile } from "../../profile/model/profile.model";
 
 export interface Chat {
   id: string;                    // Unique conversation ID
   participants: ChatUser[];       // Users involved in this chat
   messages: Message[];            // Messages in the chat
+  otherProfile?: Profile;         // Profile of the non-host user (optional for 1:1 chats)
   title?: string;                 // Optional: conversation title (for groups)
   avatarUrl?: string;             // Optional group avatar
   isGroup?: boolean;              // True if this is a group chat
@@ -26,10 +28,6 @@ export interface ChatUser {
   lastSeen?: Date;                       // Last time user was active
   roles?: ('admin' | 'moderator' | 'member')[]; // Roles in group chats
   isBot?: boolean;                       // Flag for bot users
-  preferences?: {                        // Optional user settings
-    notificationsMuted?: boolean;        // Mute notifications
-    theme?: 'light' | 'dark';            // UI preference
-  };
   createdAt?: Date;                      // Account creation date
   updatedAt?: Date;                      // Last profile update
   customStatus?: string;                 // Optional short user-defined status

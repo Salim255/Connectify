@@ -1,6 +1,6 @@
 export interface Message {
   id: string;                      // unique identifier
-  conversationId: string;          // which chat/thread this belongs to
+  chatId: string;          // which chat/thread this belongs to
   senderId: string;                // user id of the sender
   senderName: string;              // display name of the sender
   content?: string;                // plain text message (optional if it's media)
