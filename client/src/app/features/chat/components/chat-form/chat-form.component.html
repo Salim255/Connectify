@@ -1,0 +1,17 @@
+
+<form #form="ngForm" (ngSubmit)="onSubmit(form)">
+  <ion-item>
+    <ion-textarea
+      autoGrow="true"
+      ngModel
+      name="textMessage"
+      [(ngModel)]="textMessage"
+      placeholder="say something"
+      (ngModelChange)="onChange($event)"
+      ></ion-textarea>
+    <ion-button fill="clear" (click)="onSend()">
+    <ion-icon name="send"></ion-icon>
+    </ion-button>
+  </ion-item>
+</form>
+
