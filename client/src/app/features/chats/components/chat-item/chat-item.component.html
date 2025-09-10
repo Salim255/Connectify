@@ -1,0 +1,19 @@
+<ion-item button (click)="openChat(chat())" class="chat-item">
+  <ion-avatar slot="start">
+    <img alt="avatarUrl" [src]="avatarUrl" />
+  </ion-avatar>
+
+  <ion-label>
+    <h2>{{ chat()?.title }}</h2>
+    <p class="last-message" [class.unread]="unreadCount > 0">
+      {{  lastMessage  }}
+    </p>
+  </ion-label>
+
+  <ion-note slot="end" class="chat-meta">
+    <span class="time">{{ lasMessageDate | date:'shortTime' }}</span>
+    @if( unreadCount > 0){
+      <ion-badge  color="danger">{{ chat()?.unreadCount }}</ion-badge>
+    }
+  </ion-note>
+</ion-item>

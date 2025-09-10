@@ -1,0 +1,11 @@
+<div class="message" [ngClass]="{ 'own': message()?.isOwn}">
+  <div
+    class="message__content"
+    [ngClass]="{
+      'message__content--own': message()?.isOwn,
+      'message__content--other': !message()?.isOwn
+    }">
+    <p>{{ message()?.content }}</p>
+    <small>{{ message()?.timestamp | date:'shortTime' }}</small>
+  </div>
+</div>

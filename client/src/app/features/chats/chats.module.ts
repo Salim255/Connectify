@@ -3,7 +3,7 @@ import { ChatsComponent } from "./chats.component";
 import { ChatsRoutingModule } from "./chats-routing.module";
 import { IonicModule } from "@ionic/angular";
 import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
+import { ChatItemComponent } from "./components/chat-item/chat-item.component";
 
 @NgModule({
   imports: [
@@ -11,7 +11,7 @@ import { FormsModule } from "@angular/forms";
     CommonModule,
     ChatsRoutingModule
   ],
-  declarations: [ChatsComponent]
+  declarations: [ChatItemComponent ,ChatsComponent]
 })
 
 export class ChatsModule {}

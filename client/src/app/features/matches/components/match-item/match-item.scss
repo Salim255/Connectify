@@ -1,0 +1,54 @@
+.chat-item {
+  --min-height: 70px;
+  border-radius: 12px;
+  margin: 0.3rem 0;
+  padding: 0.5rem 1rem;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(0, 150, 136, 0.1);
+  }
+
+  &__label {
+    .user-name {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.2rem;
+    }
+    .last-message {
+      font-size: 0.85rem;
+      color: #666;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  &__badge {
+    font-size: 0.8rem;
+    min-width: 1.6rem;
+    height: 1.6rem;
+    line-height: 1.6rem;
+    border-radius: 50%;
+  }
+
+  &__avatar {
+    position: relative;
+
+    img {
+      object-fit: cover;
+    }
+
+    .status-dot {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid white;
+      &.online {
+        background-color: #4caf50;
+      }
+    }
+  }
+}
