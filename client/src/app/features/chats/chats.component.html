@@ -1,5 +1,5 @@
 <ion-list>
-  @for(chat of chats; track chat.id){
+  @for(chat of allChats; track chat.id){
     <app-chat-item (click)="selectChat()"></app-chat-item>
   }
 </ion-list>

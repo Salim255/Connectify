@@ -6,6 +6,6 @@
       'message__content--other': !message()?.isOwn
     }">
     <p>{{ message()?.content }}</p>
-    <small>{{ message()?.timestamp | date:'shortTime' }}</small>
+    <small>{{ message()?.createdAt | date:'shortTime' }}</small>
   </div>
 </div>

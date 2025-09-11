@@ -22,12 +22,12 @@ export class MatchItemComponent {
   }
 
   get matchAge(): number {
-    const age = this.match()?.user?.age;
+    const age = this.match()?.profile?.age;
     return age ?? 0;
   }
 
   get  matchName(): string {
-    const name =  this.match()!.user.username;
+    const name =  this.match()!.profile.name;
     return name  ?? '';
   }
 }

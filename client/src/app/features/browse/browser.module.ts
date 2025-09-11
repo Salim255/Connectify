@@ -4,6 +4,7 @@ import { IonicModule } from "@ionic/angular";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { BrowseComponent } from "./browse.component";
+import { BrowseItemComponent } from "./components/browse-item/browse-item.component";
 
 @NgModule({
   imports: [
@@ -12,6 +13,6 @@ import { BrowseComponent } from "./browse.component";
     FormsModule,
     BrowseRoutingModule,
   ],
-  declarations: [ BrowseComponent ]
+  declarations: [BrowseItemComponent, BrowseComponent ]
 })
 export class BrowserModule {}
