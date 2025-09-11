@@ -1,5 +1,7 @@
+import { Injectable } from "@angular/core";
 import { Profile } from "../model/profile.model";
 
+@Injectable({providedIn: 'root'})
 export class ProfileService {
   PROFILES_PLACEHOLDER: Profile[] = [
       {
@@ -7,7 +9,7 @@ export class ProfileService {
         name: 'Alice Johnson',
         age: 25,
         gender: 'female',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/1.jpg',
+        avatarUrl: 'https://images.pexels.com/photos/2787341/pexels-photo-2787341.jpeg',
         photos: ['https://randomuser.me/api/portraits/women/1.jpg', 'https://randomuser.me/api/portraits/women/11.jpg'],
         bio: 'Loves hiking and outdoor adventures.',
         location: { city: 'New York', country: 'USA' },
