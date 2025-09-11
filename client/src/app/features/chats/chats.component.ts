@@ -1,7 +1,8 @@
 import { Component } from "@angular/core";
-import { Chat } from "./model/chats.model";
+import { Chats } from "./model/chats.model";
 import { ChatsService } from "./services/chats.service";
 import { Router } from "@angular/router";
+import { Chat } from "../chat/model/chat.model";
 
 @Component({
   selector: 'app-chats',
@@ -10,11 +11,16 @@ import { Router } from "@angular/router";
   standalone: false,
 })
 export class ChatsComponent {
-  chats: Chat [];
+  chats: Chats;
   constructor(private router: Router, private chatsService:ChatsService){
-    this.chats = this.chatsService.chatsPlaceholder;
+    this.chats = this.chatsService.CHATS_PLACEHOLDER;
   }
   selectChat(): void {
     this.router.navigate(['/chat'])
+  }
+
+  get allChats(): Chat [] {
+    const lstChat = this.allChats ?? [];
+    return lstChat;
   }
 }
