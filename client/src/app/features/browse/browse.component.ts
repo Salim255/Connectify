@@ -12,6 +12,6 @@ import { BrowseProfile } from "./model/browse.model";
 export class BrowseComponent {
   browseProfiles: BrowseProfile [];
   constructor(private browseService: BrowseService){
-    this.browseProfiles = this.browseService.placeholderBrowseProfiles
+    this.browseProfiles = this.browseService.BROWSE_PROFILES;
   }
 }
