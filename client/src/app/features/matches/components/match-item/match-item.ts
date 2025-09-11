@@ -18,7 +18,8 @@ export class MatchItemComponent {
   }
 
   get avatar(): string{
-    return ''
+    console.log(this.match())
+    return this.match()?.profile?.avatarUrl ?? '';
   }
 
   get matchAge(): number {
