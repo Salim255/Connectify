@@ -1,35 +1,43 @@
-import { ChatUser } from "../../chats/model/chat.model";
-
 export interface Profile {
-  id: number;
-  user: ChatUser;                       // always include ChatUser block                          // required for browsing/dating
-  bio?: string;                          // personal description
-  photos: string[];                      // gallery
+  id: string;                          // unique profile ID
+  name: string;                        // display name
+  age: number;                         // required for dating/browse
+  gender?: 'male' | 'female' | 'non-binary' | 'other';
+  avatarUrl?: string;                  // main photo
+  photos: string[];                    // gallery
+  bio?: string;                        // personal description
+
   location?: {
     city?: string;
     country?: string;
     coordinates?: { lat: number; lng: number };
   };
-  interests?: string[];                  // hobbies or tags
+
+  interests?: string[];                // hobbies/tags
   prompts?: { question: string; answer: string }[];
+
   lifestyle?: {
     smoking?: boolean;
     drinking?: boolean;
     diet?: 'vegan' | 'vegetarian' | 'omnivore' | 'other';
     pets?: string[];
   };
-  compatibilityScore?: number;           // optional % match
-  verified?: boolean;                    // account verification badge
-  joinedAt: Date;                        // when user joined
-  updatedAt: Date;                        // last profile update
+
+  compatibilityScore?: number;         // match %
+  verified?: boolean;                  // blue check
+  status?: 'online' | 'offline' | 'away' | 'busy' | 'invisible';
+  lastSeen?: Date;                     // presence
+
   preferences?: {
-    notificationsMuted?: boolean;
     theme?: 'light' | 'dark';
-    discovery?: {                        // browse/match filters
+    discovery?: {
       minAge?: number;
       maxAge?: number;
       distanceKm?: number;
       interestedIn?: ('male' | 'female' | 'non-binary' | 'any')[];
     };
   };
+
+  createdAt: Date;
+  updatedAt: Date;
 }

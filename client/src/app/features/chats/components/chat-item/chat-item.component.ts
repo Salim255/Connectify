@@ -1,5 +1,5 @@
 import { Component, input } from "@angular/core";
-import { Chat } from "../../model/chat.model";
+import { Chat } from "../../model/chats.model";
 
 @Component({
   selector: 'app-chat-item',
