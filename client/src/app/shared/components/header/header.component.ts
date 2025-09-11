@@ -4,7 +4,8 @@ export enum PAGES  {
   MATCHES = 'matches',
   CHATS = 'chats',
   BROWSE = 'browse',
-  ACCOUNT = 'account'
+  ACCOUNT = 'account',
+  PROFILE = 'profile'
 }
 @Component({
   selector: 'app-header',
