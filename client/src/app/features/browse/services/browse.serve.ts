@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ChatUser } from "../../chats/model/chat.model";
+import { ChatUser } from "../../chats/model/chats.model";
 import { Profile } from "../../profile/model/profile.model";
 
 @Injectable({providedIn: 'root'})

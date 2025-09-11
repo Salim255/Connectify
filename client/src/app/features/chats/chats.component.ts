@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Chat } from "./model/chat.model";
+import { Chat } from "./model/chats.model";
 import { ChatsService } from "./services/chats.service";
 import { Router } from "@angular/router";
 
