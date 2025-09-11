@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { PAGES } from "src/app/shared/components/header/header.component";
 
 @Component({
   selector: 'app-account',
@@ -7,4 +8,6 @@ import { Component } from "@angular/core";
   standalone: false,
 })
 
-export class AccountComponent {}
+export class AccountComponent {
+  pageName: PAGES = PAGES.ACCOUNT;
+}
