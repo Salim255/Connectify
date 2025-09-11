@@ -4,7 +4,6 @@ import { Profile } from "../../profile/model/profile.model";
 import { ProfileService } from "../../profile/services/profile.service";
 
 @Injectable({providedIn: 'root'})
-
 export class MatchesService {
   profiles: Profile [] = [];
   constructor(private profileService: ProfileService){

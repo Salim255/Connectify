@@ -12,12 +12,10 @@ import { Chat } from "src/app/features/chat/model/chat.model";
 export class ChatItemComponent {
   chat = input<Chat>();
 
-  openChat(chat: Chat | undefined): void{
+  openChat(chat: Chat | undefined): void {}
 
-  }
-
-  get avatarUrl(): string{
-    return ''
+  get avatarUrl(): string {
+    return this.chat()?.participants[0].profile.avatarUrl ?? '';
   }
 
   get unreadCount(): number{

@@ -27,7 +27,7 @@ export class MatchItemComponent {
   }
 
   get  matchName(): string {
-    const name =  this.match()!.profile.name;
+    const name =  this.match()?.profile?.name;
     return name  ?? '';
   }
 }

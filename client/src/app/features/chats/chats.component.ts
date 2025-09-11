@@ -12,6 +12,7 @@ import { Chat } from "../chat/model/chat.model";
 })
 export class ChatsComponent {
   chats: Chats;
+
   constructor(private router: Router, private chatsService:ChatsService){
     this.chats = this.chatsService.CHATS_PLACEHOLDER;
   }
@@ -20,7 +21,7 @@ export class ChatsComponent {
   }
 
   get allChats(): Chat [] {
-    const lstChat = this.allChats ?? [];
+    const lstChat = this.chats;
     return lstChat;
   }
 }
