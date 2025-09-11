@@ -3,6 +3,7 @@ import { Chats } from "./model/chats.model";
 import { ChatsService } from "./services/chats.service";
 import { Router } from "@angular/router";
 import { Chat } from "../chat/model/chat.model";
+import { PAGES } from "src/app/shared/components/header/header.component";
 
 @Component({
   selector: 'app-chats',
@@ -11,6 +12,7 @@ import { Chat } from "../chat/model/chat.model";
   standalone: false,
 })
 export class ChatsComponent {
+  pageName: PAGES = PAGES.CHATS;
   chats: Chats;
 
   constructor(private router: Router, private chatsService:ChatsService){
