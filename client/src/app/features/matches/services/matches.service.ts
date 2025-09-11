@@ -10,7 +10,7 @@ export class MatchesService {
   constructor(private profileService: ProfileService){
     this.profiles = this.profileService.PROFILES_PLACEHOLDER;
   }
-  PROFILES_PLACEHOLDER: Match[] = [
+  MATCHES_PLACEHOLDER: Match[] = [
     {
       id: '1',
       profile: this.profiles[0],

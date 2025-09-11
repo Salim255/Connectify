@@ -1,171 +1,93 @@
 import { Injectable } from "@angular/core";
-import { Chat, ChatUser } from "../model/chats.model";
+import { Chats } from "../model/chats.model";
+import { ProfileService } from "../../profile/services/profile.service";
+import { Profile } from "../../profile/model/profile.model";
 
 @Injectable({providedIn: 'root'})
 export class ChatsService {
-  // Users placeholder
-  chatUsersPlaceholder: ChatUser[] = [
-    {
-      id: 'u1',
-      name: 'Alice Johnson',
-      username: 'alicej',
-      avatarUrl: 'https://i.pravatar.cc/150?img=1',
-      status: 'online',
-      lastSeen: new Date(),
-      roles: ['member'],
-      isBot: false,
-      createdAt: new Date('2023-01-10'),
-      updatedAt: new Date('2023-09-01'),
-      customStatus: 'Excited for the weekend!',
-    },
-    {
-      id: 'u2',
-      name: 'Bob Smith',
-      username: 'bob_smith',
-      avatarUrl: 'https://i.pravatar.cc/150?img=2',
-      status: 'away',
-      lastSeen: new Date(Date.now() - 10 * 60 * 1000),
-      roles: ['member'],
-      isBot: false,
-      createdAt: new Date('2023-03-22'),
-      updatedAt: new Date('2023-09-02'),
-      customStatus: 'Working remotely',
-    },
-    {
-      id: 'u3',
-      name: 'ChatBot',
-      username: 'bot_helper',
-      avatarUrl: 'https://i.pravatar.cc/150?img=3',
-      status: 'online',
-      lastSeen: new Date(),
-      roles: ['admin'],
-      isBot: true,
-      createdAt: new Date('2022-11-01'),
-      updatedAt: new Date('2023-09-05'),
-      customStatus: 'I am here to help!',
-    },
-  ];
-
+  profiles: Profile [];
   // Placeholder chats
-  chatsPlaceholder: Chat[] = [
-    {
-      id: 'c1',
-      participants: [this.chatUsersPlaceholder[0], this.chatUsersPlaceholder[1]], // Alice & Bob
-      messages: [
+ CHATS_PLACEHOLDER: Chats;
+ constructor(private profileService: ProfileService){
+    this.profiles = this.profileService.PROFILES_PLACEHOLDER;
+    this.CHATS_PLACEHOLDER = {
+      chats: [
         {
-          id: 'm1',
-          chatId: 'c1',
-          senderId: 'u1',
-          senderName: 'Alice Johnson',
-          content: 'Hey Bob, did you check the latest update?',
-          status: 'sent',
-          timestamp: new Date(Date.now() - 5 * 60 * 1000),
-          type: 'text',
-          isOwn: true,
+          id: 'c1',
+          participants: [
+            { profile: this.profiles[0], roles: ['member'], lastActive: new Date() },
+          ],
+          messages: [
+            {
+              id: 'm1',
+              chatId: 'c1',
+              senderId: 'p1',
+              content: 'Hey Bob! How’s your day?',
+              status: 'read',
+              createdAt: new Date(),
+              type: 'text',
+              isOwn: true,
+            },
+            {
+              id: 'm2',
+              chatId: 'c1',
+              senderId: 'p2',
+              content: 'Doing great, thanks Alice! How about you?',
+              status: 'delivered',
+              createdAt: new Date(),
+              type: 'text',
+            },
+          ],
+          unreadCount: 0,
+          createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24),
+          updatedAt: new Date(),
         },
         {
-          id: 'm2',
-          chatId: 'c1',
-          senderId: 'u2',
-          senderName: 'Bob Smith',
-          content: 'Yes! Looks great. Let’s deploy it today.',
-          status: 'delivered',
-          timestamp: new Date(Date.now() - 3 * 60 * 1000),
-          type: 'text',
-          isOwn: false,
-        },
-      ],
-      title: 'Alice & Bob',
-      avatarUrl: 'https://i.pravatar.cc/150?img=4',
-      isGroup: false,
-      unreadCount: 1,
-      createdAt: new Date('2023-09-05'),
-      updatedAt: new Date(),
-      pinned: true,
-      muted: false,
-    },
-    {
-      id: 'c2',
-      participants: [this.chatUsersPlaceholder[1], this.chatUsersPlaceholder[2]], // Bob & Bot
-      messages: [
-        {
-          id: 'm3',
-          chatId: 'c2',
-          senderId: 'u3',
-          senderName: 'ChatBot',
-          content: 'Hello Bob! How can I assist you today?',
-          status: 'sent',
-          timestamp: new Date(Date.now() - 10 * 60 * 1000),
-          type: 'text',
-          isOwn: false,
+          id: 'c2',
+          participants: [
+            { profile: this.profiles[1], roles: ['member'], lastActive: new Date() },
+          ],
+          messages: [
+            {
+              id: 'm3',
+              chatId: 'c2',
+              senderId: 'p3',
+              content: 'Want to grab coffee tomorrow?',
+              status: 'sent',
+              createdAt: new Date(),
+              type: 'text',
+            },
+          ],
+          unreadCount: 1,
+          createdAt: new Date(Date.now() - 1000 * 60 * 60 * 12),
+          updatedAt: new Date(),
+          pinned: true,
         },
         {
-          id: 'm4',
-          chatId: 'c2',
-          senderId: 'u2',
-          senderName: 'Bob Smith',
-          content: 'I need help with my last order.',
-          status: 'sent',
-          timestamp: new Date(Date.now() - 8 * 60 * 1000),
-          type: 'text',
-          isOwn: true,
+          id: 'c3',
+          participants: [
+            { profile: this.profiles[2], roles: ['admin'], lastActive: new Date() },
+
+          ],
+          messages: [
+            {
+              id: 'm4',
+              chatId: 'c3',
+              senderId: 'p1',
+              content: 'Welcome to our group chat 🎉',
+              status: 'read',
+              createdAt: new Date(),
+              type: 'system',
+            },
+          ],
+          title: 'Weekend Plans',
+          avatarUrl: 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png',
+          isGroup: true,
+          unreadCount: 0,
+          createdAt: new Date(Date.now() - 1000 * 60 * 60 * 48),
+          updatedAt: new Date(),
         },
-      ],
-      title: 'Support Chat',
-      avatarUrl: 'https://i.pravatar.cc/150?img=5',
-      isGroup: false,
-      unreadCount: 0,
-      createdAt: new Date('2023-08-20'),
-      updatedAt: new Date(),
-      pinned: false,
-      muted: true,
-    },
-    {
-      id: 'c3',
-      participants: [this.chatUsersPlaceholder[0], this.chatUsersPlaceholder[1], this.chatUsersPlaceholder[2]], // Group chat
-      messages: [
-        {
-          id: 'm5',
-          chatId: 'c3',
-          senderId: 'u1',
-          senderName: 'Alice Johnson',
-          content: 'Hello team! Meeting at 3 PM today.',
-          status: 'sent',
-          timestamp: new Date(Date.now() - 60 * 60 * 1000),
-          type: 'text',
-          isOwn: true,
-        },
-        {
-          id: 'm6',
-          chatId: 'c3',
-          senderId: 'u2',
-          senderName: 'Bob Smith',
-          content: 'Got it!',
-          status: 'delivered',
-          timestamp: new Date(Date.now() - 55 * 60 * 1000),
-          type: 'text',
-          isOwn: false,
-        },
-        {
-          id: 'm7',
-          chatId: 'c3',
-          senderId: 'u3',
-          senderName: 'ChatBot',
-          content: 'Reminder: Don’t forget to submit your reports.',
-          status: 'sent',
-          timestamp: new Date(Date.now() - 50 * 60 * 1000),
-          type: 'system',
-          isOwn: false,
-        },
-      ],
-      title: 'Project Alpha',
-      avatarUrl: 'https://i.pravatar.cc/150?img=6',
-      isGroup: true,
-      unreadCount: 2,
-      createdAt: new Date('2023-08-25'),
-      updatedAt: new Date(),
-      pinned: false,
-      muted: false,
-    },
-  ];
+      ]
+    }
+  }
 }
