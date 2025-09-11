@@ -1,3 +1,4 @@
+<app-header [headerTitle]="pageName"></app-header>
 <ion-content>
   @for(profile of  browseProfiles; track profile.id) {
     <app-browse-item [profile]="profile"></app-browse-item>
