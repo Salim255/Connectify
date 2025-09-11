@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, input } from "@angular/core";
+import { Profile } from "src/app/features/profile/model/profile.model";
 
 @Component({
   selector: 'app-browse-item',
@@ -7,4 +8,10 @@ import { Component } from "@angular/core";
   standalone: false
 })
 
-export class BrowseItemComponent {}
+export class BrowseItemComponent {
+  profile = input<Profile>();
+
+  get profileAvatar(): string{
+    return this.profile()?.avatarUrl ?? '';
+  }
+}

@@ -13,8 +13,8 @@ export class MatchItemComponent {
 
   constructor(private router: Router){}
 
-  viewProfile(){
-    this.router.navigate(['/profile'])
+  onChat(){
+    this.router.navigate(['/chat'])
   }
 
   get avatar(): string{
