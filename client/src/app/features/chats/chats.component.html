@@ -1,8 +1,10 @@
 <app-header [headerTitle]="pageName"></app-header>
 <ion-content>
-  <ion-list>
-  @for(chat of allChats; track chat.id){
-    <app-chat-item (click)="selectChat()" [chat]="chat"></app-chat-item>
-  }
-</ion-list>
+   <app-custom-grid>
+     <ion-list>
+        @for(chat of allChats; track chat.id){
+          <app-chat-item (click)="selectChat()" [chat]="chat"></app-chat-item>
+        }
+      </ion-list>
+   </app-custom-grid>
 </ion-content>
