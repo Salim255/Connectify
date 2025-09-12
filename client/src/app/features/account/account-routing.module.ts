@@ -20,16 +20,8 @@ const routes: Routes = [
       },
       {
         path: 'account-profile',
-        loadChildren: () => import('./components/settings/settings.module').then(m => m.SettingsModule)
+        loadChildren: () => import('./components/account-profile/account-profile.module').then(m => m.AccountProfileModule)
       },
-      {
-        path: 'view',
-        loadChildren: () => import('./components/view-profile/view-profile.module').then(m => m.ViewProfileModule)
-      },
-      {
-        path: 'edit',
-        loadChildren: () => import('./components/edit-profile/edit-profile.module').then(m => m.EditProfileModule)
-      }
     ]
   }
 ]

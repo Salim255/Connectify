@@ -7,7 +7,10 @@ const routes: Routes = [
     path: '',
     component: AccountProfileComponent,
     children: [
-        {
+      {
+        path: '', redirectTo: 'view', pathMatch: 'full',
+      },
+      {
         path: 'view',
         loadChildren: () => import('../view-profile/view-profile.module').then(m => m.ViewProfileModule)
       },
