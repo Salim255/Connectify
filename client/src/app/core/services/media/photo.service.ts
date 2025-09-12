@@ -21,6 +21,7 @@ export class PhotoService {
 
   async takePicture(): Promise<PhotoCaptureResult> {
     const result: CameraResult = await this.camera.getPhoto();
+
     if (!result?.success) {
      throw new Error(`${result.reason}`)
     }
