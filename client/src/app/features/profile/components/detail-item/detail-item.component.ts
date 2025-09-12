@@ -11,11 +11,4 @@ export class DetailItemComponent{
   itemContent = input<string | number | []>();
 
   constructor(){}
-
-  get getContent(): any {
-    const content = this.itemContent();
-    if (!content) return;
-    if(this.itemTitle() !== 'interests')  return this.itemContent();
-    const contentString = this.itemContent().split()
-  }
 }

@@ -10,6 +10,7 @@ import { GenderComponent } from "./components/gender/gender.component";
 import { BioComponent } from "./components/bio/bio.component";
 import { InterestsComponent } from "./components/interests/interests.component";
 import { ScoreComponent } from "./components/score/score.component";
+import { LocationComponent } from "./components/location/location.component";
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { ScoreComponent } from "./components/score/score.component";
     SharedModule
   ],
   declarations: [
+    LocationComponent,
     ScoreComponent,
     InterestsComponent,
     BioComponent,
