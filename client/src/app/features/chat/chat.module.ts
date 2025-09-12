@@ -8,14 +8,16 @@ import { ChatFomComponent } from "./components/chat-form/chat-form.component";
 import { MessageBubbleComponent } from "./components/message-bubble/message-bubble.component";
 import { MessagesComponent } from "./components/messages/messages.component";
 import { ChatHeaderComponent } from "./components/chat-header/chat-header";
+import { SharedModule } from "src/app/shared/shared.module";
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    ChatRoutingModule
-  ],
+    ChatRoutingModule,
+    SharedModule
+],
   declarations: [
     ChatHeaderComponent,
     MessagesComponent,

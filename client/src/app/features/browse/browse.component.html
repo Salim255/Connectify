@@ -1,6 +1,8 @@
 <app-header [headerTitle]="pageName"></app-header>
 <ion-content>
-  @for(profile of  browseProfiles; track profile.id) {
-    <app-browse-item [profile]="profile"></app-browse-item>
-  }
+  <app-custom-grid>
+     @for(profile of  browseProfiles; track profile.id) {
+      <app-browse-item [profile]="profile"></app-browse-item>
+    }
+  </app-custom-grid>
 </ion-content>
