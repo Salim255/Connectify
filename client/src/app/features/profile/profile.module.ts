@@ -11,6 +11,7 @@ import { BioComponent } from "./components/bio/bio.component";
 import { InterestsComponent } from "./components/interests/interests.component";
 import { ScoreComponent } from "./components/score/score.component";
 import { LocationComponent } from "./components/location/location.component";
+import { LifestyleComponent } from "./components/lifestyle/lifestyle.component";
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { LocationComponent } from "./components/location/location.component";
     SharedModule
   ],
   declarations: [
+    LifestyleComponent,
     LocationComponent,
     ScoreComponent,
     InterestsComponent,
