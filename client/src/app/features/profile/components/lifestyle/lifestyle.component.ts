@@ -9,5 +9,5 @@ import { Component, input } from "@angular/core";
 
 export class LifestyleComponent {
   itemTitle = input<string>();
-  itemContent = input<string | number | []>();
+  itemContent = input<any>();
 }
