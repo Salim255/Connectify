@@ -7,6 +7,7 @@ import { ProfileComponent } from "./profile.component";
 import { SharedModule } from "src/app/shared/shared.module";
 import { DetailItemComponent } from "./components/detail-item/detail-item.component";
 import { GenderComponent } from "./components/gender/gender.component";
+import { BioComponent } from "./components/bio/bio.component";
 
 @NgModule({
   imports: [
@@ -16,6 +17,11 @@ import { GenderComponent } from "./components/gender/gender.component";
     ProfileRoutingModule,
     SharedModule
   ],
-  declarations: [ GenderComponent, DetailItemComponent, ProfileComponent]
+  declarations: [
+    BioComponent,
+    GenderComponent,
+    DetailItemComponent,
+    ProfileComponent,
+  ]
 })
 export class ProfileModule {}
