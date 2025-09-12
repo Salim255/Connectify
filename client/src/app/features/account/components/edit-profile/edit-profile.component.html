@@ -1,1 +1,62 @@
-<ion-text>Hello from edit profile</ion-text>
+<app-custom-grid>
+  <form [formGroup]="editProfileForm">
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label for="avatar">Avatar</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-input formControlName="avatar" placeholder="avatar"></ion-input>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label for="bio">Bio</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-input formControlName="bio" placeholder="bio" ></ion-input>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label for="name">Name</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-input formControlName="name" placeholder="name"></ion-input>
+      </ion-item>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label for="age">Age</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-input formControlName="age" placeholder="age"></ion-input>
+      </ion-item>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label for="gender">Gender</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-input formControlName="gender" placeholder="gender"></ion-input>
+      </ion-item>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label for="location">Location</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-input formControlName="location" placeholder="location"></ion-input>
+      </ion-item>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label for="lifestyle">lifestyle</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-input formControlName="lifestyle" placeholder="lifestyle"></ion-input>
+      </ion-item>
+    </ion-item-group>
+</form>
+</app-custom-grid>

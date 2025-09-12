@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
 import { EditProfileComponent } from "./edit-profile.component";
 import { EditProfileRoutingModule } from "./edit-profile-routing.module";
+import { SharedModule } from "src/app/shared/shared.module";
 
 @NgModule({
   imports: [
@@ -11,8 +12,9 @@ import { EditProfileRoutingModule } from "./edit-profile-routing.module";
     CommonModule,
     IonicModule,
     ReactiveFormsModule,
-    EditProfileRoutingModule
-  ],
+    EditProfileRoutingModule,
+    SharedModule
+],
   declarations: [EditProfileComponent]
 })
 export class EditProfileModule {}
