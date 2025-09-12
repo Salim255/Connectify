@@ -1,13 +1,18 @@
+import { Injectable } from "@angular/core";
 import { Profile } from "../model/profile.model";
+import { BehaviorSubject, Observable } from "rxjs";
 
+@Injectable({providedIn: 'root'})
 export class ProfileService {
+  profileSubject = new BehaviorSubject<Profile | null>(null);
+
   PROFILES_PLACEHOLDER: Profile[] = [
       {
         id: 'p1',
         name: 'Alice Johnson',
         age: 25,
         gender: 'female',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/1.jpg',
+        avatarUrl: 'https://images.pexels.com/photos/2787341/pexels-photo-2787341.jpeg',
         photos: ['https://randomuser.me/api/portraits/women/1.jpg', 'https://randomuser.me/api/portraits/women/11.jpg'],
         bio: 'Loves hiking and outdoor adventures.',
         location: { city: 'New York', country: 'USA' },
@@ -193,4 +198,12 @@ export class ProfileService {
         updatedAt: new Date(),
       },
     ];
+
+  setProfile(profile: Profile){
+    this.profileSubject.next(profile);
+  }
+
+  get getProfile$(): Observable<Profile | null>{
+    return this.profileSubject.asObservable();
+  }
 }

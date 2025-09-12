@@ -9,6 +9,11 @@ const routes: Routes = [
     component: TabsComponent,
     children:[
       {
+        path: '',
+        redirectTo: 'browse',
+        pathMatch: 'full'
+      },
+      {
         path: 'browse',
         loadChildren: () => import('../features/browse/browser.module').then(m => m.BrowserModule)
       },

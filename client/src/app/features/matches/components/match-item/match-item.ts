@@ -13,12 +13,13 @@ export class MatchItemComponent {
 
   constructor(private router: Router){}
 
-  viewProfile(){
-    this.router.navigate(['/profile'])
+  onChat(){
+    this.router.navigate(['/chat'])
   }
 
   get avatar(): string{
-    return ''
+    console.log(this.match())
+    return this.match()?.profile?.avatarUrl ?? '';
   }
 
   get matchAge(): number {
@@ -27,7 +28,7 @@ export class MatchItemComponent {
   }
 
   get  matchName(): string {
-    const name =  this.match()!.profile.name;
+    const name =  this.match()?.profile?.name;
     return name  ?? '';
   }
 }

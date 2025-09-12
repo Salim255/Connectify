@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { PAGES } from "src/app/shared/components/header/header.component";
 
 @Component({
   selector: 'app-profile',
@@ -6,4 +7,6 @@ import { Component } from "@angular/core";
   styleUrls: ['./profile.component.scss'],
   standalone: false,
 })
-export class ProfileComponent {}
+export class ProfileComponent {
+  pageName: PAGES = PAGES.PROFILE;
+}

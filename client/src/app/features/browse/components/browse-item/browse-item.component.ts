@@ -1,4 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, input } from "@angular/core";
+import { Profile } from "src/app/features/profile/model/profile.model";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-browse-item',
@@ -6,5 +8,15 @@ import { Component } from "@angular/core";
   styleUrls: ['./browse-item.component.scss'],
   standalone: false
 })
+export class BrowseItemComponent {
+  profile = input<Profile>();
 
-export class BrowseItemComponent {}
+  constructor(private router : Router ){}
+  get profileAvatar(): string{
+    return this.profile()?.avatarUrl ?? '';
+  }
+
+  onViewProfile(){
+    this.router.navigate(['/profile'])
+  }
+}

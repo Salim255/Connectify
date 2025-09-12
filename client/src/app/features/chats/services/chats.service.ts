@@ -10,8 +10,8 @@ export class ChatsService {
  CHATS_PLACEHOLDER: Chats;
  constructor(private profileService: ProfileService){
     this.profiles = this.profileService.PROFILES_PLACEHOLDER;
-    this.CHATS_PLACEHOLDER = {
-      chats: [
+    this.CHATS_PLACEHOLDER =
+       [
         {
           id: 'c1',
           participants: [
@@ -88,6 +88,5 @@ export class ChatsService {
           updatedAt: new Date(),
         },
       ]
-    }
   }
 }
