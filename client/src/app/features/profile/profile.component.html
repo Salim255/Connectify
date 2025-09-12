@@ -8,7 +8,8 @@
      <app-detail-item [itemTitle]="'bio'" [itemContent]="profile?.bio"></app-detail-item>
       <app-detail-item [itemTitle]="'compatibilityScore'" [itemContent]="profile?.compatibilityScore"></app-detail-item>
       <app-gender [itemTitle]="'gender'" [itemContent]="profile?.gender"></app-gender>
-      <app-detail-item [itemTitle]="'interests'" [itemContent]="profile?.interests"></app-detail-item>
+      <app-bio></app-bio>
+      <app-interests></app-interests>
 
       {{profile?.interests}}
       {{profile?.age}}
