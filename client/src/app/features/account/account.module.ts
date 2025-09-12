@@ -5,6 +5,7 @@ import { IonicModule } from "@ionic/angular";
 import { AccountRoutingModule } from "./account-routing.module";
 import { AccountComponent } from "./account.component";
 import { SharedModule } from "src/app/shared/shared.module";
+import { AccountNavComponent } from "./components/account-nav/account-nav.component";
 
 @NgModule({
   imports: [
@@ -14,7 +15,7 @@ import { SharedModule } from "src/app/shared/shared.module";
     AccountRoutingModule,
     SharedModule
   ],
-  declarations: [AccountComponent]
+  declarations: [ AccountNavComponent, AccountComponent]
 })
 export class AccountModule {
 
