@@ -4,24 +4,12 @@
   <app-custom-grid>
    <div class="profile">
      <img class="profile__img" alt="avatar" [src]="profileAvatar"/>
-
-     <app-detail-item [itemTitle]="'bio'" [itemContent]="profile?.bio"></app-detail-item>
-      <app-detail-item [itemTitle]="'compatibilityScore'" [itemContent]="profile?.compatibilityScore"></app-detail-item>
+      <app-score [itemTitle]="'compatibilityScore'" [itemContent]="profile?.compatibilityScore"></app-score>
       <app-gender [itemTitle]="'gender'" [itemContent]="profile?.gender"></app-gender>
-      <app-bio></app-bio>
-      <app-interests></app-interests>
-      <app-score></app-score>
-
-      {{profile?.interests}}
-      {{profile?.age}}
-      {{profile?.lifestyle?.drinking}}
-      {{profile?.location?.city}}
-      {{profile?.lastSeen}}
-      {{profile?.name}}
-      {{profile?.verified}}
-      {{profile?.location?.country}}
-      {{profile?.status}}
-
+      <app-bio [itemTitle]="'bio'" [itemContent]="profile?.bio"></app-bio>
+      <app-interests [itemTitle]="'interest'" [itemContent]="profile?.interests"></app-interests>
+      <app-lifestyle [itemTitle]="'lifestyle'" [itemContent]="profile?.lifestyle"></app-lifestyle>
+      <app-location  [itemTitle]="'location'" [itemContent]="profile?.location"></app-location>
    </div>
   </app-custom-grid>
 </ion-content>

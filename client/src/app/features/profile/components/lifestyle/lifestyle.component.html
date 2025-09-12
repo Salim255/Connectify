@@ -3,7 +3,30 @@
     <ion-label> {{ itemTitle() }} </ion-label>
   </ion-item-divider>
 
-  <ion-item>
-    <ion-label> {{ itemContent() }}</ion-label>
+  @if(itemContent().smoking){
+   <ion-item>
+    <ion-label> smoking </ion-label>
+    <ion-label> {{ itemContent().smoking }}</ion-label>
   </ion-item>
+  }
+
+  @if(itemContent().drinking){
+   <ion-item>
+    <ion-label> drinking </ion-label>
+    <ion-label> {{ itemContent().drinking }}</ion-label>
+  </ion-item>
+  }
+  @if(itemContent().diet){
+   <ion-item>
+    <ion-label>  diet </ion-label>
+    <ion-label> {{ itemContent().diet }}</ion-label>
+  </ion-item>
+  }
+  @if(itemContent().pets){
+   <ion-item>
+    <ion-label>  pets </ion-label>
+    <ion-label> {{ itemContent().pets }}</ion-label>
+  </ion-item>
+  }
 </ion-item-group>
+
