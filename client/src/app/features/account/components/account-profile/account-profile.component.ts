@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { AccountHeaderService } from "../../services/account-header.service";
 
 @Component({
   selector: 'app-account-profile',
@@ -7,4 +8,10 @@ import { Component } from "@angular/core";
   standalone: false
 })
 
-export class AccountProfileComponent {}
+export class AccountProfileComponent {
+  constructor(private accountHeaderService: AccountHeaderService){}
+
+  onBack(): void{
+    this.accountHeaderService.setHeaderHide(false);
+  }
+}
