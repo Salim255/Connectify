@@ -21,7 +21,7 @@ export class AccountDashboardComponent{
     this.accountHeaderService.setHeaderHide(false);
   }
   onNavigate(navType: 'settings'| 'profile'){
-    this.accountHeaderService.setHeaderHide(true);
+    //this.accountHeaderService.setHeaderHide(true);
     if (navType === 'settings') {
       this.router.navigate(['/account/settings']);
     }else {

@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { AccountHeaderService } from "../../services/account-header.service";
 
 @Component({
@@ -8,8 +8,12 @@ import { AccountHeaderService } from "../../services/account-header.service";
   standalone: false
 })
 
-export class SettingsComponent {
-  constructor(private accountHeaderService :AccountHeaderService  ){}
+export class SettingsComponent implements OnInit {
+  constructor(private accountHeaderService :AccountHeaderService ){}
+
+  ngOnInit(): void {
+    this.accountHeaderService.setHeaderHide(true);
+  }
   onBack(): void{
     this.accountHeaderService.setHeaderHide(false);
   }

@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { AccountHeaderService } from "../../services/account-header.service";
 
 @Component({
   selector: 'app-view-profile',
@@ -7,4 +8,6 @@ import { Component } from "@angular/core";
   standalone: false
 })
 
-export class ViewProfileComponent {}
+export class ViewProfileComponent {
+
+}

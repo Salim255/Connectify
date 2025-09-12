@@ -5,7 +5,7 @@
     </ion-buttons>
 
     <ion-title>
-
+      {{ headerTitle() }}
     </ion-title>
 
     <ion-buttons slot="end">
@@ -16,14 +16,13 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content>
   <app-custom-grid>
     <ion-segment value="default">
-      <ion-segment-button value="default"  routerLink="/account/account-profile/view">
+      <ion-segment-button (click)="onToggle('view profile')" value="default"  routerLink="/account/account-profile/view">
         <ion-label >View</ion-label>
       </ion-segment-button>
-      <ion-segment-button  value="segment"  routerLink="/account/account-profile/edit">
+      <ion-segment-button  (click)="onToggle('edit profile')"   value="segment"  routerLink="/account/account-profile/edit">
         <ion-label >Edit</ion-label>
       </ion-segment-button>
     </ion-segment>
