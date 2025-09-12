@@ -15,6 +15,14 @@ const routes: Routes = [
         loadChildren: () => import('./components/account-dashboard/account-dashboard.module').then(m => m.AccountDashboardModule)
       },
       {
+        path: 'settings',
+        loadChildren: () => import('./components/settings/settings.module').then(m => m.SettingsModule)
+      },
+      {
+        path: 'account-profile',
+        loadChildren: () => import('./components/settings/settings.module').then(m => m.SettingsModule)
+      },
+      {
         path: 'view',
         loadChildren: () => import('./components/view-profile/view-profile.module').then(m => m.ViewProfileModule)
       },
@@ -22,7 +30,6 @@ const routes: Routes = [
         path: 'edit',
         loadChildren: () => import('./components/edit-profile/edit-profile.module').then(m => m.EditProfileModule)
       }
-
     ]
   }
 ]
