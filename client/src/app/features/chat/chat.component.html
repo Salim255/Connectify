@@ -1,8 +1,13 @@
 <app-chat-header></app-chat-header>
 
 <ion-content>
-  <app-messages [messages]="messages"></app-messages>
+  <app-custom-grid>
+    <app-messages [messages]="messages"></app-messages>
+  </app-custom-grid>
 </ion-content>
+
 <ion-footer>
-  <app-chat-form></app-chat-form>
+ <app-custom-grid>
+   <app-chat-form></app-chat-form>
+ </app-custom-grid>
 </ion-footer>
