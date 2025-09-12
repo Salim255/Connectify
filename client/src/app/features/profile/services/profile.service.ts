@@ -1,8 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Profile } from "../model/profile.model";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class ProfileService {
+  profileSubject = new BehaviorSubject<Profile | null>(null);
+
   PROFILES_PLACEHOLDER: Profile[] = [
       {
         id: 'p1',
@@ -195,4 +198,12 @@ export class ProfileService {
         updatedAt: new Date(),
       },
     ];
+
+  setProfile(profile: Profile){
+    this.profileSubject.next(profile);
+  }
+
+  get getProfile$(): Observable<Profile | null>{
+    return this.profileSubject.asObservable();
+  }
 }
