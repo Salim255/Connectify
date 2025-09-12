@@ -6,15 +6,14 @@
       </ion-item-divider>
       <ion-item>
         <img alt="avatar" [src]="this.accountProfile.avatarUrl"  (click)="onEditPhoto()">
-        <ion-input
+        <input
          type="file"
           accept="image/*"
           capture="environment"
           #fileInput
           style="display: none"
           (change)="onFileSelected($event)"
-          formControlName="avatar" placeholder="avatar">
-        </ion-input>
+          />
       </ion-item>
     </ion-item-group>
 
