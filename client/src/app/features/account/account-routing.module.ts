@@ -5,7 +5,17 @@ import { AccountComponent } from "./account.component";
 const routes: Routes = [
   {
     path: '',
-    component: AccountComponent
+    component: AccountComponent,
+    children: [
+      {
+
+      },
+      {
+        path: '/edit',
+        loadChildren: () => import('./components/edit-profile/edit-profile.module').then(m => m.EditProfileModule)
+      }
+
+    ]
   }
 ]
 @NgModule({
