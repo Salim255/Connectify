@@ -1,12 +1,20 @@
 <app-custom-grid>
-  <form [formGroup]="editProfileForm">
-    <ion-item-group>
+  <form  class="edit-profile-form" [formGroup]="editProfileForm">
+    <ion-item-group class="edit-profile-form__avatar">
       <ion-item-divider>
         <ion-label for="avatar">Avatar</ion-label>
       </ion-item-divider>
       <ion-item>
-        <img alt="avatar" [src]="this.accountProfile.avatarUrl">
-        <ion-input formControlName="avatar" placeholder="avatar"></ion-input>
+        <img alt="avatar" [src]="this.accountProfile.avatarUrl"  (click)="onEditPhoto()">
+        <ion-input
+         type="file"
+          accept="image/*"
+          capture="environment"
+          #fileInput
+          style="display: none"
+          (change)="onFileSelected($event)"
+          formControlName="avatar" placeholder="avatar">
+        </ion-input>
       </ion-item>
     </ion-item-group>
 
