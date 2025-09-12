@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button (click)="onBack()" defaultHref="/account"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>
+      {{ headerTitle() }}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        done
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-custom-grid>
+    <ion-segment value="default">
+      <ion-segment-button (click)="onToggle('view profile')" value="default"  routerLink="/account/account-profile/view">
+        <ion-label >View</ion-label>
+      </ion-segment-button>
+      <ion-segment-button  (click)="onToggle('edit profile')"   value="segment"  routerLink="/account/account-profile/edit">
+        <ion-label >Edit</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </app-custom-grid>
+  <router-outlet></router-outlet>
+</ion-content>
+
+

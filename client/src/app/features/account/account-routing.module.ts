@@ -8,14 +8,20 @@ const routes: Routes = [
     component: AccountComponent,
     children: [
       {
-        path: 'view',
-        loadChildren: () => import('./components/view-profile/view-profile.module').then(m => m.ViewProfileModule)
+        path: '', redirectTo: 'dashboard', pathMatch: 'full'
       },
       {
-        path: 'edit',
-        loadChildren: () => import('./components/edit-profile/edit-profile.module').then(m => m.EditProfileModule)
-      }
-
+        path: 'dashboard',
+        loadChildren: () => import('./components/account-dashboard/account-dashboard.module').then(m => m.AccountDashboardModule)
+      },
+      {
+        path: 'settings',
+        loadChildren: () => import('./components/settings/settings.module').then(m => m.SettingsModule)
+      },
+      {
+        path: 'account-profile',
+        loadChildren: () => import('./components/account-profile/account-profile.module').then(m => m.AccountProfileModule)
+      },
     ]
   }
 ]

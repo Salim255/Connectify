@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { IonicModule } from "@ionic/angular";
+import { IonicModule, IonLabel, IonSegment, IonSegmentButton } from "@ionic/angular";
 import { AccountRoutingModule } from "./account-routing.module";
 import { AccountComponent } from "./account.component";
 import { SharedModule } from "src/app/shared/shared.module";
@@ -13,7 +13,7 @@ import { AccountNavComponent } from "./components/account-nav/account-nav.compon
     CommonModule,
     FormsModule,
     AccountRoutingModule,
-    SharedModule
+    SharedModule,
   ],
   declarations: [ AccountNavComponent, AccountComponent]
 })

@@ -1,8 +1,8 @@
-<app-header [headerTitle]="pageName"></app-header>
+@if(!isHidden()){
+  <app-header [headerTitle]="pageName"></app-header>
+}
 
 <ion-content>
-  <app-custom-grid>
-     <ion-text>Hello from account</ion-text>
-  </app-custom-grid>
+  <router-outlet></router-outlet>
 </ion-content>
-<ion-router-outlet></ion-router-outlet>
+
