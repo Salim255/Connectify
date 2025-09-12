@@ -13,6 +13,7 @@ import { Profile } from "src/app/features/profile/model/profile.model";
 export class EditProfileComponent implements OnInit {
   editProfileForm!: FormGroup;
   accountProfile: Profile;
+
   constructor(
     private accountService: AccountService,
     private formBuilder: FormBuilder,
@@ -28,12 +29,17 @@ export class EditProfileComponent implements OnInit {
 
   buildForm(){
     this.editProfileForm = this.formBuilder.group({
-      avatar: ['', Validators.required],
-      name: ['', Validators.required],
-      age: ['', Validators.required],
-      gender: ['', Validators.required],
-      location: ['', Validators.required],
-      bio: ['', Validators.required],
+      avatar: [this.accountProfile.avatarUrl, Validators.required],
+      name: [this.accountProfile.name, Validators.required],
+      age: [this.accountProfile.age, Validators.required],
+      gender: [this.accountProfile.gender, Validators.required],
+      location: [`${this.accountProfile?.location?.country}, ${this.accountProfile?.location?.city} `, Validators.required],
+      bio: [this.accountProfile.bio, Validators.required],
+      lifestyle: ['', Validators.required]
     })
+  }
+
+  onFileSelected(event: any){
+
   }
 }
