@@ -1,8 +1,8 @@
 
 <ion-content>
   <app-custom-grid>
-    <ion-button routerLink="/account/settings">Preferences</ion-button>
-    <ion-button routerLink="/account/account-profile">Profile</ion-button>
+    <ion-button (click)="onNavigate('settings')">Preferences</ion-button>
+    <ion-button (click)="onNavigate('profile')">Profile</ion-button>
   </app-custom-grid>
   <router-outlet></router-outlet>
 </ion-content>

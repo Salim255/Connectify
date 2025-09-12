@@ -1,4 +1,6 @@
-<app-header [headerTitle]="pageName"></app-header>
+@if(!isHidden()){
+  <app-header [headerTitle]="pageName"></app-header>
+}
 
 <ion-content>
   <router-outlet></router-outlet>
