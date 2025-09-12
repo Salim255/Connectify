@@ -1,6 +1,7 @@
 import { Component, input } from "@angular/core";
 import { Profile } from "src/app/features/profile/model/profile.model";
 import { Router } from "@angular/router";
+import { ProfileService } from "src/app/features/profile/services/profile.service";
 
 @Component({
   selector: 'app-browse-item',
@@ -11,12 +12,20 @@ import { Router } from "@angular/router";
 export class BrowseItemComponent {
   profile = input<Profile>();
 
-  constructor(private router : Router ){}
+  constructor(
+    private profileService: ProfileService,
+    private router : Router,
+  ){}
+
   get profileAvatar(): string{
     return this.profile()?.avatarUrl ?? '';
   }
 
   onViewProfile(){
+    const profile = this.profile();
+    if (!profile) return;
+    this.profileService.setProfile(profile);
     this.router.navigate(['/profile'])
   }
+
 }

@@ -2,6 +2,26 @@
 
 <ion-content>
   <app-custom-grid>
-    <ion-text>Hello from profile</ion-text>
+   <div class="profile">
+     <img class="profile__img" alt="avatar" [src]="profileAvatar"/>
+
+     <app-detail-item [itemTitle]="'bio'" [itemContent]="profile?.bio"></app-detail-item>
+      <app-detail-item [itemTitle]="'compatibilityScore'" [itemContent]="profile?.compatibilityScore"></app-detail-item>
+      <app-gender [itemTitle]="'gender'" [itemContent]="profile?.gender"></app-gender>
+      <app-bio></app-bio>
+      <app-interests></app-interests>
+      <app-score></app-score>
+
+      {{profile?.interests}}
+      {{profile?.age}}
+      {{profile?.lifestyle?.drinking}}
+      {{profile?.location?.city}}
+      {{profile?.lastSeen}}
+      {{profile?.name}}
+      {{profile?.verified}}
+      {{profile?.location?.country}}
+      {{profile?.status}}
+
+   </div>
   </app-custom-grid>
 </ion-content>

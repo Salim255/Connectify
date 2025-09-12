@@ -5,6 +5,12 @@ import { IonicModule } from "@ionic/angular";
 import { ProfileRoutingModule } from "./profile-routing.module";
 import { ProfileComponent } from "./profile.component";
 import { SharedModule } from "src/app/shared/shared.module";
+import { DetailItemComponent } from "./components/detail-item/detail-item.component";
+import { GenderComponent } from "./components/gender/gender.component";
+import { BioComponent } from "./components/bio/bio.component";
+import { InterestsComponent } from "./components/interests/interests.component";
+import { ScoreComponent } from "./components/score/score.component";
+import { LocationComponent } from "./components/location/location.component";
 
 @NgModule({
   imports: [
@@ -14,6 +20,14 @@ import { SharedModule } from "src/app/shared/shared.module";
     ProfileRoutingModule,
     SharedModule
   ],
-  declarations: [ProfileComponent]
+  declarations: [
+    LocationComponent,
+    ScoreComponent,
+    InterestsComponent,
+    BioComponent,
+    GenderComponent,
+    DetailItemComponent,
+    ProfileComponent,
+  ]
 })
 export class ProfileModule {}
