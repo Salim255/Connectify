@@ -8,6 +8,7 @@ import { SharedModule } from "src/app/shared/shared.module";
 import { DetailItemComponent } from "./components/detail-item/detail-item.component";
 import { GenderComponent } from "./components/gender/gender.component";
 import { BioComponent } from "./components/bio/bio.component";
+import { InterestsComponent } from "./components/interests/interests.component";
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { BioComponent } from "./components/bio/bio.component";
     SharedModule
   ],
   declarations: [
+    InterestsComponent,
     BioComponent,
     GenderComponent,
     DetailItemComponent,
