@@ -15,6 +15,7 @@ export class EditProfileComponent implements OnInit {
   accountProfile: Profile;
 
   constructor(
+    private photoService: PhotoService,
     private accountService: AccountService,
     private formBuilder: FormBuilder,
   ){
@@ -41,5 +42,9 @@ export class EditProfileComponent implements OnInit {
 
   onFileSelected(event: any){
 
+  }
+
+  onEditPhoto(){
+    console.log("hello from take photo")
   }
 }
