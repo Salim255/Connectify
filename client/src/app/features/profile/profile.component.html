@@ -2,14 +2,12 @@
 
 <ion-content>
   <app-custom-grid>
-   <div class="profile">
-     <img class="profile__img" alt="avatar" [src]="profileAvatar"/>
-      <app-score [itemTitle]="'compatibilityScore'" [itemContent]="profile?.compatibilityScore"></app-score>
-      <app-gender [itemTitle]="'gender'" [itemContent]="profile?.gender"></app-gender>
-      <app-bio [itemTitle]="'bio'" [itemContent]="profile?.bio"></app-bio>
-      <app-interests [itemTitle]="'interest'" [itemContent]="profile?.interests"></app-interests>
-      <app-lifestyle [itemTitle]="'lifestyle'" [itemContent]="profile?.lifestyle"></app-lifestyle>
-      <app-location  [itemTitle]="'location'" [itemContent]="profile?.location"></app-location>
-   </div>
+    <img class="profile-img" alt="avatar" [src]="profileAvatar"/>
+    <app-score [itemTitle]="'compatibilityScore'" [itemContent]="profile?.compatibilityScore"></app-score>
+    <app-gender [itemTitle]="'gender'" [itemContent]="profile?.gender"></app-gender>
+    <app-bio [itemTitle]="'bio'" [itemContent]="profile?.bio"></app-bio>
+    <app-interests [itemTitle]="'interest'" [itemContent]="profile?.interests"></app-interests>
+    <app-lifestyle [itemTitle]="'lifestyle'" [itemContent]="profile?.lifestyle"></app-lifestyle>
+    <app-location  [itemTitle]="'location'" [itemContent]="profile?.location"></app-location>
   </app-custom-grid>
 </ion-content>
