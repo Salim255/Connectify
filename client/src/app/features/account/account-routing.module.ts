@@ -8,6 +8,9 @@ const routes: Routes = [
     component: AccountComponent,
     children: [
       {
+        path: '', redirectTo: 'view', pathMatch: 'full'
+      },
+      {
         path: 'view',
         loadChildren: () => import('./components/view-profile/view-profile.module').then(m => m.ViewProfileModule)
       },
