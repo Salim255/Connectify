@@ -8,7 +8,11 @@ const routes: Routes = [
     component: AccountComponent,
     children: [
       {
-        path: '', redirectTo: 'view', pathMatch: 'full'
+        path: '', redirectTo: 'dashboard', pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        loadChildren: () => import('./components/account-dashboard/account-dashboard.module').then(m => m.AccountDashboardModule)
       },
       {
         path: 'view',
