@@ -8,10 +8,11 @@ const routes: Routes = [
     component: AccountComponent,
     children: [
       {
-
+        path: 'view',
+        loadChildren: () => import('./components/view-profile/view-profile.module').then(m => m.ViewProfileModule)
       },
       {
-        path: '/edit',
+        path: 'edit',
         loadChildren: () => import('./components/edit-profile/edit-profile.module').then(m => m.EditProfileModule)
       }
 
