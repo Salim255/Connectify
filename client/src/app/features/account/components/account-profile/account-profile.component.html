@@ -1,11 +1,34 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/account"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>
+
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
 
 <ion-content>
   <app-custom-grid>
-    <ion-text>Hello from Account profile</ion-text>
-     <ion-button routerLink="/account/account-profile/edit">Edit</ion-button>
-  <ion-button routerLink="/account/account-profile/view">View</ion-button>
-  <router-outlet></router-outlet>
+    <ion-segment value="default">
+      <ion-segment-button value="default"  routerLink="/account/account-profile/view">
+        <ion-label >View</ion-label>
+      </ion-segment-button>
+      <ion-segment-button  value="segment"  routerLink="/account/account-profile/edit">
+        <ion-label >Edit</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </app-custom-grid>
+  <router-outlet></router-outlet>
 </ion-content>
 
 
