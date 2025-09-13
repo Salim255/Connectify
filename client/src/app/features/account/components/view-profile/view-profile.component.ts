@@ -12,9 +12,7 @@ import { Profile } from "src/app/features/profile/model/profile.model";
 
 export class ViewProfileComponent {
   accountProfile: Profile;
-  constructor(
-  private accountService: AccountService,
-  ){
+  constructor(private accountService: AccountService){
   this.accountProfile = this.accountService.accountProfile;
   }
 }
