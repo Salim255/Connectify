@@ -11,6 +11,7 @@ export class ChatComponent{
   messages: Message [];
   constructor(private chatService: ChatService){
     this.messages =  this.chatService.placeholderMessages;
+
   }
 
 }
