@@ -26,9 +26,7 @@ export class EditProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
-    console.log(this.accountProfile);
   }
-
 
   buildForm(){
     this.editProfileForm = this.formBuilder.group({
@@ -36,7 +34,10 @@ export class EditProfileComponent implements OnInit {
       name: [this.accountProfile.name, Validators.required],
       age: [this.accountProfile.age, Validators.required],
       gender: [this.accountProfile.gender, Validators.required],
-      location: [`${this.accountProfile?.location?.country}, ${this.accountProfile?.location?.city} `, Validators.required],
+      location: [
+        `${this.accountProfile?.location?.country}, ${this.accountProfile?.location?.city} `,
+         Validators.required,
+        ],
       bio: [this.accountProfile.bio, Validators.required],
       lifestyle: ['', Validators.required]
     })
