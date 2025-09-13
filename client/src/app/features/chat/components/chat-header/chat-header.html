@@ -6,6 +6,9 @@
 
     <ion-title>
       {{ chatTitle }}
+      <ion-avatar (click)="onProfile()">
+        <img alt="avatar" [src]="profile.avatarUrl">
+      </ion-avatar>
      @if(chatStatus){
        <div class="chat-status">
         <ion-icon name="ellipse" [class.online]="chatStatus === 'online'" [class.offline]="chatStatus !== 'online'"></ion-icon>

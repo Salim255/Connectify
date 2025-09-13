@@ -3,14 +3,16 @@ import { NgModule } from "@angular/core";
 import { IonicModule } from "@ionic/angular";
 import { ViewProfileComponent } from "./view-profile.component";
 import { ViewProfileRoutingModule } from "./view-profile-routing.module";
+import { SharedModule } from "src/app/shared/shared.module";
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
-    ViewProfileRoutingModule
+    ViewProfileRoutingModule,
+    SharedModule
   ],
-  declarations:[ ViewProfileComponent ],
+  declarations:[ ViewProfileComponent ]
 })
 
 export class ViewProfileModule {}

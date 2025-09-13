@@ -1,6 +1,8 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AccountHeaderService } from "../../services/account-header.service";
+import { Profile } from "src/app/features/profile/model/profile.model";
+import { AccountService } from "../../services/account.service";
 
 @Component({
   selector: 'app-account-dashboard',
@@ -8,16 +10,17 @@ import { AccountHeaderService } from "../../services/account-header.service";
   styleUrls: ['./account-dashboard.component.scss'],
   standalone: false
 })
-export class AccountDashboardComponent{
-   constructor(
+export class AccountDashboardComponent implements OnInit{
+  accountProfile: Profile;
+  constructor(
     private router: Router,
     private accountHeaderService: AccountHeaderService,
-  ){};
+    private accountService: AccountService
+  ){
+    this.accountProfile = this.accountService.accountProfile;
+  };
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    console.log("hello from dashboard");
     this.accountHeaderService.setHeaderHide(false);
   }
   onNavigate(navType: 'settings'| 'profile'){

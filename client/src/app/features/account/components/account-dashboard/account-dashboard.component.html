@@ -1,8 +1,19 @@
 
-<ion-content>
+<ion-content >
   <app-custom-grid>
-    <ion-button (click)="onNavigate('settings')">Preferences</ion-button>
-    <ion-button (click)="onNavigate('profile')">Profile</ion-button>
+   <div class="dashboard">
+      <ion-item lines="none" class="dashboard__hero">
+        <img alt="avatar" [src]="accountProfile.avatarUrl">
+      </ion-item>
+      <ion-item lines="none" class="dashboard__btns">
+        <a (click)="onNavigate('settings')">
+          <ion-icon name="settings-outline"></ion-icon>
+        </a>
+        <a (click)="onNavigate('profile')">
+          <ion-icon name="person-outline"></ion-icon>
+        </a>
+      </ion-item>
+   </div>
   </app-custom-grid>
   <router-outlet></router-outlet>
 </ion-content>
