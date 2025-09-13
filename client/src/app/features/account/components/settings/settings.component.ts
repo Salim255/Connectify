@@ -70,9 +70,31 @@ export class SettingsComponent implements OnInit {
     });
 
 
-    this.newMap.setOnMapClickListener((event) => {
+    this.newMap.setOnMapClickListener(async(event) => {
        console.log(event);
-    })
+
+
+         const { latitude, longitude } = event;
+
+      // Add marker at clicked location
+      await this.newMap?.addMarker({
+        coordinate: { lat: latitude, lng: longitude },
+        title: 'Selected Location',
+      });
+
+
+        await this.newMap.addTileOverlay({
+      opacity: 1,
+      visible: true,
+      zIndex: 2,
+      url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+    });
+
+
+
+    });
+
+    //this.newMap.addCircles()
   }
 
 }
