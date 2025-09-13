@@ -17,7 +17,10 @@
 </ion-header>
 
 <ion-content>
+
   <app-custom-grid>
+   <capacitor-google-map #map id="map"></capacitor-google-map>
+   <button (click)="createMap()">Create Map</button>
     <form  class="edit-profile-form" [formGroup]="editProfileForm">
       <ion-item-group>
         <ion-item-divider>
