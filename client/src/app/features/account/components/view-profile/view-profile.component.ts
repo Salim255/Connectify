@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 import { AccountHeaderService } from "../../services/account-header.service";
+import { AccountService } from "../../services/account.service";
+import { Profile } from "src/app/features/profile/model/profile.model";
 
 @Component({
   selector: 'app-view-profile',
@@ -9,5 +11,10 @@ import { AccountHeaderService } from "../../services/account-header.service";
 })
 
 export class ViewProfileComponent {
-
+  accountProfile: Profile;
+  constructor(
+  private accountService: AccountService,
+  ){
+  this.accountProfile = this.accountService.accountProfile;
+  }
 }
