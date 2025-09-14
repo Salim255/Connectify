@@ -65,31 +65,10 @@ export class SettingsComponent implements OnInit {
   }
 
   async createMap() {
-    console.log(this.mapRef)
     this.newMap =  await this.googleMapService.createMap(this.currentLocation!, this.mapRef);
 
-
-    this.newMap.setOnMapClickListener(async(event) => {
-      // Remove current marker if it exists
-      if (this.currentMarker) {
-        await this.newMap.removeMarker(this.currentMarker);
-        this.currentMarker = null;
-      }
-
-      const { latitude, longitude } = event;
-      console.log(event, "event");
-
-      this.geolocationService.getCityAndCountry(latitude, longitude).then(location => {
-        console.log('Location:', location);
-      }).catch(error => {
-        console.error('Error getting location:', error);
-      });
-
-      // Add marker at clicked location
-      this.currentMarker = await this.newMap?.addMarker({
-        coordinate: { lat: latitude, lng: longitude },
-        title: '',
-      });
+    this.googleMapService.listenForMapClick(this.newMap, (locationName) => {
+      console.log('Location:', locationName);
     });
   }
 
