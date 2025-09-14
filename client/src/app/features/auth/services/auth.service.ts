@@ -1,8 +1,11 @@
 import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
+import { User } from "../model/user.model";
 
 @Injectable({providedIn: "root"})
 
 export class AuthService {
+  private user = new BehaviorSubject<User | null>(null);
   private _isAuthenticated = false;
 
   get isAuthenticated() {
@@ -15,5 +18,9 @@ export class AuthService {
 
   logout() {
     this._isAuthenticated = false;
+  }
+
+  userIsAuthenticated() {
+   return this.user.asObservable();
   }
 }
