@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { CanMatch, Route, UrlSegment } from "@angular/router";
-import { Observable } from "rxjs";
+import { map, Observable, of, switchMap, take, tap } from "rxjs";
 import { AuthService } from "src/app/features/auth/services/auth.service";
 import { Router } from "@angular/router";
 
@@ -14,13 +14,21 @@ export class AuthGuard implements CanMatch {
   canMatch(
     route: Route, segments: UrlSegment[],
   ): Observable<boolean> | Promise<boolean> | boolean {
-    console.log(this.authService.isAuthenticated, 'auth guard');
-    const  auth =  this.authService.isAuthenticated;
-   if (auth){
-    return true;
-   } else {
-    this.router.navigateByUrl('/auth');
-    return false;
-   }
+    return this.authService.userIsAuthenticated.pipe(
+      take(1),
+        switchMap((isAuthenticated) => {
+          if (!isAuthenticated){
+            return this.authService.autoLogin();
+          } else {
+            return of(isAuthenticated);
+          }
+        }
+      ),
+      tap((isAuthenticated) => {
+        if (!isAuthenticated){
+          this.router.navigateByUrl('/auth');
+        }
+      })
+    );
   }
 }
