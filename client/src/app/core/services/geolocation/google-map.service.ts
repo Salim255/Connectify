@@ -3,15 +3,37 @@ import { GoogleMap } from "@capacitor/google-maps";
 import { environment } from "src/environments/environment.prod";
 import { Coordinates } from "./geolocation.service";
 import { GeolocationService } from "./geolocation.service";
+import { ModalController } from "@ionic/angular";
+import { LocationPickerComponent } from "src/app/shared/components/location-picker/location-picker";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoogleMapService {
   private currentMarker: string | null = null;
-  constructor(private geolocationService: GeolocationService) { }
+  constructor(
+    private modalController: ModalController,
+    private geolocationService: GeolocationService,
+  ) {
 
-  async  createMap(coordinate: Coordinates, mapElement: ElementRef<HTMLElement>): Promise<any> {
+  }
+
+  async createLocationPickerModal() {
+    const modal = await this.modalController.create({
+      component: LocationPickerComponent,
+      cssClass: 'location-picker-modal',
+    });
+
+    await modal.present();
+    return modal;
+  }
+
+  async dismissLocationPickerModal() {
+    await this.modalController.dismiss();
+  }
+
+  async createMap(coordinate: Coordinates, mapElement: ElementRef<HTMLElement>): Promise<any> {
+    console.log('Creating map at:', mapElement);
     return await GoogleMap.create({
       id: 'my-cool-map',
       element: mapElement?.nativeElement,
