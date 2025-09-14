@@ -20,6 +20,8 @@ export class SettingsComponent implements OnInit {
   editProfileForm!: FormGroup;
   accountProfile: Profile;
 
+  currentMarker: string | null = null;
+
   constructor(
     private formBuilder: FormBuilder,
     private accountService: AccountService,
@@ -65,33 +67,34 @@ export class SettingsComponent implements OnInit {
           lat: 33.6,
           lng: -117.9,
         },
-        zoom: 8,
+        zoom: 14,
       },
     });
 
 
     this.newMap.setOnMapClickListener(async(event) => {
-       console.log(event);
+      // Remove current marker if it exists
+      if (this.currentMarker) {
+        await this.newMap.removeMarker(this.currentMarker);
+        this.currentMarker = null;
+      }
 
 
-         const { latitude, longitude } = event;
+      const { latitude, longitude } = event;
 
       // Add marker at clicked location
-      await this.newMap?.addMarker({
+      this.currentMarker = await this.newMap?.addMarker({
         coordinate: { lat: latitude, lng: longitude },
         title: 'Selected Location',
       });
+      console.log( typeof this.currentMarker,  this.currentMarker);
 
-
-        await this.newMap.addTileOverlay({
+      await this.newMap.addTileOverlay({
       opacity: 1,
       visible: true,
       zIndex: 2,
       url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
     });
-
-
-
     });
 
     //this.newMap.addCircles()
