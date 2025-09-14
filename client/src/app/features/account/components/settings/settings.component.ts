@@ -7,6 +7,7 @@ import { GoogleMap } from '@capacitor/google-maps';
 import { environment } from "src/environments/environment.prod";
 import { Coordinates, GeolocationService } from "src/app/core/services/geolocation/geolocation.service";
 import { GoogleMapService } from "src/app/core/services/geolocation/google-map.service";
+import { Subscription } from "rxjs";
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -23,6 +24,10 @@ export class SettingsComponent implements OnInit {
 
   currentMarker: string | null = null;
   currentLocation: Coordinates | null = null;
+
+
+  locationNameSubscription!: Subscription;
+
   constructor(
     private googleMapService: GoogleMapService,
     private geolocationService: GeolocationService,
@@ -42,8 +47,20 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.accountHeaderService.setHeaderHide(true);
     this.buildForm();
-    //this.createMap();
+    this.subscribeToLocationName()
+  }
 
+  subscribeToLocationName(){
+    this.locationNameSubscription = this.googleMapService.getLocationNAmeSubject$.subscribe(
+      locationName => {
+        console.log('Location name updated:', locationName);
+        if (locationName) {
+          this.editProfileForm.patchValue({
+            location: `${locationName?.country}, ${locationName?.city}`
+          });
+        }
+      }
+    )
   }
   onBack(): void{
     this.accountHeaderService.setHeaderHide(false);
@@ -65,12 +82,11 @@ export class SettingsComponent implements OnInit {
   }
 
   async createMap() {
-   /*  this.newMap =  await this.googleMapService.createMap(this.currentLocation!, this.mapRef);
+    await this.googleMapService.createLocationPickerModal();
+  }
 
-    this.googleMapService.listenForMapClick(this.newMap, (locationName) => {
-      console.log('Location:', locationName);
-    }); */
-     await this.googleMapService.createLocationPickerModal();
+  ngOnDestroy(): void {
+    this.locationNameSubscription?.unsubscribe();
   }
 
 }
