@@ -16,7 +16,10 @@ export class GeolocationService {
   private ENV = environment;
   private userCoordinates: Coordinates;
 
-  constructor(private http: HttpClient) { this.userCoordinates = { latitude: 0, longitude: 0 } }
+  constructor(private http: HttpClient)
+  {
+    this.userCoordinates = { latitude: 0, longitude: 0 }
+  }
 
   async requestPermissions(): Promise<any> {
     const permissions = await Geolocation.requestPermissions();
@@ -45,7 +48,6 @@ export class GeolocationService {
       this.userCoordinates.latitude = position.coords.latitude;
       this.userCoordinates.longitude = position.coords.longitude;
       return this.userCoordinates;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
        throw new Error(error.message);
     }

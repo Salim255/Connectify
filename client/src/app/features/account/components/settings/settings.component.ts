@@ -65,11 +65,12 @@ export class SettingsComponent implements OnInit {
   }
 
   async createMap() {
-    this.newMap =  await this.googleMapService.createMap(this.currentLocation!, this.mapRef);
+   /*  this.newMap =  await this.googleMapService.createMap(this.currentLocation!, this.mapRef);
 
     this.googleMapService.listenForMapClick(this.newMap, (locationName) => {
       console.log('Location:', locationName);
-    });
+    }); */
+     await this.googleMapService.createLocationPickerModal();
   }
 
 }
