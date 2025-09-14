@@ -5,12 +5,18 @@ import { Coordinates } from "./geolocation.service";
 import { GeolocationService } from "./geolocation.service";
 import { ModalController } from "@ionic/angular";
 import { LocationPickerComponent } from "src/app/shared/components/location-picker/location-picker";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoogleMapService {
   private currentMarker: string | null = null;
+  locationName: {city: any, country: any} | null = null;
+
+  locationNAmeSubject = new BehaviorSubject<{city: any, country: any} | null>(null);
+  getLocationNAmeSubject$ = this.locationNAmeSubject.asObservable();
+
   constructor(
     private modalController: ModalController,
     private geolocationService: GeolocationService,
@@ -65,8 +71,9 @@ export class GoogleMapService {
       });
 
       if (onLocationResolved) {
-        const locationName = await this.geolocationService.getCityAndCountry(latitude, longitude);
-        onLocationResolved(locationName);
+        this.locationName = await this.geolocationService.getCityAndCountry(latitude, longitude);
+        this.locationNAmeSubject.next(this.locationName);
+        onLocationResolved(this.locationName);
       }
     });
   }
