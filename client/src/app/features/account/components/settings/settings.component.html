@@ -17,10 +17,7 @@
 </ion-header>
 
 <ion-content>
-
   <app-custom-grid>
-   <capacitor-google-map #map id="map"></capacitor-google-map>
-   <button (click)="createMap()">Create Map</button>
     <form  class="edit-profile-form" [formGroup]="editProfileForm">
       <ion-item-group>
         <ion-item-divider>
@@ -57,10 +54,11 @@
       </ion-item-group>
       <ion-item-group>
         <ion-item-divider>
-          <ion-label for="location">Location</ion-label>
+          <ion-label for="location">Dating Location</ion-label>
         </ion-item-divider>
         <ion-item>
-          <ion-input formControlName="location" placeholder="location"></ion-input>
+          <!-- <button (click)="createMap()">Create Map</button> -->
+          <ion-input formControlName="location" placeholder="location" (click)="createMap()"></ion-input>
         </ion-item>
       </ion-item-group>
       <ion-item-group>
