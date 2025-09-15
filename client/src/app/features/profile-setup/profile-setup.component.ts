@@ -1,5 +1,4 @@
-import { Component } from "@angular/core";
-import { IonicModule } from "@ionic/angular";
+import { Component, OnInit, signal } from "@angular/core";
 
 @Component({
   selector: 'app-profile-setup',
@@ -7,4 +6,13 @@ import { IonicModule } from "@ionic/angular";
   styleUrls: ['./profile-setup.component.scss'],
   standalone: false,
 })
-export class ProfileSetupComponent {}
+export class ProfileSetupComponent implements OnInit {
+  headerTitle = signal<string>('view profile');
+
+  ngOnInit(): void {
+
+  }
+  onBack(): void{
+
+  }
+}

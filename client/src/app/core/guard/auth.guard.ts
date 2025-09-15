@@ -22,6 +22,7 @@ export class AuthGuard implements CanMatch {
           if (isAuthenticated){
             return of(true);
           }
+           return of(true);
           // auto login
           return this.authService.autoLogin().pipe(
             map((authenticated) => {

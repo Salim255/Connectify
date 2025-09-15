@@ -1,1 +1,21 @@
-<ion-text>Hello from profile setup</ion-text>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button (click)="onBack()" defaultHref="/account"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>
+      {{ headerTitle() }}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        done
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text>Complete profile contents</ion-text>
+</ion-content>
