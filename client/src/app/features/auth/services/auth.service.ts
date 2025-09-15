@@ -60,8 +60,7 @@ export class AuthService {
         }
       }),
       map((userToReturn) => {
-        //return !!userToReturn;
-        return true;
+        return !!userToReturn;
       })
     );
   }
