@@ -5,6 +5,6 @@ import { IonicModule } from "@ionic/angular";
   selector: 'app-profile-setup',
   templateUrl: './profile-setup.component.html',
   styleUrls: ['./profile-setup.component.scss'],
-  imports: [IonicModule]
+  standalone: false,
 })
 export class ProfileSetupComponent {}
