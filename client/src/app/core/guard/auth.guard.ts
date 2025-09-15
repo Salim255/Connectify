@@ -15,12 +15,10 @@ export class AuthGuard implements CanMatch {
   canMatch(
     route: Route, segments: UrlSegment[],
   ): Observable<boolean | UrlTree>{
-    console.log('AuthGuard#canMatch called');
     return this.authService.userIsAuthenticated.pipe(
       take(1),
 
         switchMap((isAuthenticated) => {
-          console.log('isAuthenticated', isAuthenticated);
           if (isAuthenticated){
             return of(true);
           }
@@ -30,7 +28,6 @@ export class AuthGuard implements CanMatch {
               if (authenticated){
                 return true;
               } else {
-                // Angular-friendly redirect;
                 const urlTree = this.router.parseUrl('/auth');
                 return urlTree;
               }

@@ -11,7 +11,7 @@ export class AuthService {
   activeLogoutTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor(){}
-    private autoLogout(duration: number): void {
+  private autoLogout(duration: number): void {
       if (this.activeLogoutTimer) {
         clearTimeout(this.activeLogoutTimer);
       }
@@ -20,7 +20,8 @@ export class AuthService {
         this.logout();
       }, duration);
     }
-   autoLogin(): Observable<boolean> {
+
+  autoLogin(): Observable<boolean> {
     return from(Preferences.get({ key: 'authData' })).pipe(
       map((storedData) => {
         if (!storedData || !storedData.value) {
@@ -31,9 +32,6 @@ export class AuthService {
           id: number;
           _token: string;
           tokenExpirationDate: string;
-          _privateKey: string;
-          _publicKey: string;
-          _email: string;
         };
 
         const expirationTime = new Date(parseData.tokenExpirationDate);
@@ -46,9 +44,6 @@ export class AuthService {
           parseData.id,
           parseData._token,
           expirationTime,
-          parseData._privateKey,
-          parseData._publicKey,
-          parseData._email
         );
 
         return userToReturn;
@@ -65,13 +60,9 @@ export class AuthService {
     );
   }
 
-  login() {
-    this._isAuthenticated = true;
-  }
-
-  logout() {
-    this._isAuthenticated = false;
-  }
+  private removeStoredData = async () => {
+    await Preferences.remove({ key: 'authData' });
+  };
 
   get userIsAuthenticated(): Observable<boolean> {
    return this.user.asObservable().pipe(
@@ -83,5 +74,20 @@ export class AuthService {
       }
     })
    );
+  }
+
+  async logout(): Promise<void> {
+    if (this.activeLogoutTimer) {
+      clearTimeout(this.activeLogoutTimer);
+    }
+
+    this.user.next(null);
+    this.removeStoredData();
+  }
+
+  get userId(): Observable<number | null> {
+    return this.user.asObservable().pipe(
+      map((user) => user?.id ?? null)
+    );
   }
 }
