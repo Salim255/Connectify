@@ -5,7 +5,9 @@ import { Profile } from "src/app/features/profile/model/profile.model";
 import { AccountService } from "../../services/account.service";
 import { GoogleMap } from '@capacitor/google-maps';
 import { environment } from "src/environments/environment.prod";
-
+import { Coordinates, GeolocationService } from "src/app/core/services/geolocation/geolocation.service";
+import { GoogleMapService } from "src/app/core/services/geolocation/google-map.service";
+import { Subscription } from "rxjs";
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -21,21 +23,44 @@ export class SettingsComponent implements OnInit {
   accountProfile: Profile;
 
   currentMarker: string | null = null;
+  currentLocation: Coordinates | null = null;
+
+
+  locationNameSubscription!: Subscription;
 
   constructor(
+    private googleMapService: GoogleMapService,
+    private geolocationService: GeolocationService,
     private formBuilder: FormBuilder,
     private accountService: AccountService,
     private accountHeaderService :AccountHeaderService ){
       this.accountProfile = this.accountService.accountProfile;
-
+      this.geolocationService.getCurrentCoordinates().then(coords => {
+        this.currentLocation = { latitude: coords.latitude, longitude: coords.longitude };
+        console.log('Current location:', this.currentLocation);
+      }).catch(error => {
+        console.error('Error getting location:', error);
+      });
   }
 
 
   ngOnInit(): void {
     this.accountHeaderService.setHeaderHide(true);
     this.buildForm();
-    //this.createMap();
+    this.subscribeToLocationName()
+  }
 
+  subscribeToLocationName(){
+    this.locationNameSubscription = this.googleMapService.getLocationNAmeSubject$.subscribe(
+      locationName => {
+        console.log('Location name updated:', locationName);
+        if (locationName) {
+          this.editProfileForm.patchValue({
+            location: `${locationName?.country}, ${locationName?.city}`
+          });
+        }
+      }
+    )
   }
   onBack(): void{
     this.accountHeaderService.setHeaderHide(false);
@@ -49,55 +74,19 @@ export class SettingsComponent implements OnInit {
       gender: [this.accountProfile.gender, Validators.required],
       location: [
         `${this.accountProfile?.location?.country}, ${this.accountProfile?.location?.city} `,
-         Validators.required,
-        ],
+        Validators.required,
+      ],
       bio: [this.accountProfile.bio, Validators.required],
       lifestyle: ['', Validators.required]
     })
   }
 
   async createMap() {
-    console.log(this.mapRef)
-    this.newMap = await GoogleMap.create({
-      id: 'my-cool-map',
-      element: this.mapRef?.nativeElement,
-      apiKey: environment.GoogleMapAPIKey,
-      config: {
-        center: {
-          lat: 33.6,
-          lng: -117.9,
-        },
-        zoom: 14,
-      },
-    });
+    await this.googleMapService.createLocationPickerModal();
+  }
 
-
-    this.newMap.setOnMapClickListener(async(event) => {
-      // Remove current marker if it exists
-      if (this.currentMarker) {
-        await this.newMap.removeMarker(this.currentMarker);
-        this.currentMarker = null;
-      }
-
-
-      const { latitude, longitude } = event;
-
-      // Add marker at clicked location
-      this.currentMarker = await this.newMap?.addMarker({
-        coordinate: { lat: latitude, lng: longitude },
-        title: 'Selected Location',
-      });
-      console.log( typeof this.currentMarker,  this.currentMarker);
-
-      await this.newMap.addTileOverlay({
-      opacity: 1,
-      visible: true,
-      zIndex: 2,
-      url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
-    });
-    });
-
-    //this.newMap.addCircles()
+  ngOnDestroy(): void {
+    this.locationNameSubscription?.unsubscribe();
   }
 
 }

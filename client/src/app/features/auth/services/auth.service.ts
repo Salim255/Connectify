@@ -1,0 +1,87 @@
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, from, map, Observable, tap } from "rxjs";
+import { User } from "../model/user.model";
+import { Preferences } from '@capacitor/preferences';
+
+@Injectable({providedIn: "root"})
+
+export class AuthService {
+  private user = new BehaviorSubject<User | null>(null);
+  private _isAuthenticated = false;
+  activeLogoutTimer: ReturnType<typeof setTimeout> | null = null;
+
+  constructor(){}
+    private autoLogout(duration: number): void {
+      if (this.activeLogoutTimer) {
+        clearTimeout(this.activeLogoutTimer);
+      }
+
+      this.activeLogoutTimer = setTimeout(() => {
+        this.logout();
+      }, duration);
+    }
+   autoLogin(): Observable<boolean> {
+    return from(Preferences.get({ key: 'authData' })).pipe(
+      map((storedData) => {
+        if (!storedData || !storedData.value) {
+          return null;
+        }
+
+        const parseData = JSON.parse(storedData.value) as {
+          id: number;
+          _token: string;
+          tokenExpirationDate: string;
+          _privateKey: string;
+          _publicKey: string;
+          _email: string;
+        };
+
+        const expirationTime = new Date(parseData.tokenExpirationDate);
+
+        if (expirationTime <= new Date()) {
+          return null;
+        }
+
+        const userToReturn = new User(
+          parseData.id,
+          parseData._token,
+          expirationTime,
+          parseData._privateKey,
+          parseData._publicKey,
+          parseData._email
+        );
+
+        return userToReturn;
+      }),
+      tap((userToReturn) => {
+        if (userToReturn) {
+          this.user.next(userToReturn);
+          this.autoLogout(userToReturn.tokenDuration);
+        }
+      }),
+      map((userToReturn) => {
+        return !!userToReturn;
+      })
+    );
+  }
+
+  login() {
+    this._isAuthenticated = true;
+  }
+
+  logout() {
+    this._isAuthenticated = false;
+  }
+
+  get userIsAuthenticated(): Observable<boolean> {
+   return this.user.asObservable().pipe(
+    map((user) => {
+      if (user){
+        return  !!user.token;
+      } else {
+        return false;
+      }
+    })
+   );
+  }
+}
