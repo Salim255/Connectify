@@ -1,0 +1,24 @@
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating"> Name</ion-label>
+      <ion-input formControlName="name" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">age</ion-label>
+      <ion-input formControlName="age" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Profile Picture</ion-label>
+      <ion-input formControlName="photo" type="url"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <div class="button-container">
+    <ion-button expand="full" type="submit" [disabled]="profileForm.invalid">
+      Save Profile
+    </ion-button>
+  </div >
+
+</form>
