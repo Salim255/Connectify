@@ -3,7 +3,10 @@ import { ProfileSetupComponent } from "./profile-setup.component";
 import { NgModule } from "@angular/core";
 
 const routes: Routes = [
-  { path: '', component: ProfileSetupComponent }
+  {
+    path: '',
+    component: ProfileSetupComponent,
+  }
 ];
 
 @NgModule({

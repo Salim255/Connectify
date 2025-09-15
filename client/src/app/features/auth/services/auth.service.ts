@@ -7,7 +7,6 @@ import { Preferences } from '@capacitor/preferences';
 
 export class AuthService {
   private user = new BehaviorSubject<User | null>(null);
-  private _isAuthenticated = false;
   activeLogoutTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor(){}
