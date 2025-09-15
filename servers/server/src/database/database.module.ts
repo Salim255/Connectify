@@ -1,9 +1,8 @@
-import { Logger, Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
-import { Connection } from 'mongoose';
+import { Module } from '@nestjs/common';
+import { databaseProviders } from './providers/database.provider';
 
 @Module({
+  providers: [databaseProviders],
   imports: [],
 })
 export class DatabaseModule {}
