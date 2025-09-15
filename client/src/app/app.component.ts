@@ -15,14 +15,14 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private authService: AuthService) {}
+    private authService: AuthService,
+  ) {}
+
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.subscribeToUserIsAuthenticated()
+    this.subscribeToUserAuthentication()
   }
 
-  subscribeToUserIsAuthenticated(){
+  subscribeToUserAuthentication(){
     this.authenticatedUserSubscription = this.authService.userIsAuthenticated.subscribe((isAuthenticated) => {
       if (!isAuthenticated && this.previousAuthState !== isAuthenticated){
         this.router.navigateByUrl('/auth');
