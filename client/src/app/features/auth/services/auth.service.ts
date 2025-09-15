@@ -60,13 +60,9 @@ export class AuthService {
     );
   }
 
-  login() {
-    this._isAuthenticated = true;
-  }
-
-  logout() {
-    this._isAuthenticated = false;
-  }
+  private removeStoredData = async () => {
+    await Preferences.remove({ key: 'authData' });
+  };
 
   get userIsAuthenticated(): Observable<boolean> {
    return this.user.asObservable().pipe(
@@ -78,6 +74,15 @@ export class AuthService {
       }
     })
    );
+  }
+
+  async logout(): Promise<void> {
+    if (this.activeLogoutTimer) {
+      clearTimeout(this.activeLogoutTimer);
+    }
+
+    this.user.next(null);
+    this.removeStoredData();
   }
 
   get userId(): Observable<number | null> {
