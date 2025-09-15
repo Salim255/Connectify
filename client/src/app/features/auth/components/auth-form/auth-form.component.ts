@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, signal } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
@@ -10,10 +10,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 export class AuthFormComponent {
   authFormField!: FormGroup;
-
+  isLoginMode = signal<boolean>(true);
   constructor(private buildForm: FormBuilder){}
-
-
 
   ngOnInit(){
     this.buildAuthForm();
@@ -33,5 +31,9 @@ export class AuthFormComponent {
     } else {
       console.log("Form is not valid");
     }
+  }
+
+  switchAuthMod(){
+    this.isLoginMode.update((currentValue) => !currentValue);
   }
 }
