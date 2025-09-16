@@ -51,7 +51,7 @@ export class CreatedUserDto extends OmitType(CreateUserDto, [
   updatedAt?: Date;
 }
 
-export class CreatedUserResponseDto {
+export class SignUpResponseDto {
   @ApiProperty({ description: 'Create user status', example: 'Success' })
   status: string;
   @ApiProperty({
@@ -70,6 +70,8 @@ export class CreatedUserResponseDto {
     user: CreatedUserDto;
   };
 }
+
+export class LoginUpResponseDto extends SignUpResponseDto {}
 
 export class SigninUserDto {
   @ApiProperty({ description: 'User email', example: 'test@gmail.com' })
