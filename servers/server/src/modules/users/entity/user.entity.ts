@@ -1,8 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column({ unique: true })
@@ -10,4 +10,19 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column({ default: false })
+  isEmailVerified: boolean;
+
+  @Column({ default: true })
+  isActive: boolean;
+
+  @Column({
+    enum: ['customer', 'admin', 'manager'],
+    default: 'customer',
+  })
+  role: string;
+
+  @OneToOne(() => Profile, (profile) => profile.user)
+  profile: Profile;
 }
