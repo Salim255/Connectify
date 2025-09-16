@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Profile } from '../entity/profile.entity';
 
 export enum UserGender {
   MALE = 'male',
@@ -22,4 +23,14 @@ export class CreateProfileDto {
 
   @ApiProperty({ description: 'Profile photo' })
   avatarUrl: string;
+}
+
+export class CreatedProfileResponseDto {
+  @ApiProperty({ description: 'Profile create response status' })
+  status: string;
+
+  @ApiProperty({ description: 'Response data' })
+  data: {
+    profile: Profile;
+  };
 }
