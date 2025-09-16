@@ -10,8 +10,12 @@
       <ion-input formControlName="age" type="text"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">gender</ion-label>
-      <ion-input formControlName="gender" type="text"></ion-input>
+      <ion-label position="stack">gender</ion-label>
+      <ion-select formControlName="gender" aria-label="Fruit" interface="popover" placeholder="Select your gender">
+        @for(gender of  GENDERS; track gender.value){
+          <ion-select-option [value]="gender.value"> {{ gender.label }}</ion-select-option>
+        }
+      </ion-select>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Profile Picture</ion-label>
@@ -20,7 +24,7 @@
   </ion-list>
 
   <div class="button-container">
-    <ion-button expand="full" type="submit" [disabled]="profileForm.invalid">
+    <ion-button expand="full" type="submit" >
       Save Profile
     </ion-button>
   </div >

@@ -11,6 +11,14 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 export class ProfileSetupFormComponent {
   profileForm!: FormGroup;
 
+  GENDERS = [
+    { value: 'male', label: 'Male' },
+    { value: 'female', label: 'Female' },
+    { value: 'non-binary', label: 'Non-binary' },
+    { value: 'prefer_not_to_say', label: 'Prefer not to say' },
+    { value: 'other', label: 'Other' }
+  ];
+
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -43,6 +51,6 @@ export class ProfileSetupFormComponent {
   }
 
   onSubmit(){
-
+    console.log(this.profileForm.value);
   }
 }
