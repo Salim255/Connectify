@@ -9,8 +9,10 @@ import { UserService } from '../services/user.service';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   CreatedUserDto,
-  CreatedUserResponseDto,
   CreateUserDto,
+  LoginUpResponseDto,
+  SigninUserDto,
+  SignUpResponseDto,
 } from '../dto/users.dto';
 
 @ApiTags('Users')
@@ -22,7 +24,7 @@ export class UsersController {
     return this.userService.findAll();
   }
 
-  @Post()
+  @Post('signup')
   @ApiOperation({ summary: 'Create a new user' })
   @ApiBody({
     type: CreateUserDto,
@@ -32,9 +34,9 @@ export class UsersController {
   @ApiResponse({
     status: 201,
     description: 'The user has been successfully created.',
-    type: CreatedUserDto,
+    type: SignUpResponseDto,
   })
-  async signUp(@Body() body: CreateUserDto): Promise<CreatedUserResponseDto> {
+  async signUp(@Body() body: CreateUserDto): Promise<SignUpResponseDto> {
     //Sanitize and validate input
     const { email, password, passwordConfirm } = body;
     if (password !== passwordConfirm) {
@@ -43,7 +45,38 @@ export class UsersController {
 
     //Create user
     const { token, ...user }: CreatedUserDto & { token: string } =
-      await this.userService.createUser({ email, password });
+      await this.userService.createUser({ email, password, passwordConfirm });
+
+    return {
+      status: 'Success',
+      token,
+      data: { user },
+    };
+  }
+
+  @Post('login')
+  @ApiOperation({ summary: 'Log in user' })
+  @ApiBody({
+    type: SigninUserDto,
+    description: 'User login credentials',
+    required: true,
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'The user has been successfully created.',
+    type: LoginUpResponseDto,
+  })
+  async login(@Body() body: SigninUserDto): Promise<LoginUpResponseDto> {
+    //Sanitize and validate input
+    const { email, password } = body;
+    if (!password || !email) {
+      throw new BadRequestException('Please provide valid email and password');
+    }
+
+    //Create user
+    const result: CreatedUserDto & { token: string } =
+      await this.userService.loginUser({ email, password });
+    const { token, ...user } = result;
 
     return {
       status: 'Success',
