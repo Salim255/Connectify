@@ -3,7 +3,10 @@ import { User } from '../entity/user.entity';
 import { Repository } from 'typeorm';
 import { USER_REPOSITORY } from 'src/common/constants/constants';
 import { CreatedUserDto, CreateUserDto, SigninUserDto } from '../dto/users.dto';
-import { JwtTokenService } from 'src/modules/auth/services/jwt-token.service';
+import {
+  JwtTokenPayload,
+  JwtTokenService,
+} from 'src/modules/auth/services/jwt-token.service';
 import * as passwordHandler from '../../auth/utils/password-handler';
 import { PasswordComparisonPayload } from '../../auth/utils/password-handler';
 
@@ -38,8 +41,10 @@ export class UserService {
 
     // Step 5:  - Prepare token
     const token = this.jwtTokenService.createToken(savedUser.id);
+    const tokenDetails: JwtTokenPayload =
+      this.jwtTokenService.verifyToken(token);
 
-    return { ...rest, token };
+    return { ...rest, token, expireIn: tokenDetails.exp };
   }
 
   async loginUser(
@@ -56,19 +61,20 @@ export class UserService {
       plainPassword: loginPayload.password,
       hashedPassword: user.password,
     };
-
     const isPasswordValid = await passwordHandler.correctPassword(passwords);
     if (!isPasswordValid) {
       throw new BadRequestException('Invalid password');
     }
 
+    // Step: 3 - Prepare token
+    const token = this.jwtTokenService.createToken(user.id);
+    const tokenDetails: JwtTokenPayload =
+      this.jwtTokenService.verifyToken(token);
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...rest } = user; // exclude password field
 
-    // Prepare token
-    const token = this.jwtTokenService.createToken(user.id);
-
-    return { ...rest, token };
+    return { ...rest, token, expireIn: tokenDetails.exp };
   }
 
   async findAll(): Promise<User[]> {
