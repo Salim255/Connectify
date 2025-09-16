@@ -1,4 +1,4 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 export enum UserRole {
   USER = 'user',
@@ -28,10 +28,7 @@ export class CreateUserDto {
   passwordConfirm: string;
 }
 
-export class CreatedUserDto extends OmitType(CreateUserDto, [
-  'passwordConfirm',
-  'password',
-]) {
+export class CreatedUserDto {
   @ApiProperty({ description: `User's email`, example: 'test@gmail.com' })
   email: string;
 
@@ -44,14 +41,11 @@ export class CreatedUserDto extends OmitType(CreateUserDto, [
   @ApiProperty({ description: `User's role`, example: 'user' }) // default
   role: UserRole;
 
-  @ApiProperty({ description: 'User created at', example: new Date() })
-  createdAt?: Date;
-
-  @ApiProperty({ description: 'User updated at', example: new Date() })
-  updatedAt?: Date;
+  @ApiProperty({ description: `Token expiration date` })
+  expireIn: number;
 }
 
-export class CreatedUserResponseDto {
+export class SignUpResponseDto {
   @ApiProperty({ description: 'Create user status', example: 'Success' })
   status: string;
   @ApiProperty({
@@ -70,6 +64,8 @@ export class CreatedUserResponseDto {
     user: CreatedUserDto;
   };
 }
+
+export class LoginUpResponseDto extends SignUpResponseDto {}
 
 export class SigninUserDto {
   @ApiProperty({ description: 'User email', example: 'test@gmail.com' })
