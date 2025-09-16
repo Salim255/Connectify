@@ -6,4 +6,8 @@ import { USER_REPOSITORY } from 'src/common/constants/constants';
 @Injectable()
 export class UserService {
   constructor(@Inject(USER_REPOSITORY) private userRepo: Repository<User>) {}
+
+  async findAll(): Promise<User[]> {
+    return this.userRepo.find();
+  }
 }
