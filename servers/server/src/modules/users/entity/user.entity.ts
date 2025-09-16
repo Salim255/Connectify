@@ -18,8 +18,8 @@ export class User {
   isActive: boolean;
 
   @Column({
-    enum: ['customer', 'admin', 'manager'],
-    default: 'customer',
+    enum: ['user', 'admin', 'support'],
+    default: 'user',
   })
   role: string;
 

@@ -7,9 +7,11 @@ import { MatchesModule } from './modules/matches/matches.module';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './modules/users/user.module';
+import { ProfilesModule } from './modules/profiles/profiles.module';
 
 @Module({
   imports: [
+    ProfilesModule,
     UserModule,
     MatchesModule,
     AuthModule,
