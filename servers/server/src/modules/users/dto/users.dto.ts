@@ -2,8 +2,7 @@ import { ApiProperty, OmitType } from '@nestjs/swagger';
 
 export const userObjectExample = {
   _id: '123IZN',
-  firstName: 'Salim',
-  lastName: 'Hassan',
+  name: 'Salim',
   email: 'test@gmail.com',
   isEmailVerified: false,
   isActive: true,

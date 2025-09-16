@@ -1,3 +1,4 @@
+import { Profile } from 'src/modules/profiles/entity/profile.entity';
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('users')
