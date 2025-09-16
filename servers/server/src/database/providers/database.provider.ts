@@ -1,8 +1,9 @@
 import { DataSource } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
+import { DATA_SOURCE } from 'src/common/constants/constants';
 
 export const databaseProviders = {
-  provide: 'DATA_SOURCE',
+  provide: DATA_SOURCE,
   inject: [ConfigService],
   useFactory: async (configService: ConfigService) => {
     //const logger = new Logger('DatabaseProvider');
