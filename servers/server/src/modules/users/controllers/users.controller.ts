@@ -7,7 +7,11 @@ import {
 } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreatedUserDto, CreateUserDto } from '../dto/users.dto';
+import {
+  CreatedUserDto,
+  CreatedUserResponseDto,
+  CreateUserDto,
+} from '../dto/users.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -30,7 +34,7 @@ export class UsersController {
     description: 'The user has been successfully created.',
     type: CreatedUserDto,
   })
-  async signUp(@Body() body: CreateUserDto): Promise<CreatedUserDto> {
+  async signUp(@Body() body: CreateUserDto): Promise<CreatedUserResponseDto> {
     //Sanitize and validate input
     const { email, password, passwordConfirm } = body;
     if (password !== passwordConfirm) {
@@ -38,6 +42,13 @@ export class UsersController {
     }
 
     //Create user
-    return await this.userService.createUser({ email, password });
+    const { token, ...user }: CreatedUserDto & { token: string } =
+      await this.userService.createUser({ email, password });
+
+    return {
+      status: 'Success',
+      token,
+      data: { user },
+    };
   }
 }
