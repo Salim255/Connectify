@@ -16,6 +16,9 @@ export const databaseProviders = {
       database: configService.get<string>('DB_NAME'),
       synchronize: true, // ❌ disable in production
       logging: true,
+      entities: [__dirname + '/../../modules/**/entity/*.entity{.ts,.js}'],
+      /*  migrations: [__dirname + '/migrations/*{.ts,.js}'],
+      subscribers: [], */
     });
 
     return dataSource.initialize();

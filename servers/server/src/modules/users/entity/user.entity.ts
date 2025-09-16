@@ -1,8 +1,9 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { UserRole } from '../dto/users.dto';
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column({ unique: true })
@@ -10,4 +11,16 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column({ default: false })
+  isEmailVerified: boolean;
+
+  @Column({ default: true })
+  isActive: boolean;
+
+  @Column({
+    enum: ['user', 'admin', 'support'],
+    default: 'user',
+  })
+  role: UserRole;
 }
