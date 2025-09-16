@@ -5,99 +5,83 @@ import {
   HttpException,
   HttpStatus,
   Logger,
+  Inject,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { QueryFailedError } from 'typeorm';
+import { ConfigService } from '@nestjs/config';
 
 class BaseHttpException {
   constructor(
-    public statusCode: number, // HTTP status code (e.g. 404, 500)
-    public message: string | object, // Human-readable message or detailed
-    public path: string, // The request path (e.g /products)
-    public timestamp = new Date().toISOString(), // ISO timestamp of when the error occurred
+    public statusCode: number,
+    public message: string | object,
+    public path: string,
+    public timestamp = new Date().toISOString(),
   ) {}
 }
 
-// This decorator tells NestJS to catch all exceptions (not just HttpException)
-// Catch-all filter that handles:
-// - HttpException (NestJs built-in)
-// - MongoDB errors like E1100 (duplicate key)
-// - Mongoose validation errors
-// -Unknown/internal server errors
 @Catch()
 export class HttpExceptionsErrorHandler implements ExceptionFilter {
-  logger = new Logger('Error handler💥');
-  // This catch() method gets triggered whenever an exception is thrown in the app
+  private logger = new Logger('ErrorHandler💥');
+
+  constructor(@Inject(ConfigService) private configService: ConfigService) {}
+
   catch(exception: unknown, host: ArgumentsHost) {
-    // Extract the context of the HTTP request
     const context = host.switchToHttp();
+    const response = context.getResponse<Response>();
+    const request = context.getRequest<Request>();
 
-    // Get the response and request objects from the context
-    const response = context.getResponse<Response>(); // Get response object
-    const request = context.getRequest<Request>(); // Get request object
+    const isDev = this.configService.get<string>('NODE_ENV') !== 'production';
+    this.logger.log(isDev, 'Environment');
+    let status = HttpStatus.INTERNAL_SERVER_ERROR;
+    let message: string | object = 'Internal server error';
 
-    let status = HttpStatus.INTERNAL_SERVER_ERROR; // Default to 500
-    let message: string | object = 'Internal server error'; // Default message
-
-    // Handle NestJs HttpExceptions (like BadRequestException, NotFoundException, etc.)
     if (exception instanceof HttpException) {
       status = exception.getStatus();
       message = exception.getResponse();
-    }
-
-    // Handle MongoDB duplicate key error (code 11000)
-    else if (
-      typeof exception === 'object' &&
-      exception !== null &&
-      'code' in exception &&
-      exception.code === 11000
-    ) {
-      status = HttpStatus.CONFLICT; // 409 Conflict
-      interface MongoDuplicateKeyError {
-        code: number;
-        keyValue?: Record<string, unknown>;
-        message: string;
-      }
-      const ex = exception as MongoDuplicateKeyError;
-      message = {
-        error: 'Duplicate key error',
-        keyValue: ex.keyValue, // e.g {name: "Wireless Mouse"}
-        detail: ex.message,
+    } else if (exception instanceof QueryFailedError) {
+      const pgError = exception as QueryFailedError & {
+        code?: string;
+        detail?: string;
+        message?: string;
       };
-    }
 
-    // Handle Mongoose validation errors (e.g. required fields, custom validators)
-    else if (
-      typeof exception === 'object' &&
-      exception !== null &&
-      'name' in exception &&
-      (exception as { name: string }).name === 'ValidationError'
-    ) {
-      status = HttpStatus.BAD_REQUEST;
-      type MongooseValidationError = {
-        errors: { [key: string]: { message: string } };
-      };
-      const validationError = exception as unknown as MongooseValidationError;
-      const errors = Object.values(validationError.errors).map((err) => {
-        if (
-          err &&
-          typeof err === 'object' &&
-          'message' in err &&
-          typeof err.message === 'string'
-        ) {
-          return err.message;
+      if (pgError && typeof pgError === 'object' && 'code' in pgError) {
+        if (pgError.code === '23505') {
+          status = HttpStatus.CONFLICT;
+          message = {
+            error: 'Duplicate key error',
+            detail: isDev ? pgError.detail : undefined,
+          };
+        } else if (pgError.code === '23503') {
+          status = HttpStatus.BAD_REQUEST;
+          message = {
+            error: 'Foreign key violation',
+            detail: isDev ? pgError.detail : undefined,
+          };
+        } else if (pgError.code === '23514') {
+          status = HttpStatus.BAD_REQUEST;
+          message = {
+            error: 'Check constraint violation',
+            detail: isDev ? pgError.detail : undefined,
+          };
+        } else {
+          status = HttpStatus.BAD_REQUEST;
+          message = isDev
+            ? {
+                error: 'Database error',
+                detail: pgError,
+              }
+            : { error: 'Database error' };
         }
-        return 'Unknown validation error';
-      });
-
-      message = {
-        error: 'Validation Error',
-        details: errors,
-      };
+      }
+    } else if (exception instanceof Error) {
+      message = isDev ? exception.message : 'Internal server error';
     }
 
-    // Format response using our helper class
+    this.logger.error(exception);
+
     const errorResponse = new BaseHttpException(status, message, request.url);
-    // Send a structured JSON response to the client
     response.status(status).json(errorResponse);
   }
 }

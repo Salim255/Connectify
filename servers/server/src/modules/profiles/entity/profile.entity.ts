@@ -32,7 +32,7 @@ export class Profile {
   gender: 'male' | 'female' | 'non-binary' | 'other';
 
   @Column({ nullable: false })
-  avatarUrl?: string;
+  avatarUrl: string;
 
   // JSON columns for flexible structures
   @Column('text', { array: true, default: [] })

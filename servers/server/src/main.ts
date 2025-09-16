@@ -4,6 +4,7 @@ import { setupSwagger } from './config/swagger.config';
 import { morganConfig } from './config/morgan.config';
 import { HttpExceptionsErrorHandler } from './common/errors/http-exception-errors';
 import { processErrorHandler } from './common/errors/process-errors';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -12,7 +13,8 @@ async function bootstrap() {
 
   // Errors handlers
   // Register http exception errors handler
-  app.useGlobalFilters(new HttpExceptionsErrorHandler());
+  const configService = app.get(ConfigService);
+  app.useGlobalFilters(new HttpExceptionsErrorHandler(configService));
   //  Register process errors handler
   processErrorHandler(app);
 
