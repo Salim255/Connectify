@@ -1,5 +1,5 @@
-import { Profile } from 'src/modules/profiles/entity/profile.entity';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { UserRole } from '../dto/users.dto';
 
 @Entity('users')
 export class User {
@@ -22,8 +22,5 @@ export class User {
     enum: ['user', 'admin', 'support'],
     default: 'user',
   })
-  role: string;
-
-  @OneToOne(() => Profile, (profile) => profile.user)
-  profile: Profile;
+  role: UserRole;
 }

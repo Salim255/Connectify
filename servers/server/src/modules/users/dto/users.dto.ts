@@ -18,9 +18,6 @@ export const userObjectExample = {
 };
 
 export class CreateUserDto {
-  @ApiProperty({ description: `User's name`, example: 'Salim' })
-  name: string;
-
   @ApiProperty({ description: `User's email`, example: 'test@gmail.com' })
   email: string;
 
@@ -35,14 +32,8 @@ export class CreatedUserDto extends OmitType(CreateUserDto, [
   'passwordConfirm',
   'password',
 ]) {
-  @ApiProperty({ description: `User's firstName`, example: 'Salim' })
-  name: string;
-
   @ApiProperty({ description: `User's email`, example: 'test@gmail.com' })
   email: string;
-
-  @ApiProperty({ description: `User's password` })
-  password?: string;
 
   @ApiProperty({ description: `Is user's email verified`, example: false })
   isEmailVerified: boolean;
@@ -54,10 +45,10 @@ export class CreatedUserDto extends OmitType(CreateUserDto, [
   role: UserRole;
 
   @ApiProperty({ description: 'User created at', example: new Date() })
-  createdAt: Date;
+  createdAt?: Date;
 
   @ApiProperty({ description: 'User updated at', example: new Date() })
-  updatedAt: Date;
+  updatedAt?: Date;
 }
 
 export class CreatedUserResponseDto {
