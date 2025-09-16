@@ -6,9 +6,11 @@ import { ChatsModule } from './modules/chats/chats.module';
 import { MatchesModule } from './modules/matches/matches.module';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
+import { UserModule } from './modules/users/user.module';
 
 @Module({
   imports: [
+    UserModule,
     MatchesModule,
     AuthModule,
     ChatsModule,
