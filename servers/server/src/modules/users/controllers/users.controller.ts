@@ -31,10 +31,13 @@ export class UsersController {
     type: CreatedUserDto,
   })
   async signUp(@Body() body: CreateUserDto): Promise<CreatedUserDto> {
+    //Sanitize and validate input
     const { email, password, passwordConfirm } = body;
     if (password !== passwordConfirm) {
       throw new BadRequestException('Passwords do not match');
     }
+
+    //Create user
     return await this.userService.createUser({ email, password });
   }
 }
