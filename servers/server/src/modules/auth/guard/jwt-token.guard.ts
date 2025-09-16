@@ -6,7 +6,9 @@ import { Request } from 'express';
 export class JwtAuthGuard implements CanActivate {
   constructor(private jwtTokenService: JwtTokenService) {}
   canActivate(context: ExecutionContext): boolean {
-    const request = context.switchToHttp().getRequest<Request>();
+    const request = context
+      .switchToHttp()
+      .getRequest<Request & { user?: { id: string } }>();
     const authHeader = request.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return false;
