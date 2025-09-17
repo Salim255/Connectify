@@ -1,12 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Match } from '../entity/match.entity';
+import { IsUUID, IsNotEmpty } from 'class-validator';
 
 export class CreateMatchDto {
-  @ApiProperty({ description: 'User that initiate match' })
-  fromUser: 'uuid';
+  @IsUUID()
+  @IsNotEmpty()
+  @ApiProperty({
+    description: 'User that initiate match',
+    example: 'uuid-of-from-user',
+  })
+  fromUserId: string;
 
-  @ApiProperty({ description: 'User that confirm match' })
-  toUser: 'uuid';
+  @ApiProperty({
+    description: 'User that confirm match',
+    example: 'uuid-of-from-user',
+  })
+  toUserId: string;
 }
 
 export class InitiatedMatchResponseDto {
@@ -15,6 +24,6 @@ export class InitiatedMatchResponseDto {
 
   @ApiProperty()
   data: {
-    initiatedMatch: Match;
+    match: Match;
   };
 }

@@ -10,7 +10,7 @@ export type JwtTokenPayload = {
 export class JwtTokenService {
   constructor(private jwtService: JwtService) {}
 
-  createToken(userId: number): string {
+  createToken(userId: string): string {
     return this.jwtService.sign({ id: userId });
   }
 
