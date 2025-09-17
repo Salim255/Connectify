@@ -7,4 +7,4 @@ import { ChatUsersController } from './controllers/chat-users.controller';
   providers: [],
   controllers: [ChatUsersController],
 })
-export class ChatUsersModule {},
+export class ChatUsersModule {}
