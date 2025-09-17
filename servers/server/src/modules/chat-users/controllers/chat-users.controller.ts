@@ -1,7 +1,7 @@
 import { Controller, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateChatUserDto } from '../dto/chat-users.dto';
-import { ChatUser } from '../entity/chatUser.entity';
+import { ChatUser } from '../entity/chat-user.entity';
 
 @ApiTags('ChatUsers')
 @Controller('chatUsers')
