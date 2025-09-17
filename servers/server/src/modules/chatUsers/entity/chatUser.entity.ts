@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
   JoinColumn,
 } from 'typeorm';
-import { ChatEntity } from '../../chats/entity/chat.entity';
+import { Chat } from '../../chats/entity/chat.entity';
 import { Profile } from '../../profiles/entity/profile.entity';
 
 export enum ChatUserRole {
@@ -17,15 +17,15 @@ export enum ChatUserRole {
 }
 
 @Entity('chat_users')
-export class ChatUserEntity {
+export class ChatUser {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => ChatEntity, (chat) => chat.participants, {
+  @ManyToOne(() => Chat, (chat) => chat.participants, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'chatId' })
-  chat: ChatEntity;
+  chat: Chat;
 
   @Column()
   chatId: string;
