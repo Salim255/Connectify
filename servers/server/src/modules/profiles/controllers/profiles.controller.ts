@@ -1,9 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ProfilesService } from '../services/profiles.service';
 import {
   CreateProfileDto,
   CreateProfileResponseDto,
+  GetProfilesResponseDto,
 } from '../dto/profiles.dto';
 import { Profile } from '../entity/profile.entity';
 
@@ -21,7 +22,7 @@ export class ProfilesController {
   })
   @ApiResponse({
     status: 201,
-    description: 'The user has been successfully created.',
+    description: 'The profile has been successfully created.',
     type: CreateProfileResponseDto,
   })
   async createProfile(
@@ -40,6 +41,24 @@ export class ProfilesController {
       status: 'Success',
       data: {
         profile,
+      },
+    };
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Get non matched profiles by user' })
+  @ApiResponse({
+    status: 200,
+    description: 'Profiles successfully fetched',
+    type: GetProfilesResponseDto,
+  })
+  async getProfiles(): Promise<GetProfilesResponseDto> {
+    const profiles: Profile[] = await this.profilesService.getProfiles();
+
+    return {
+      status: 'Success',
+      data: {
+        profiles,
       },
     };
   }

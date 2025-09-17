@@ -10,8 +10,12 @@ export class ProfilesService {
     @Inject(PROFILE_REPOSITORY) private profileRep: Repository<Profile>,
   ) {}
 
-  async createProfile(createPayload: CreateProfileDto) {
-    const profile = this.profileRep.create(createPayload);
+  async createProfile(createPayload: CreateProfileDto): Promise<Profile> {
+    const profile: Profile = this.profileRep.create(createPayload);
     return await this.profileRep.save(profile);
+  }
+
+  async getProfiles(): Promise<Profile[]> {
+    return await this.profileRep.find();
   }
 }
