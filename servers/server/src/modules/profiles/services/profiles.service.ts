@@ -16,7 +16,7 @@ export class ProfilesService {
   }
 
   async getProfiles(): Promise<Profile[]> {
-    const query = `SELECT * FROM profiles`;
+    // const query = `SELECT * FROM profiles`;
     return await this.profileRep.find();
   }
 }
