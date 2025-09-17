@@ -34,3 +34,13 @@ export class CreateProfileResponseDto {
     profile: Profile;
   };
 }
+
+export class GetProfilesResponseDto {
+  @ApiProperty({ description: 'Profiles that potential match to current user' })
+  status: string;
+
+  @ApiProperty({ description: 'Response data' })
+  data: {
+    profiles: Profile[];
+  };
+}
