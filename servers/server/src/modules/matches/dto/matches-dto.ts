@@ -3,7 +3,9 @@ import { Match } from '../entity/match.entity';
 import { IsUUID, IsNotEmpty } from 'class-validator';
 
 export class CreateMatchDto {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   @IsUUID()
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   @IsNotEmpty()
   @ApiProperty({
     description: 'User that initiate match',
@@ -11,6 +13,10 @@ export class CreateMatchDto {
   })
   fromUserId: string;
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  @IsUUID()
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  @IsNotEmpty()
   @ApiProperty({
     description: 'User that confirm match',
     example: 'uuid-of-from-user',
