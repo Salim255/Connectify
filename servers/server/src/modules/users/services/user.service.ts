@@ -80,4 +80,8 @@ export class UserService {
   async findAll(): Promise<User[]> {
     return this.userRepo.find();
   }
+
+  async findOne(userId: string): Promise<User | null> {
+    return await this.userRepo.findOne({ where: { id: userId } });
+  }
 }

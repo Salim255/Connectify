@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
   Column,
   Unique,
+  JoinColumn,
 } from 'typeorm';
 
 export enum MatchStatus {
@@ -17,17 +18,25 @@ export enum MatchStatus {
 }
 
 @Entity('matches')
-@Unique(['fromUser', 'toUser']) // prevent duplicate matches between same pair
+@Unique(['toUser', 'fromUser']) // prevent duplicate matches between same pair
 export class Match {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   // Eager: true: Automatically load this relation whenever you load the entity
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'fromUserId' })
   fromUser: User;
 
+  @Column()
+  toUserId: string; // exposes the UUID directly in the entity
+
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'toUserId' })
   toUser: User;
+
+  @Column()
+  fromUserId: string; // exposes the UUID directly in the entity
 
   @Column({
     type: 'enum',
