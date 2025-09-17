@@ -1,10 +1,11 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ProfilesService } from '../services/profiles.service';
 import {
-  CreatedProfileResponseDto,
   CreateProfileDto,
+  CreateProfileResponseDto,
 } from '../dto/profiles.dto';
+import { Profile } from '../entity/profile.entity';
 
 @ApiTags('Profiles')
 @Controller('profiles')
@@ -21,9 +22,25 @@ export class ProfilesController {
   @ApiResponse({
     status: 201,
     description: 'The user has been successfully created.',
-    type: CreatedProfileResponseDto,
+    type: CreateProfileResponseDto,
   })
-  createProfile() {
-    return 'hello from create profile';
+  async createProfile(
+    @Body() body: CreateProfileDto,
+  ): Promise<CreateProfileResponseDto> {
+    const { userId, name, age, gender, avatarUrl } = body;
+    const profile: Profile = await this.profilesService.createProfile({
+      userId,
+      name,
+      age,
+      gender,
+      avatarUrl,
+    });
+
+    return {
+      status: 'Success',
+      data: {
+        profile,
+      },
+    };
   }
 }

@@ -1,3 +1,4 @@
+import { User } from 'src/modules/users/entity/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -7,34 +8,36 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
-import { User } from '../../users/entity/user.entity';
 
 @Entity('profiles')
 export class Profile {
   @PrimaryGeneratedColumn('uuid')
-  id: string; // UUID is better for profiles in dating apps
+  id: string;
 
   @OneToOne(() => User, { onDelete: 'CASCADE' })
-  @JoinColumn()
+  @JoinColumn({ name: 'userId' }) // This creates a "userId" column in the DB
   user: User;
+
+  // ✅ Exposed userId FK column (will appear in JSON responses)
+  @Column({ type: 'uuid' })
+  userId: string;
 
   @Column()
   name: string;
 
-  @Column()
-  age: number;
+  // Better as birthDate, but keeping "age" as Date since you said so
+  @Column({ type: 'date' })
+  age: Date;
 
   @Column({
     type: 'enum',
     enum: ['male', 'female', 'non-binary', 'other'],
-    nullable: false,
   })
   gender: 'male' | 'female' | 'non-binary' | 'other';
 
-  @Column({ nullable: false })
+  @Column()
   avatarUrl: string;
 
-  // JSON columns for flexible structures
   @Column('text', { array: true, default: [] })
   photos: string[];
 
@@ -73,7 +76,7 @@ export class Profile {
     enum: ['online', 'offline', 'away', 'busy', 'invisible'],
     default: 'offline',
   })
-  status: 'online' | 'offline' | 'away' | 'busy' | 'invisible';
+  status?: 'online' | 'offline' | 'away' | 'busy' | 'invisible';
 
   @Column({ type: 'timestamp', nullable: true })
   lastSeen?: Date;

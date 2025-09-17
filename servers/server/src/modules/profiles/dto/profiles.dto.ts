@@ -10,7 +10,7 @@ export enum UserGender {
 
 export class CreateProfileDto {
   @ApiProperty({ description: 'Profile id' })
-  userId: string;
+  userId: 'uuid';
 
   @ApiProperty({ description: 'Profile name' })
   name: string;
@@ -25,7 +25,7 @@ export class CreateProfileDto {
   avatarUrl: string;
 }
 
-export class CreatedProfileResponseDto {
+export class CreateProfileResponseDto {
   @ApiProperty({ description: 'Profile create response status' })
   status: string;
 
