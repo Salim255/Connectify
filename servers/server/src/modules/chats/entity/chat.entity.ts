@@ -9,10 +9,10 @@ import {
   OneToMany,
 } from 'typeorm';
 import { User } from '../../users/entity/user.entity';
-import { Message } from './message.entity';
+import { Message } from 'src/modules/messages/entity/message.entity';
 
 @Entity('chats')
-export class ChatEntity {
+export class Chat {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -26,7 +26,10 @@ export class ChatEntity {
   participants: User[];
 
   // Messages in this chat
-  @OneToMany(() => Message, (message) => message.chat, { cascade: true, eager: true })
+  @OneToMany(() => Message, (message) => message.chat, {
+    cascade: true,
+    eager: true,
+  })
   messages: Message[];
 
   @Column({ type: 'varchar', nullable: true })

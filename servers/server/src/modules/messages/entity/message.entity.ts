@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
   JoinColumn,
 } from 'typeorm';
-import { ChatEntity } from './chat.entity';
+import { Chat } from '../../chats/entity/chat.entity';
 import { User } from '../../users/entity/user.entity';
 
 export enum MessageStatus {
@@ -25,13 +25,13 @@ export enum MessageType {
 }
 
 @Entity('messages')
-export class MessageEntity {
+export class Message {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => ChatEntity, (chat) => chat.messages, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Chat, (chat) => chat.messages, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'chatId' })
-  chat: ChatEntity;
+  chat: Chat;
 
   @Column()
   chatId: string;
@@ -49,12 +49,16 @@ export class MessageEntity {
   @Column({ type: 'varchar', nullable: true })
   mediaUrl?: string;
 
-  @Column({ type: 'enum', enum: ['image', 'video', 'file', 'audio'], nullable: true })
+  @Column({
+    type: 'enum',
+    enum: ['image', 'video', 'file', 'audio'],
+    nullable: true,
+  })
   mediaType?: 'image' | 'video' | 'file' | 'audio';
 
-  @ManyToOne(() => MessageEntity, { nullable: true })
+  @ManyToOne(() => Message, { nullable: true })
   @JoinColumn({ name: 'replyToMessageId' })
-  replyToMessage?: MessageEntity;
+  replyToMessage?: Message;
 
   @Column({ type: 'uuid', nullable: true })
   replyToMessageId?: string;
