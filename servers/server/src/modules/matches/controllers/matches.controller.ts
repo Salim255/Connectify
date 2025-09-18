@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
+  AcceptedMatchResponseDto,
   CreateMatchDto,
   GetMatchesResponseDto,
   InitiatedMatchResponseDto,
@@ -65,7 +66,7 @@ export class MatchesController {
     type: '',
     description: 'Accepted match response',
   })
-  acceptMatch(){
+  acceptMatch(): Promise<AcceptedMatchResponseDto> {
     return 'Hello from accepted match';
   }
 }
