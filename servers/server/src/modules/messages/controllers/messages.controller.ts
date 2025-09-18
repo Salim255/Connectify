@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateMessageDto } from '../dto/messages-dto';
 import { Message } from '../entity/message.entity';
@@ -22,7 +22,7 @@ export class MessagesController {
     description: 'Created message',
     status: 201,
   })
-  async createMessage(body: CreateMessageDto): Promise<Message> {
+  async createMessage(@Body() body: CreateMessageDto): Promise<Message> {
     const { content, chatId, senderId } = body;
     return await this.messagesService.createMessage({
       content,
