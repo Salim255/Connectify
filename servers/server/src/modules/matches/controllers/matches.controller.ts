@@ -1,14 +1,36 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreateMatchDto, InitiatedMatchResponseDto } from '../dto/matches-dto';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import {
+  AcceptedMatchResponseDto,
+  CreateMatchDto,
+  GetMatchesResponseDto,
+  InitiatedMatchResponseDto,
+} from '../dto/matches-dto';
 import { MatchesService } from '../services/matches.service';
 import { Match } from '../entity/match.entity';
+import { JwtAuthGuard } from 'src/modules/auth/guard/jwt-token.guard';
 
 @ApiTags('Matches')
 @Controller('matches')
 export class MatchesController {
   constructor(private matchesService: MatchesService) {}
+
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ description: 'Initiate match route' })
   @ApiBody({
     type: CreateMatchDto,
@@ -30,6 +52,45 @@ export class MatchesController {
     return {
       status: 'Success',
       data: { match },
+    };
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Get all matches route' })
+  @ApiResponse({
+    status: 200,
+    type: GetMatchesResponseDto,
+    description: 'All matches getter response',
+  })
+  async getAllMatches(): Promise<GetMatchesResponseDto> {
+    const matches: Match[] = await this.matchesService.getAllMatches();
+    return {
+      status: 'Success',
+      data: {
+        matches,
+      },
+    };
+  }
+
+  @Patch(':matchId/accept')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
+  @ApiOperation({ description: 'Accept match request' })
+  @ApiResponse({
+    status: 200,
+    type: '',
+    description: 'Accepted match response',
+  })
+  async acceptMatch(
+    @Param('matchId') matchId: string,
+  ): Promise<AcceptedMatchResponseDto> {
+    const match: Match = await this.matchesService.acceptMatch(matchId);
+    return {
+      status: 'Success',
+      data: {
+        match,
+      },
     };
   }
 }

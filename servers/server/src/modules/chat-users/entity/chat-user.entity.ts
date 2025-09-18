@@ -30,6 +30,7 @@ export class ChatUser {
   @Column()
   chatId: string;
 
+  // { eager: true } means that the relation will be loaded automatically every time you
   @ManyToOne(() => Profile, { eager: true })
   @JoinColumn({ name: 'profileId' })
   profile: Profile;

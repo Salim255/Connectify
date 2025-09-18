@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ProfilesService } from '../services/profiles.service';
 import {
@@ -7,6 +7,7 @@ import {
   GetProfilesResponseDto,
 } from '../dto/profiles.dto';
 import { Profile } from '../entity/profile.entity';
+import { JwtAuthGuard } from 'src/modules/auth/guard/jwt-token.guard';
 
 @ApiTags('Profiles')
 @Controller('profiles')
@@ -14,6 +15,7 @@ export class ProfilesController {
   constructor(private profilesService: ProfilesService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Create user profile' })
   @ApiBody({
     type: CreateProfileDto,
@@ -46,6 +48,7 @@ export class ProfilesController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get non matched profiles by user' })
   @ApiResponse({
     status: 200,

@@ -24,6 +24,16 @@ export class CreateMatchDto {
   toUserId: string;
 }
 
+export class GetMatchesResponseDto {
+  @ApiProperty()
+  status: string;
+
+  @ApiProperty()
+  data: {
+    matches: Match[];
+  };
+}
+
 export class InitiatedMatchResponseDto {
   @ApiProperty()
   status: string;
@@ -33,3 +43,5 @@ export class InitiatedMatchResponseDto {
     match: Match;
   };
 }
+
+export class AcceptedMatchResponseDto extends InitiatedMatchResponseDto {}

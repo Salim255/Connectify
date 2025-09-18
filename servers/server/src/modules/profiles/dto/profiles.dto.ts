@@ -13,7 +13,7 @@ export class CreateProfileDto {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   @IsNotEmpty()
   @ApiProperty({ description: 'Profile id' })
-  userId: 'uuid';
+  userId?: 'uuid';
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   @IsNotEmpty()

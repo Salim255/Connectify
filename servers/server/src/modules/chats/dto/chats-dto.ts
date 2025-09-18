@@ -22,3 +22,5 @@ export class GetAllChatsResponseDto {
     chats: Chat[];
   };
 }
+
+export class GetUserChatsResponseDto extends GetAllChatsResponseDto {}

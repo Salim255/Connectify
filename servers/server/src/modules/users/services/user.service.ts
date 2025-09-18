@@ -63,7 +63,7 @@ export class UserService {
     };
     const isPasswordValid = await passwordHandler.correctPassword(passwords);
     if (!isPasswordValid) {
-      throw new BadRequestException('Invalid password');
+      throw new BadRequestException('Invalid email or password');
     }
 
     // Step: 3 - Prepare token
