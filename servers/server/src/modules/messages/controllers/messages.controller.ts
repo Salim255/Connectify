@@ -7,7 +7,7 @@ import { MessagesService } from '../services/messages.service';
 @ApiTags('Messages')
 @Controller('messages')
 export class MessagesController {
-  constructor(private messagesService: MessagesService){}
+  constructor(private messagesService: MessagesService) {}
   @Post()
   @ApiOperation({
     description: 'Create message router',

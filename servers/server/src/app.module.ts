@@ -9,9 +9,11 @@ import { DatabaseModule } from './database/database.module';
 import { UserModule } from './modules/users/user.module';
 import { ProfilesModule } from './modules/profiles/profiles.module';
 import { ChatUsersModule } from './modules/chat-users/chat-users.module';
+import { MessagesModule } from './modules/messages/messages.module';
 
 @Module({
   imports: [
+    MessagesModule,
     ChatUsersModule,
     ProfilesModule,
     UserModule,
