@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateChatUserDto } from '../dto/chat-users.dto';
 import { ChatUser } from '../entity/chat-user.entity';
@@ -18,11 +18,13 @@ export class ChatUsersController {
     required: true,
   })
   @ApiResponse({
-    description: '',
+    description: 'Create chatUser response',
     type: ChatUser,
     status: 201,
   })
-  async createChatUser(): Promise<ChatUser> {
-    return await this.chatUsersService.createChatUser();
+  async createChatUser(@Body() body: CreateChatUserDto): Promise<ChatUser> {
+    const { chatId, profileId } = body;
+    console.log(chatId, profileId);
+    return await this.chatUsersService.createChatUser({ chatId, profileId });
   }
 }
