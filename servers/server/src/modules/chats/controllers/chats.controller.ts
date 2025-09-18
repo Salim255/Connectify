@@ -4,6 +4,7 @@ import {
   CreateChatDto,
   CreateChatResponseDto,
   GetAllChatsResponseDto,
+  GetUserChatsResponseDto,
 } from '../dto/chats-dto';
 import { ChatsService } from '../services/chats.service';
 import { Chat } from '../entity/chat.entity';
@@ -49,6 +50,24 @@ export class ChatsController {
   })
   async getAllChats(): Promise<GetAllChatsResponseDto> {
     const chats: Chat[] = await this.chatsService.getAllChats();
+    return {
+      status: 'Success',
+      data: { chats },
+    };
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    summary: 'Fetch all chats route',
+  })
+  @ApiResponse({
+    type: GetAllChatsResponseDto,
+    status: 2000,
+    description: 'Get all chats response',
+  })
+  async getUserChats(): Promise<GetUserChatsResponseDto> {
+    const chats: Chat[] = await this.chatsService.getUserChats();
     return {
       status: 'Success',
       data: { chats },
