@@ -1,14 +1,21 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreateMatchDto, InitiatedMatchResponseDto } from '../dto/matches-dto';
+import {
+  CreateMatchDto,
+  GetMatchesResponseDto,
+  InitiatedMatchResponseDto,
+} from '../dto/matches-dto';
 import { MatchesService } from '../services/matches.service';
 import { Match } from '../entity/match.entity';
+import { JwtAuthGuard } from 'src/modules/auth/guard/jwt-token.guard';
 
 @ApiTags('Matches')
 @Controller('matches')
 export class MatchesController {
   constructor(private matchesService: MatchesService) {}
+
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ description: 'Initiate match route' })
   @ApiBody({
     type: CreateMatchDto,
@@ -31,5 +38,16 @@ export class MatchesController {
       status: 'Success',
       data: { match },
     };
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Get all matches route' })
+  @ApiResponse({
+    status: 200,
+    type: GetMatchesResponseDto,
+    description: 'All matches getter response',
+  })
+  getAllMatches() {
+    return 'hello from all matches';
   }
 }

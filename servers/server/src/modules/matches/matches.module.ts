@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { MatchesController } from './controllers/matches.controller';
 import { MatchesService } from './services/matches.service';
 import { matchRepository } from './repository/match.repository';
-import { DatabaseModule } from 'src/database/database.module';
+import { DatabaseModule } from '../../database/database.module';
+import { AuthModule } from '../auth/auth.module';
+
 @Module({
-  imports: [DatabaseModule],
+  imports: [AuthModule, DatabaseModule],
   providers: [MatchesService, matchRepository],
   controllers: [MatchesController],
 })
