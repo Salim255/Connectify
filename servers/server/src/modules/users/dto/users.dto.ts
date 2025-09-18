@@ -75,9 +75,13 @@ export class SignUpResponseDto {
 export class LoginUpResponseDto extends SignUpResponseDto {}
 
 export class SigninUserDto {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  @IsNotEmpty()
   @ApiProperty({ description: 'User email', example: 'test@gmail.com' })
   email: string;
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  @IsNotEmpty()
   @ApiProperty({ description: 'User password', example: 'password' })
   password: string;
 }
