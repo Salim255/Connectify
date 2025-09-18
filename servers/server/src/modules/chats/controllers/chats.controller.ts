@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   CreateChatDto,
@@ -7,6 +7,7 @@ import {
 } from '../dto/chats-dto';
 import { ChatsService } from '../services/chats.service';
 import { Chat } from '../entity/chat.entity';
+import { JwtAuthGuard } from '../../auth/guard/jwt-token.guard';
 
 @ApiTags('Chats')
 @Controller('chats')
@@ -14,6 +15,7 @@ export class ChatsController {
   constructor(private chatsService: ChatsService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Create chat router' })
   @ApiBody({
     type: CreateChatDto,
