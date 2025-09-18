@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   CreateMatchDto,
@@ -56,5 +56,16 @@ export class MatchesController {
         matches,
       },
     };
+  }
+
+  @Patch()
+  @ApiOperation({ description: 'Accept match request' })
+  @ApiResponse({
+    status: 200,
+    type: '',
+    description: 'Accepted match response',
+  })
+  acceptMatch(){
+    return 'Hello from accepted match';
   }
 }
