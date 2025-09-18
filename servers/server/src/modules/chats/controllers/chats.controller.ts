@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   CreateChatDto,
@@ -56,7 +56,7 @@ export class ChatsController {
     };
   }
 
-  @Get()
+  @Get('/users')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: 'Fetch all chats route',
@@ -66,8 +66,11 @@ export class ChatsController {
     status: 2000,
     description: 'Get all chats response',
   })
-  async getUserChats(): Promise<GetUserChatsResponseDto> {
-    const chats: Chat[] = await this.chatsService.getUserChats();
+  async getUserChats(
+    @Req() req: Request & { user: { id: string } },
+  ): Promise<GetUserChatsResponseDto> {
+    const { id } = req.user;
+    const chats: Chat[] = await this.chatsService.getUserChats(id);
     return {
       status: 'Success',
       data: { chats },
