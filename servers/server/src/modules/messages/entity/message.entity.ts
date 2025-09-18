@@ -8,7 +8,6 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Chat } from '../../chats/entity/chat.entity';
-import { User } from '../../users/entity/user.entity';
 
 export enum MessageStatus {
   SENDING = 'sending',
@@ -36,11 +35,7 @@ export class Message {
   @Column()
   chatId: string;
 
-  @ManyToOne(() => User, { eager: true })
-  @JoinColumn({ name: 'senderId' })
-  sender: User;
-
-  @Column()
+  @Column({ type: 'uuid' })
   senderId: string;
 
   @Column({ type: 'text', nullable: false })
