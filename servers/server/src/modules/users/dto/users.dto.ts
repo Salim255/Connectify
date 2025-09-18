@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty } from 'class-validator';
 
 export enum UserRole {
   USER = 'user',
@@ -18,12 +19,18 @@ export const userObjectExample = {
 };
 
 export class CreateUserDto {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  @IsNotEmpty()
   @ApiProperty({ description: `User's email`, example: 'test@gmail.com' })
   email: string;
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  @IsNotEmpty()
   @ApiProperty({ description: `User's password` })
   password: string;
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  @IsNotEmpty()
   @ApiProperty({ description: `User's confirm password` })
   passwordConfirm: string;
 }
