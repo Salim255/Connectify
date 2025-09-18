@@ -9,6 +9,7 @@ import { JwtAuthGuard } from 'src/modules/auth/guard/jwt-token.guard';
 @Controller('chat-users')
 export class ChatUsersController {
   constructor(private chatUsersService: ChatUsersService) {}
+
   @Post()
   @UseGuards(JwtAuthGuard)
   @ApiOperation({
