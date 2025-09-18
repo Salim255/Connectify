@@ -38,6 +38,7 @@ export class ChatsController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: 'Fetch all chats route',
   })
