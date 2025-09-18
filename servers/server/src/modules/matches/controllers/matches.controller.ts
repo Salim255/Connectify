@@ -41,13 +41,20 @@ export class MatchesController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get all matches route' })
   @ApiResponse({
     status: 200,
     type: GetMatchesResponseDto,
     description: 'All matches getter response',
   })
-  getAllMatches() {
-    return 'hello from all matches';
+  async getAllMatches(): Promise<GetMatchesResponseDto> {
+    const matches: Match[] = await this.matchesService.getAllMatches();
+    return {
+      status: 'Success',
+      data: {
+        matches,
+      },
+    };
   }
 }
