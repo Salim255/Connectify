@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { Match } from '../entity/match.entity';
 import { IsUUID, IsNotEmpty } from 'class-validator';
 import { Profile } from 'src/modules/profiles/entity/profile.entity';
@@ -47,7 +47,10 @@ export class InitiatedMatchResponseDto {
 
 export class AcceptedMatchResponseDto extends InitiatedMatchResponseDto {}
 
-export class MatchWithPartnerProfile extends Match {
+export class MatchWithPartnerProfile extends OmitType(Match, [
+  'fromUserId',
+  'toUserId',
+]) {
   profile: Profile;
 }
 

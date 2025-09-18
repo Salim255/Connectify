@@ -32,8 +32,7 @@ export class MatchesService {
   }
 
   async getMatchesByUser(userId: string): Promise<MatchWithPartnerProfile[]> {
-    const matches: MatchWithPartnerProfile[] = await this.matchRepo.query(
-      `
+    const query = `
       SELECT
         m.id,
         m.status,
@@ -41,6 +40,7 @@ export class MatchesService {
         m."isHidden",
         m."createdAt",
         m."updatedAt",
+        m."matchedAt",
         row_to_json(p) AS profile
       FROM matches m
       JOIN profiles p
@@ -51,7 +51,10 @@ export class MatchesService {
       WHERE m.status = 'matched'
         AND ($1 IN (m."fromUserId", m."toUserId"))
       ORDER BY m."updatedAt" DESC
-    `,
+    `;
+
+    const matches: MatchWithPartnerProfile[] = await this.matchRepo.query(
+      query,
       [userId],
     );
 
