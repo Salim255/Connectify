@@ -11,4 +11,8 @@ export class ChatsService {
     const chat: Chat = this.chatRepo.create();
     return this.chatRepo.save(chat);
   }
+
+  async getAllChats(): Promise<Chat[]> {
+    return await this.chatRepo.find();
+  }
 }

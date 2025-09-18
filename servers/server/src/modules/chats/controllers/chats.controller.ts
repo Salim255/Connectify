@@ -8,6 +8,7 @@ import { Chat } from '../entity/chat.entity';
 @Controller('chats')
 export class ChatsController {
   constructor(private chatsService: ChatsService) {}
+
   @Post()
   @ApiOperation({ summary: 'Create chat router' })
   @ApiBody({
