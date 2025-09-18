@@ -16,7 +16,13 @@ export class ChatsService {
     return await this.chatRepo.find();
   }
 
-  async getUserChats() {
-    return await this.chatRepo.find();
+  async getUserChats(userId: string) {
+    return await this.chatRepo
+      .createQueryBuilder('chat')
+      .leftJoinAndSelect('chat.participants', 'chatUser')
+      .leftJoinAndSelect('chat.messages', 'message')
+      .leftJoinAndSelect('chatUser.profile', 'profile')
+      .where('profile.userId = :userId', { userId })
+      .getMany();
   }
 }
