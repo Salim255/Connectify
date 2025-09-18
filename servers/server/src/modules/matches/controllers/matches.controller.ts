@@ -31,6 +31,7 @@ export class MatchesController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
   @ApiOperation({ description: 'Initiate match route' })
   @ApiBody({
     type: CreateMatchDto,
@@ -57,6 +58,7 @@ export class MatchesController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
   @ApiOperation({ summary: 'Get all matches route' })
   @ApiResponse({
     status: 200,
@@ -79,7 +81,7 @@ export class MatchesController {
   @ApiOperation({ description: 'Accept match request' })
   @ApiResponse({
     status: 200,
-    type: '',
+    type: AcceptedMatchResponseDto,
     description: 'Accepted match response',
   })
   async acceptMatch(
@@ -92,5 +94,20 @@ export class MatchesController {
         match,
       },
     };
+  }
+
+  @Get('/users')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
+  @ApiOperation({
+    summary: `Get user's matches route`,
+  })
+  @ApiResponse({
+    type: GetMatchesResponseDto,
+    description: 'Matches by user response',
+    status: 200,
+  })
+  getMatchesByUser() {
+    return 'Hello from my matches';
   }
 }
