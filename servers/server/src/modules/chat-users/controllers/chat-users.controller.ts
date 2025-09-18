@@ -1,14 +1,16 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateChatUserDto } from '../dto/chat-users.dto';
 import { ChatUser } from '../entity/chat-user.entity';
 import { ChatUsersService } from '../services/chat-users.service';
+import { JwtAuthGuard } from 'src/modules/auth/guard/jwt-token.guard';
 
 @ApiTags('ChatUsers')
 @Controller('chat-users')
 export class ChatUsersController {
   constructor(private chatUsersService: ChatUsersService) {}
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: 'Create chatUsers router',
   })
