@@ -35,7 +35,12 @@ export class MatchesService {
     const matches: MatchWithPartnerProfile[] = await this.matchRepo.query(
       `
       SELECT
-        m.*,
+        m.id,
+        m.status,
+        m."isFavorite",
+        m."isHidden",
+        m."createdAt",
+        m."updatedAt",
         row_to_json(p) AS profile
       FROM matches m
       JOIN profiles p
