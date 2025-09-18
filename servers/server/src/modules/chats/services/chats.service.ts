@@ -16,13 +16,31 @@ export class ChatsService {
     return await this.chatRepo.find();
   }
 
-  async getUserChats(userId: string) {
+  async getUserChats(userId: string): Promise<Chat[]> {
     return await this.chatRepo
       .createQueryBuilder('chat')
       .leftJoinAndSelect('chat.participants', 'chatUser')
-      .leftJoinAndSelect('chat.messages', 'message')
       .leftJoinAndSelect('chatUser.profile', 'profile')
-      .where('profile.userId = :userId', { userId })
+      .leftJoinAndSelect('profile.user', 'user')
+      .leftJoinAndSelect('chat.messages', 'message')
+      .where((qb) => {
+        const subQuery = qb
+          .subQuery()
+          .select('chatUserSub.chatId')
+          .from('chat_users', 'chatUserSub')
+          .where(
+            'chatUserSub.profileId IN ' +
+              qb
+                .subQuery()
+                .select('profileSub.id')
+                .from('profiles', 'profileSub')
+                .where('profileSub.userId = :userId')
+                .getQuery(),
+          )
+          .getQuery();
+        return 'chat.id IN ' + subQuery;
+      })
+      .setParameter('userId', userId)
       .getMany();
   }
 }
