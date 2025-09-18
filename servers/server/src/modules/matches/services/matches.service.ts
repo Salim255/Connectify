@@ -2,7 +2,7 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { MATCH_REPOSITORY } from 'src/common/constants/constants';
 import { Repository } from 'typeorm';
 import { Match, MatchStatus } from '../entity/match.entity';
-import { CreateMatchDto } from '../dto/matches-dto';
+import { CreateMatchDto, MatchWithPartnerProfile } from '../dto/matches-dto';
 
 @Injectable()
 export class MatchesService {
@@ -25,5 +25,27 @@ export class MatchesService {
       throw new NotFoundException(`Match with ID ${matchId} not found`);
     }
     return this.matchRepo.save(updatedMatch);
+  }
+
+  async getMatchesByUser(userId: string): Promise<MatchWithPartnerProfile[]> {
+    const matches: MatchWithPartnerProfile[] = await this.matchRepo.query(
+      `
+      SELECT
+        m.*,
+        row_to_json(p) AS profile
+      FROM matches m
+      JOIN profiles p
+        ON p."userId" = CASE
+          WHEN m."fromUserId" = $1 THEN m."toUserId"
+          ELSE m."fromUserId"
+        END
+      WHERE m.status = 'matched'
+        AND ($1 IN (m."fromUserId", m."toUserId"))
+      ORDER BY m."updatedAt" DESC
+    `,
+      [userId],
+    );
+
+    return matches;
   }
 }

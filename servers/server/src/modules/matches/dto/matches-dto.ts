@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Match } from '../entity/match.entity';
 import { IsUUID, IsNotEmpty } from 'class-validator';
+import { Profile } from 'src/modules/profiles/entity/profile.entity';
 
 export class CreateMatchDto {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -45,3 +46,17 @@ export class InitiatedMatchResponseDto {
 }
 
 export class AcceptedMatchResponseDto extends InitiatedMatchResponseDto {}
+
+export class MatchWithPartnerProfile extends Match {
+  profile: Profile;
+}
+
+export class GetMatchesByUserResponseDto {
+  @ApiProperty({ description: 'Response status' })
+  status: string;
+
+  @ApiProperty({ description: 'Response data' })
+  data: {
+    matches: MatchWithPartnerProfile[];
+  };
+}

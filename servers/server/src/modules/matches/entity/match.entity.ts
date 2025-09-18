@@ -51,6 +51,9 @@ export class Match {
   @Column({ type: 'boolean', default: false })
   isHidden: boolean; // hide from list without deleting
 
+  @Column({ default: null })
+  matchedAt: Date;
+
   @CreateDateColumn()
   createdAt: Date;
 

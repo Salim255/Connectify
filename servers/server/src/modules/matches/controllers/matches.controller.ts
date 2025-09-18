@@ -5,6 +5,7 @@ import {
   Param,
   Patch,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -17,8 +18,10 @@ import {
 import {
   AcceptedMatchResponseDto,
   CreateMatchDto,
+  GetMatchesByUserResponseDto,
   GetMatchesResponseDto,
   InitiatedMatchResponseDto,
+  MatchWithPartnerProfile,
 } from '../dto/matches-dto';
 import { MatchesService } from '../services/matches.service';
 import { Match } from '../entity/match.entity';
@@ -103,11 +106,22 @@ export class MatchesController {
     summary: `Get user's matches route`,
   })
   @ApiResponse({
-    type: GetMatchesResponseDto,
+    type: GetMatchesByUserResponseDto,
     description: 'Matches by user response',
     status: 200,
   })
-  getMatchesByUser() {
-    return 'Hello from my matches';
+  async getMatchesByUser(
+    @Req() req: Request & { user: { id: string } },
+  ): Promise<GetMatchesByUserResponseDto> {
+    const { id: userId } = req.user;
+    const matches: MatchWithPartnerProfile[] =
+      await this.matchesService.getMatchesByUser(userId);
+
+    return {
+      status: 'Success',
+      data: {
+        matches,
+      },
+    };
   }
 }
