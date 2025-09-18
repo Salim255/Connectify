@@ -1,5 +1,19 @@
-import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   AcceptedMatchResponseDto,
   CreateMatchDto,
@@ -59,14 +73,24 @@ export class MatchesController {
     };
   }
 
-  @Patch()
+  @Patch(':matchId/accept')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
   @ApiOperation({ description: 'Accept match request' })
   @ApiResponse({
     status: 200,
     type: '',
     description: 'Accepted match response',
   })
-  acceptMatch(): Promise<AcceptedMatchResponseDto> {
-    return 'Hello from accepted match';
+  async acceptMatch(
+    @Param('matchId') matchId: string,
+  ): Promise<AcceptedMatchResponseDto> {
+    const match: Match = await this.matchesService.acceptMatch(matchId);
+    return {
+      status: 'Success',
+      data: {
+        match,
+      },
+    };
   }
 }
