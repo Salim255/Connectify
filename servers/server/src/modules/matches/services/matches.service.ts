@@ -18,7 +18,10 @@ export class MatchesService {
   }
 
   async acceptMatch(matchId: string): Promise<Match> {
-    await this.matchRepo.update(matchId, { status: MatchStatus.MATCHED });
+    await this.matchRepo.update(matchId, {
+      status: MatchStatus.MATCHED,
+      matchedAt: new Date(),
+    });
 
     const updatedMatch = await this.matchRepo.findOneBy({ id: matchId });
     if (!updatedMatch) {
