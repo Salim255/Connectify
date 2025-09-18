@@ -10,7 +10,6 @@ export class JwtAuthGuard implements CanActivate {
       .switchToHttp()
       .getRequest<Request & { user?: { id: string } }>();
     const authHeader = request.headers.authorization;
-    console.log(authHeader, 'Hello ✅✅✅');
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return false;
     }

@@ -15,4 +15,8 @@ export class ChatsService {
   async getAllChats(): Promise<Chat[]> {
     return await this.chatRepo.find();
   }
+
+  async getUserChats() {
+    return await this.chatRepo.find();
+  }
 }
