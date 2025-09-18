@@ -21,6 +21,7 @@ export class MatchesService {
     await this.matchRepo.update(matchId, {
       status: MatchStatus.MATCHED,
       matchedAt: new Date(),
+      updatedAt: new Date(),
     });
 
     const updatedMatch = await this.matchRepo.findOneBy({ id: matchId });
