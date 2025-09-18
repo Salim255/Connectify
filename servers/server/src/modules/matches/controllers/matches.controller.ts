@@ -5,6 +5,7 @@ import {
   Param,
   Patch,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -17,8 +18,10 @@ import {
 import {
   AcceptedMatchResponseDto,
   CreateMatchDto,
+  GetMatchesByUserResponseDto,
   GetMatchesResponseDto,
   InitiatedMatchResponseDto,
+  MatchWithPartnerProfile,
 } from '../dto/matches-dto';
 import { MatchesService } from '../services/matches.service';
 import { Match } from '../entity/match.entity';
@@ -31,6 +34,7 @@ export class MatchesController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
   @ApiOperation({ description: 'Initiate match route' })
   @ApiBody({
     type: CreateMatchDto,
@@ -57,6 +61,7 @@ export class MatchesController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
   @ApiOperation({ summary: 'Get all matches route' })
   @ApiResponse({
     status: 200,
@@ -79,7 +84,7 @@ export class MatchesController {
   @ApiOperation({ description: 'Accept match request' })
   @ApiResponse({
     status: 200,
-    type: '',
+    type: AcceptedMatchResponseDto,
     description: 'Accepted match response',
   })
   async acceptMatch(
@@ -90,6 +95,32 @@ export class MatchesController {
       status: 'Success',
       data: {
         match,
+      },
+    };
+  }
+
+  @Get('/users')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
+  @ApiOperation({
+    summary: `Get user's matches route`,
+  })
+  @ApiResponse({
+    type: GetMatchesByUserResponseDto,
+    description: 'Matches by user response',
+    status: 200,
+  })
+  async getMatchesByUser(
+    @Req() req: Request & { user: { id: string } },
+  ): Promise<GetMatchesByUserResponseDto> {
+    const { id: userId } = req.user;
+    const matches: MatchWithPartnerProfile[] =
+      await this.matchesService.getMatchesByUser(userId);
+
+    return {
+      status: 'Success',
+      data: {
+        matches,
       },
     };
   }
