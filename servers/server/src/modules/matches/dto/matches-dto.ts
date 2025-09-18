@@ -43,3 +43,5 @@ export class InitiatedMatchResponseDto {
     match: Match;
   };
 }
+
+export class AcceptedMatchResponseDto extends InitiatedMatchResponseDto {}
