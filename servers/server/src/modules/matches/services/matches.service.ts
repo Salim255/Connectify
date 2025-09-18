@@ -12,4 +12,8 @@ export class MatchesService {
     const match: Match = this.matchRepo.create(createMatchPayload);
     return this.matchRepo.save(match);
   }
+
+  async getAllMatches(): Promise<Match[]> {
+    return await this.matchRepo.find();
+  }
 }

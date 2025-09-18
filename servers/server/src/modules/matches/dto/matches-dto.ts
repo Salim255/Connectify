@@ -30,8 +30,16 @@ export class GetMatchesResponseDto {
 
   @ApiProperty()
   data: {
-    match: Match;
+    matches: Match[];
   };
 }
 
-export class InitiatedMatchResponseDto extends GetMatchesResponseDto {}
+export class InitiatedMatchResponseDto {
+  @ApiProperty()
+  status: string;
+
+  @ApiProperty()
+  data: {
+    match: Match;
+  };
+}
