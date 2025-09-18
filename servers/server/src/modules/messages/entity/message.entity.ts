@@ -43,8 +43,8 @@ export class Message {
   @Column()
   senderId: string;
 
-  @Column({ type: 'text', nullable: true })
-  content?: string;
+  @Column({ type: 'text', nullable: false })
+  content: string;
 
   @Column({ type: 'varchar', nullable: true })
   mediaUrl?: string;

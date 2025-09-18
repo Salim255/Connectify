@@ -1,9 +1,12 @@
 import { Controller, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { CreateMessageDto } from '../dto/messages-dto';
+import { Message } from '../entity/message.entity';
 
 @ApiTags('Messages')
 @Controller('messages')
 export class MessagesController {
+    constructor(){}
   @Post()
   @ApiOperation({
     description: 'Create message router',
@@ -18,7 +21,8 @@ export class MessagesController {
     description: 'Created message',
     status: 201,
   })
-  createMessage(): Promise<Message>{
-      return 'Hello from create message'
-    }
+  async createMessage(body: CreateMessageDto): Promise<Message> {
+    const { content, chatId, senderId } = body;
+     return 'Hello from create message'
+  }
 }
