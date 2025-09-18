@@ -2,11 +2,12 @@ import { Controller, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateChatUserDto } from '../dto/chat-users.dto';
 import { ChatUser } from '../entity/chat-user.entity';
+import { ChatUsersService } from '../services/chat-users.service';
 
 @ApiTags('ChatUsers')
-@Controller('chatUsers')
+@Controller('chat-users')
 export class ChatUsersController {
-  constructor() {}
+  constructor(private chatUsersService: ChatUsersService) {}
   @Post()
   @ApiOperation({
     summary: 'Create chatUsers router',
@@ -21,7 +22,7 @@ export class ChatUsersController {
     type: ChatUser,
     status: 201,
   })
-  createChatUser() {
-    return 'hello from chatUser creation';
+  async createChatUser(): Promise<ChatUser> {
+    return await this.chatUsersService.createChatUser();
   }
 }
