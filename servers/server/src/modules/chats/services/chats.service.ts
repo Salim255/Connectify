@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CHAT_REPOSITORY } from 'src/common/constants/constants';
 import { Chat } from '../entity/chat.entity';
 import { DataSource, Repository } from 'typeorm';
@@ -49,13 +49,30 @@ export class ChatsService {
       await queryRunner.commitTransaction();
 
       // Fetch chat with details
-      return chat;
+      const chatWithDetails = await this.getSingleChat(chat.id);
+      if (!chatWithDetails) {
+        throw new NotFoundException(
+          `Chat with ID ${createdChat.id} was created but could not be retrieved`,
+        );
+      }
+      return chatWithDetails;
     } catch (err) {
       await queryRunner.rollbackTransaction();
       throw err;
     } finally {
       await queryRunner.release();
     }
+  }
+
+  async getSingleChat(chatId: string): Promise<Chat | null> {
+    return await this.chatRepo
+      .createQueryBuilder('chat')
+      .leftJoinAndSelect('chat.participants', 'chatUser')
+      .leftJoinAndSelect('chatUser.profile', 'profile')
+      .leftJoinAndSelect('profile.user', 'user')
+      .leftJoinAndSelect('chat.messages', 'message')
+      .where('chat.id = :chatId', { chatId })
+      .getOne();
   }
 
   async createChat(): Promise<Chat> {
