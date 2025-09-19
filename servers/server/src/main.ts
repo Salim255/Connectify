@@ -6,9 +6,12 @@ import { HttpExceptionsErrorHandler } from './common/errors/http-exception-error
 import { processErrorHandler } from './common/errors/process-errors';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common/pipes';
+import { corsConfig } from './config/cors.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // Initialize Cors config
+  corsConfig(app);
 
   app.useGlobalPipes(
     new ValidationPipe({

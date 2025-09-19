@@ -1,5 +1,5 @@
 <form [formGroup]="authFormField" (ngSubmit)="onSubmit()">
-  <ion-item>
+  <ion-item >
     <ion-label position="floating">Email</ion-label>
     <ion-input formControlName="email" type="email" required></ion-input>
   </ion-item>
@@ -12,7 +12,7 @@
   @if(!isLoginMode()) {
     <ion-item>
       <ion-label position="floating">Password Confirm</ion-label>
-      <ion-input type="password" required></ion-input>
+      <ion-input formControlName="passwordConfirm" type="password" required></ion-input>
     </ion-item>
   }
 

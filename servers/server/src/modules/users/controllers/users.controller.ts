@@ -44,12 +44,17 @@ export class UsersController {
     }
 
     //Create user
-    const { token, ...user }: CreatedUserDto & { token: string } =
+    const {
+      token,
+      expireIn,
+      ...user
+    }: CreatedUserDto & { token: string } & { expireIn: number } =
       await this.userService.createUser({ email, password, passwordConfirm });
 
     return {
       status: 'Success',
       token,
+      expireIn,
       data: { user },
     };
   }
@@ -74,13 +79,14 @@ export class UsersController {
     }
 
     //Create user
-    const result: CreatedUserDto & { token: string } =
+    const result: CreatedUserDto & { token: string } & { expireIn: number } =
       await this.userService.loginUser({ email, password });
-    const { token, ...user } = result;
+    const { token, expireIn, ...user } = result;
 
     return {
       status: 'Success',
       token,
+      expireIn,
       data: { user },
     };
   }

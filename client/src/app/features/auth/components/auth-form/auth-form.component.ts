@@ -1,5 +1,6 @@
 import { Component, signal } from "@angular/core";
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: "app-auth-form",
@@ -11,7 +12,10 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 export class AuthFormComponent {
   authFormField!: FormGroup;
   isLoginMode = signal<boolean>(true);
-  constructor(private buildForm: FormBuilder){}
+
+  constructor(
+    private authService: AuthService,
+    private buildForm: FormBuilder){}
 
   ngOnInit(){
     this.buildAuthForm();
@@ -25,21 +29,25 @@ export class AuthFormComponent {
       : null;
   }
 
-  buildAuthForm(isLogin: boolean = true){
+  buildAuthForm(){
     this.authFormField = this.buildForm.group({
-      email: ['', Validators.required, Validators.email],
-      password: ['', Validators.required, Validators.minLength(6)],
-      ...(isLogin ? {}: { passwordConfirm: ['', Validators.required, Validators.minLength(6) ]})
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(3)]],
+      ...(!this.isLoginMode() ? {}: { passwordConfirm: ['', [Validators.required, Validators.minLength(3)] ]})
     },
-    { Validators: isLogin ? null : this.passwordMatchValidator }
+    { validators: this.isLoginMode() ? null : this.passwordMatchValidator }
   )
   }
 
   onSubmit(){
-    if(this.authFormField.valid){
-      console.log(this.authFormField.value);
+    if(this.authFormField.invalid){
+      return;
+    }
+    console.log(this.authFormField.value);
+    if (this.isLoginMode()) {
+      this.authService.login(this.authFormField.value).subscribe();
     } else {
-      console.log("Form is not valid");
+      this.authService.signup(this.authFormField.value).subscribe();
     }
   }
 

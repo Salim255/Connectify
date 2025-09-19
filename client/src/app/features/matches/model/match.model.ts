@@ -12,7 +12,7 @@ export interface Match {
   id: string;           // match ID
   profile: Profile;     // matched profile
   matchedAt?: Date;     // timestamp of the match
-  status: MatchStatus;  // true if both liked
+  status: MatchStatus;
   isFavorite: boolean;
   isHidden: boolean,
   createdAt: Date;

@@ -2,14 +2,30 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, from, map, Observable, tap } from "rxjs";
 import { User } from "../model/user.model";
 import { Preferences } from '@capacitor/preferences';
+import { AuthHttpService, AuthResponse, LoginPayload, SignupPayload } from "./auth-http.service";
 
 @Injectable({providedIn: "root"})
-
 export class AuthService {
   private user = new BehaviorSubject<User | null>(null);
   activeLogoutTimer: ReturnType<typeof setTimeout> | null = null;
 
-  constructor(){}
+  constructor(private authHttpService: AuthHttpService  ){}
+
+  login(data: LoginPayload): Observable<AuthResponse>{
+   return this.authHttpService.logIn(data).pipe(
+    tap((result) => {
+      console.log(result);
+    })
+   );
+  }
+
+  signup(data: SignupPayload): Observable<AuthResponse>{
+    return this.authHttpService.signup(data).pipe(
+      tap((result) => {
+        console.log(result);
+      })
+    )
+  }
   private autoLogout(duration: number): void {
       if (this.activeLogoutTimer) {
         clearTimeout(this.activeLogoutTimer);
