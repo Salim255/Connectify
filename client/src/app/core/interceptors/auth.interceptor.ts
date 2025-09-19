@@ -22,7 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
         };
 
         const token = parsedData._token;
-
+        console.log(token);
         // Clone the request and add the Authorization header
         const authReq = req.clone({
           setHeaders: {
