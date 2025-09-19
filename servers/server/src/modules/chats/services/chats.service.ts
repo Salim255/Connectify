@@ -48,7 +48,7 @@ export class ChatsService {
       // Commit transaction
       await queryRunner.commitTransaction();
 
-      // Fetch
+      // Fetch chat with details
       return chat;
     } catch (err) {
       await queryRunner.rollbackTransaction();
