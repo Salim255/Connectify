@@ -14,7 +14,9 @@ export class AuthService {
   login(data: LoginPayload): Observable<AuthResponse>{
    return this.authHttpService.logIn(data).pipe(
     tap((result) => {
-      console.log(result);
+      if (result?.data?.user?.id){
+        this.setAuthData(result);
+      }
     })
    );
   }
@@ -22,7 +24,9 @@ export class AuthService {
   signup(data: SignupPayload): Observable<AuthResponse>{
     return this.authHttpService.signup(data).pipe(
       tap((result) => {
-        console.log(result);
+        if (result?.data?.user?.id){
+          this.setAuthData(result);
+        }
       })
     )
   }
