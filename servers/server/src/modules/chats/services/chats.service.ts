@@ -7,18 +7,17 @@ import {
   ChatUserRole,
 } from 'src/modules/chat-users/entity/chat-user.entity';
 import { Message } from 'src/modules/messages/entity/message.entity';
+import { CreateChatWithMessageDto } from '../dto/chats-dto';
 
 @Injectable()
 export class ChatsService {
   constructor(
-    private dataSource: DataSource,
+    @Inject('DATA_SOURCE') private dataSource: DataSource,
     @Inject(CHAT_REPOSITORY) private chatRepo: Repository<Chat>,
   ) {}
 
   async createChatWithMessage(
-    currentUserId: string,
-    recipientId: string,
-    messageText: string,
+    payload: CreateChatWithMessageDto & { userId: string },
   ) {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
@@ -33,17 +32,17 @@ export class ChatsService {
       await queryRunner.manager.save(ChatUser, [
         {
           chatId: createdChat.id,
-          profileId: currentUserId,
+          profileId: payload.senderProfileId,
           roles: [ChatUserRole.ADMIN],
         },
-        { chatId: createdChat.id, profileId: recipientId },
+        { chatId: createdChat.id, profileId: payload.receiverProfileId },
       ]);
 
       // 3. Send first message
       await queryRunner.manager.save(Message, {
         chatId: chat.id,
-        senderId: currentUserId,
-        content: messageText,
+        senderId: payload.senderProfileId,
+        content: payload.content,
       });
 
       // Commit transaction
