@@ -44,10 +44,12 @@ export class ChatsService {
         chatId: chat.id,
         senderId: currentUserId,
         content: messageText,
-        sentAt: new Date(),
       });
 
+      // Commit transaction
       await queryRunner.commitTransaction();
+
+      // Fetch
       return chat;
     } catch (err) {
       await queryRunner.rollbackTransaction();
