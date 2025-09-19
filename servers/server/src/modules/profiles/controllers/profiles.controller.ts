@@ -1,9 +1,18 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  NotFoundException,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ProfilesService } from '../services/profiles.service';
 import {
   CreateProfileDto,
   CreateProfileResponseDto,
+  GetProfileResponseDto,
   GetProfilesResponseDto,
 } from '../dto/profiles.dto';
 import { Profile } from '../entity/profile.entity';
@@ -39,6 +48,33 @@ export class ProfilesController {
       avatarUrl,
     });
 
+    return {
+      status: 'Success',
+      data: {
+        profile,
+      },
+    };
+  }
+  @Get('/users')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Get profile by user route' })
+  @ApiResponse({
+    status: 200,
+    description: 'Potential match Profiles successfully fetched',
+    type: GetProfileResponseDto,
+  })
+  async getUserProfile(
+    @Req() req: Request & { user: { id: string } },
+  ): Promise<GetProfileResponseDto> {
+    const { id: userId } = req.user;
+    const profile: Profile | null =
+      await this.profilesService.getProfileByUserId(userId);
+
+    if (!profile) {
+      throw new NotFoundException(
+        `Profile for user ID ${userId} was not found or could not be retrieved.`,
+      );
+    }
     return {
       status: 'Success',
       data: {

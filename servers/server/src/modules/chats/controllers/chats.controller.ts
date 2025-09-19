@@ -31,15 +31,12 @@ export class ChatsController {
   })
   async createChatWithMessage(
     @Body() body: CreateChatWithMessageDto,
-    @Req() req: Request & { user: { id: string } },
   ): Promise<CreateChatResponseDto> {
-    const { id: userId } = req.user;
     const { content, senderProfileId, receiverProfileId } = body;
     const chat: Chat = await this.chatsService.createChatWithMessage({
       content,
       senderProfileId,
       receiverProfileId,
-      userId,
     });
     return {
       status: 'Success',

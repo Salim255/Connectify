@@ -11,12 +11,12 @@ export class CreateChatWithMessageDto {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   @IsNotEmpty()
   @ApiProperty({ description: 'Message sender Id' })
-  senderProfileId: 'uuid';
+  senderProfileId: string;
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   @IsNotEmpty()
   @ApiProperty({ description: 'Message receiver Id' })
-  receiverProfileId: 'uuid';
+  receiverProfileId: string;
 }
 
 export class CreateChatDto {}
