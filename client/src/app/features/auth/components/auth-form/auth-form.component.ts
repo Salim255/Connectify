@@ -1,5 +1,6 @@
 import { Component, signal } from "@angular/core";
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: "app-auth-form",
@@ -11,7 +12,10 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 export class AuthFormComponent {
   authFormField!: FormGroup;
   isLoginMode = signal<boolean>(true);
-  constructor(private buildForm: FormBuilder){}
+
+  constructor(
+    private authService: AuthService,
+    private buildForm: FormBuilder){}
 
   ngOnInit(){
     this.buildAuthForm();
@@ -36,6 +40,7 @@ export class AuthFormComponent {
   }
 
   onSubmit(){
+    this.authService.loginUser({email: "salim@gmail.com", password: "123"}).subscribe();
     if(this.authFormField.valid){
       console.log(this.authFormField.value);
     } else {
