@@ -55,3 +55,5 @@ export class GetProfilesResponseDto {
     profiles: Profile[];
   };
 }
+
+export class GetProfileResponseDto extends CreateProfileResponseDto {}
