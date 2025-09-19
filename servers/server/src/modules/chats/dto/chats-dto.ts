@@ -1,5 +1,23 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Chat } from '../entity/chat.entity';
+import { IsNotEmpty } from 'class-validator';
+
+export class CreateChatWithMessageDto {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  @IsNotEmpty()
+  @ApiProperty({ description: 'Message content' })
+  content: string;
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  @IsNotEmpty()
+  @ApiProperty({ description: 'Message sender Id' })
+  senderProfileId: 'uuid';
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  @IsNotEmpty()
+  @ApiProperty({ description: 'Message receiver Id' })
+  receiverProfileId: 'uuid';
+}
 
 export class CreateChatDto {}
 

@@ -1,11 +1,62 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CHAT_REPOSITORY } from 'src/common/constants/constants';
 import { Chat } from '../entity/chat.entity';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
+import {
+  ChatUser,
+  ChatUserRole,
+} from 'src/modules/chat-users/entity/chat-user.entity';
+import { Message } from 'src/modules/messages/entity/message.entity';
+import { CreateChatWithMessageDto } from '../dto/chats-dto';
 
 @Injectable()
 export class ChatsService {
-  constructor(@Inject(CHAT_REPOSITORY) private chatRepo: Repository<Chat>) {}
+  constructor(
+    @Inject('DATA_SOURCE') private dataSource: DataSource,
+    @Inject(CHAT_REPOSITORY) private chatRepo: Repository<Chat>,
+  ) {}
+
+  async createChatWithMessage(
+    payload: CreateChatWithMessageDto & { userId: string },
+  ) {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      // 1. Create chat
+      const chat = this.chatRepo.create();
+      const createdChat: Chat = await queryRunner.manager.save(chat);
+
+      // 2. Add participants
+      await queryRunner.manager.save(ChatUser, [
+        {
+          chatId: createdChat.id,
+          profileId: payload.senderProfileId,
+          roles: [ChatUserRole.ADMIN],
+        },
+        { chatId: createdChat.id, profileId: payload.receiverProfileId },
+      ]);
+
+      // 3. Send first message
+      await queryRunner.manager.save(Message, {
+        chatId: chat.id,
+        senderId: payload.senderProfileId,
+        content: payload.content,
+      });
+
+      // Commit transaction
+      await queryRunner.commitTransaction();
+
+      // Fetch
+      return chat;
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+      throw err;
+    } finally {
+      await queryRunner.release();
+    }
+  }
 
   async createChat(): Promise<Chat> {
     const chat: Chat = this.chatRepo.create();
