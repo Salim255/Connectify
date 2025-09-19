@@ -29,22 +29,23 @@ export class AuthFormComponent {
       : null;
   }
 
-  buildAuthForm(isLogin: boolean = true){
+  buildAuthForm(){
     this.authFormField = this.buildForm.group({
-      email: ['', Validators.required, Validators.email],
-      password: ['', Validators.required, Validators.minLength(6)],
-      ...(isLogin ? {}: { passwordConfirm: ['', Validators.required, Validators.minLength(6) ]})
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(3)]],
+      ...(this.isLoginMode() ? {}: { passwordConfirm: ['', Validators.required, Validators.minLength(3) ]})
     },
-    { Validators: isLogin ? null : this.passwordMatchValidator }
+    { validators: this.isLoginMode() ? null : this.passwordMatchValidator }
   )
   }
 
   onSubmit(){
-    this.authService.loginUser({email: "salim@gmail.com", password: "123"}).subscribe();
-    if(this.authFormField.valid){
-      console.log(this.authFormField.value);
-    } else {
-      console.log("Form is not valid");
+    if(this.authFormField.invalid){
+      return;
+    }
+    console.log(this.authFormField.value);
+    if (this.isLoginMode()) {
+      this.authService.loginUser(this.authFormField.value).subscribe();
     }
   }
 
