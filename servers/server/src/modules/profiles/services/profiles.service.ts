@@ -15,6 +15,10 @@ export class ProfilesService {
     return await this.profileRep.save(profile);
   }
 
+  async getProfileByUserId(userId: string): Promise<Profile | null> {
+    return await this.profileRep.findOneBy({ userId });
+  }
+
   async getPotentialMatchProfiles(userId: string): Promise<Profile[]> {
     // const query = `SELECT * FROM profiles`;
     const query = `
