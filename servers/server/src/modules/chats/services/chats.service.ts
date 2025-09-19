@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CHAT_REPOSITORY } from 'src/common/constants/constants';
 import { Chat } from '../entity/chat.entity';
 import { DataSource, Repository } from 'typeorm';
@@ -17,6 +22,16 @@ export class ChatsService {
   ) {}
 
   async createChatWithMessage(payload: CreateChatWithMessageDto) {
+    const existChat = await this.findExistingChat(
+      payload.senderProfileId,
+      payload.receiverProfileId,
+    );
+
+    if (existChat) {
+      throw new ConflictException(
+        `A chat between profiles ${payload.senderProfileId} and ${payload.receiverProfileId} already exists.`,
+      );
+    }
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
@@ -108,5 +123,21 @@ export class ChatsService {
       })
       .setParameter('userId', userId)
       .getMany();
+  }
+
+  async findExistingChat(
+    senderProfileId: string,
+    receiverProfileId: string,
+  ): Promise<Chat | null> {
+    return await this.chatRepo
+      .createQueryBuilder('chat')
+      .innerJoin('chat.participants', 'chatUser')
+      .where('chatUser.profileId IN (:...profileIds)', {
+        profileIds: [senderProfileId, receiverProfileId],
+      })
+      .groupBy('chat.id')
+      .having('COUNT(DISTINCT chatUser.profileId) = 2')
+      .andWhere('chat.isGroup = false') // optional: only for direct chats
+      .getOne();
   }
 }
