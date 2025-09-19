@@ -4,16 +4,34 @@ import { User } from "../model/user.model";
 import { Preferences } from '@capacitor/preferences';
 import { AuthHttpService, LogInPayload } from "./auth-http.service";
 
-@Injectable({providedIn: "root"})
+export type AuthResponse = {
+  status: string;
+  token: string;
+  expireIn: number;
+  data: {
+    user : {
+      email: string;
+      id: string;
+      isActive: boolean;
+      isEmailVerified: boolean;
+      role: string;
+    }
+  }
+}
 
+@Injectable({providedIn: "root"})
 export class AuthService {
   private user = new BehaviorSubject<User | null>(null);
   activeLogoutTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor(private authHttpService: AuthHttpService  ){}
 
-  loginUser(data: LogInPayload): Observable<any>{
-   return this.authHttpService.logIn(data);
+  loginUser(data: LogInPayload): Observable<AuthResponse>{
+   return this.authHttpService.logIn(data).pipe(
+    tap((result) => {
+      console.log(result);
+    })
+   );
   }
   private autoLogout(duration: number): void {
       if (this.activeLogoutTimer) {
