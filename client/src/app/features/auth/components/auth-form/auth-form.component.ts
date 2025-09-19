@@ -45,7 +45,7 @@ export class AuthFormComponent {
     }
     console.log(this.authFormField.value);
     if (this.isLoginMode()) {
-      this.authService.loginUser(this.authFormField.value).subscribe();
+      this.authService.login(this.authFormField.value).subscribe();
     }
   }
 
