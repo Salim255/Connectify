@@ -3,13 +3,17 @@ import { BehaviorSubject, from, map, Observable, tap } from "rxjs";
 import { User } from "../model/user.model";
 import { Preferences } from '@capacitor/preferences';
 import { AuthHttpService, AuthResponse, LoginPayload, SignupPayload } from "./auth-http.service";
+import { ProfileService } from "../../profile/services/profile.service";
 
 @Injectable({providedIn: "root"})
 export class AuthService {
   private user = new BehaviorSubject<User | null>(null);
   activeLogoutTimer: ReturnType<typeof setTimeout> | null = null;
 
-  constructor(private authHttpService: AuthHttpService  ){}
+  constructor(
+    private profileService : ProfileService,
+    private authHttpService: AuthHttpService,
+  ){}
 
   login(data: LoginPayload): Observable<AuthResponse>{
    return this.authHttpService.logIn(data).pipe(
