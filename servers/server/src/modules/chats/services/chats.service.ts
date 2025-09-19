@@ -16,9 +16,7 @@ export class ChatsService {
     @Inject(CHAT_REPOSITORY) private chatRepo: Repository<Chat>,
   ) {}
 
-  async createChatWithMessage(
-    payload: CreateChatWithMessageDto & { userId: string },
-  ) {
+  async createChatWithMessage(payload: CreateChatWithMessageDto) {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
