@@ -10,6 +10,7 @@ export class ProfileService {
   private profileLoadedSubject = new BehaviorSubject<boolean>(false);
 
   isLoadedProfile$ = this.profileLoadedSubject.asObservable();
+
   constructor(
     private router: Router,
     private profileHttpService: ProfileHttpService,
@@ -217,7 +218,6 @@ export class ProfileService {
       tap((response) => {
         if (response?.data?.profile) {
           this.setProfile(response.data.profile);
-          this.router.navigate(['/browse']);
         }
 
         this.profileLoadedSubject.next(true);
