@@ -46,6 +46,28 @@ export class ProfilesController {
       },
     };
   }
+  @Get('/users')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Get profile by user route' })
+  @ApiResponse({
+    status: 200,
+    description: 'Potential match Profiles successfully fetched',
+    type: GetProfileResponseDto,
+  })
+  async getUserProfile(
+    @Req() req: Request & { user: { id: string } },
+  ): Promise<GetProfilesResponseDto> {
+    const { id: userId } = req.user;
+    const profiles: Profile[] =
+      await this.profilesService.getPotentialMatchProfiles(userId);
+
+    return {
+      status: 'Success',
+      data: {
+        profiles,
+      },
+    };
+  }
 
   @Get()
   @UseGuards(JwtAuthGuard)
