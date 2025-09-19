@@ -24,6 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   subscribeToUserAuthentication(){
     this.authenticatedUserSubscription = this.authService.userIsAuthenticated.subscribe((isAuthenticated) => {
+      console.log(isAuthenticated, "Hello from here", this.previousAuthState);
       if (!isAuthenticated && this.previousAuthState !== isAuthenticated){
         this.router.navigateByUrl('/auth');
       }
