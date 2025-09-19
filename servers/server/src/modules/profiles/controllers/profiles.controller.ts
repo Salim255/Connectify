@@ -60,7 +60,7 @@ export class ProfilesController {
   @ApiOperation({ summary: 'Get profile by user route' })
   @ApiResponse({
     status: 200,
-    description: 'Potential match Profiles successfully fetched',
+    description: 'Getting User profile response',
     type: GetProfileResponseDto,
   })
   async getUserProfile(
