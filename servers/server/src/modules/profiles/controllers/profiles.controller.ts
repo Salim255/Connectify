@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ProfilesService } from '../services/profiles.service';
 import {
@@ -49,14 +49,18 @@ export class ProfilesController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Get non matched profiles by user' })
+  @ApiOperation({ summary: 'Get potential matched profiles by user' })
   @ApiResponse({
     status: 200,
-    description: 'Profiles successfully fetched',
+    description: 'Potential match Profiles successfully fetched',
     type: GetProfilesResponseDto,
   })
-  async getProfiles(): Promise<GetProfilesResponseDto> {
-    const profiles: Profile[] = await this.profilesService.getProfiles();
+  async getProfiles(
+    @Req() req: Request & { user: { id: string } },
+  ): Promise<GetProfilesResponseDto> {
+    const { id: userId } = req.user;
+    const profiles: Profile[] =
+      await this.profilesService.getPotentialMatchProfiles(userId);
 
     return {
       status: 'Success',
