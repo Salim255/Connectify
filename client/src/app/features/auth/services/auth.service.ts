@@ -100,14 +100,13 @@ export class AuthService {
     this.removeStoredData();
   }
 
-  get userId(): Observable<number | null> {
+  get userId(): Observable<string | null> {
     return this.user.asObservable().pipe(
       map((user) => user?.id ?? null)
     );
   }
 
    private setAuthData(authData: AuthResponse) {
-
     const expirationTime = new Date(new Date().getTime() + authData.expireIn);
     const buildUser = new User(
       authData.data.user.id,
@@ -117,4 +116,13 @@ export class AuthService {
     this.user.next(buildUser);
     this.storeAuthData(buildUser);
   }
+
+
+  private storeAuthData = async (dataToStore: User) => {
+    const data = JSON.stringify(dataToStore);
+    await Preferences.set({
+      key: 'authData',
+      value: data,
+    });
+  };
 }
