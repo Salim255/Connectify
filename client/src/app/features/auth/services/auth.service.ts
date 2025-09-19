@@ -34,7 +34,6 @@ export class AuthService {
       if (this.activeLogoutTimer) {
         clearTimeout(this.activeLogoutTimer);
       }
-
       this.activeLogoutTimer = setTimeout(() => {
         this.logout();
       }, duration);
@@ -117,6 +116,7 @@ export class AuthService {
       authData.token,
       expirationTime,
     );
+
     this.user.next(buildUser);
     this.storeAuthData(buildUser);
   }

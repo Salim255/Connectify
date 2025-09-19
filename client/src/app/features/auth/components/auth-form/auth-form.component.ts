@@ -1,6 +1,7 @@
 import { Component, signal } from "@angular/core";
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { AuthService } from "../../services/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-auth-form",
@@ -14,8 +15,10 @@ export class AuthFormComponent {
   isLoginMode = signal<boolean>(true);
 
   constructor(
+    private router: Router,
     private authService: AuthService,
-    private buildForm: FormBuilder){}
+    private buildForm: FormBuilder,
+  ){}
 
   ngOnInit(){
     this.buildAuthForm();
@@ -30,23 +33,36 @@ export class AuthFormComponent {
   }
 
   buildAuthForm(){
+
     this.authFormField = this.buildForm.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(3)]],
-      ...(!this.isLoginMode() ? {}: { passwordConfirm: ['', [Validators.required, Validators.minLength(3)] ]})
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, Validators.minLength(3)]],
+      ...(this.isLoginMode() ? null: { passwordConfirm: [null, [Validators.required, Validators.minLength(3)] ]}),
     },
-    { validators: this.isLoginMode() ? null : this.passwordMatchValidator }
-  )
+    { validators: this.isLoginMode() ? null : this.passwordMatchValidator },
+    );
   }
 
   onSubmit(){
+    console.log(this.authFormField.value, this.isLoginMode());
     if(this.authFormField.invalid){
       return;
     }
     if (this.isLoginMode()) {
-      this.authService.login(this.authFormField.value).subscribe();
+
+      this.authService.login(this.authFormField.value).subscribe({
+        next: () => {
+          this.router.navigate(['/browse'])
+        },
+        error: () => {}
+      });
     } else {
-      this.authService.signup(this.authFormField.value).subscribe();
+      this.authService.signup(this.authFormField.value).subscribe({
+        next: () => {
+          this.router.navigate(['/browse'])
+        },
+        error: () => {}
+      });
     }
   }
 
