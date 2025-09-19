@@ -1,8 +1,9 @@
 import { CommonModule } from "@angular/common";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
+import { AuthInterceptor } from "./interceptors/auth.interceptor";
 
 @NgModule({
   imports: [
@@ -12,7 +13,12 @@ import { IonicModule } from "@ionic/angular";
     ReactiveFormsModule
   ],
   providers:[
-    provideHttpClient(withInterceptorsFromDi())
+    provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
   ]
 })
 export class CoreModule {}
