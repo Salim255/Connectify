@@ -47,9 +47,6 @@ export class CreatedUserDto {
 
   @ApiProperty({ description: `User's role`, example: 'user' }) // default
   role: UserRole;
-
-  @ApiProperty({ description: `Token expiration date` })
-  expireIn: number;
 }
 
 export class SignUpResponseDto {
@@ -60,6 +57,9 @@ export class SignUpResponseDto {
     example: 'user token',
   })
   token: string;
+
+  @ApiProperty({ description: `Token expiration date` })
+  expireIn: number;
 
   @ApiProperty({
     description: 'Create user response',
@@ -87,6 +87,12 @@ export class SigninUserDto {
 }
 
 export class SigninUserResponseDto {
+  @ApiProperty({ description: 'JWT' })
   token: string;
+
+  @ApiProperty({ description: `Token expiration date` })
+  expireIn: number;
+
+  @ApiProperty({ description: 'User data' })
   user: CreatedUserDto;
 }

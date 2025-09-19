@@ -19,7 +19,7 @@ export class UserService {
 
   async createUser(
     data: CreateUserDto,
-  ): Promise<CreatedUserDto & { token: string }> {
+  ): Promise<CreatedUserDto & { token: string } & { expireIn: number }> {
     // Step 1: Check if password match
     if (data.password !== data.passwordConfirm) {
       throw new BadRequestException('The confirmation password does not match');
@@ -49,7 +49,7 @@ export class UserService {
 
   async loginUser(
     loginPayload: SigninUserDto,
-  ): Promise<CreatedUserDto & { token: string }> {
+  ): Promise<CreatedUserDto & { token: string } & { expireIn: number }> {
     const { email } = loginPayload;
     const user = await this.userRepo.findOne({ where: { email } });
     if (!user) {
