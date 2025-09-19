@@ -17,25 +17,24 @@ export class AuthGuard implements CanMatch {
   ): Observable<boolean | UrlTree>{
     return this.authService.userIsAuthenticated.pipe(
       take(1),
-
-        switchMap((isAuthenticated) => {
-          if (isAuthenticated){
-            return of(true);
-          }
-           //return of(true);
-          // auto login
-          return this.authService.autoLogin().pipe(
-            map((authenticated) => {
-              if (authenticated){
-                return true;
-              } else {
-                const urlTree = this.router.parseUrl('/auth');
-                return urlTree;
-              }
-
-            })
-          );
+      switchMap((isAuthenticated) => {
+        if (isAuthenticated){
+          return of(true);
         }
+          //return of(true);
+        // auto login
+        return this.authService.autoLogin().pipe(
+          map((authenticated) => {
+            if (authenticated){
+              return true;
+            } else {
+              const urlTree = this.router.parseUrl('/auth');
+              return urlTree;
+            }
+
+          })
+        );
+      }
       )
     );
   }

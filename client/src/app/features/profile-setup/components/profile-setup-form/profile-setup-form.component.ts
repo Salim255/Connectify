@@ -30,7 +30,7 @@ export class ProfileSetupFormComponent {
       const value = control.value;
 
       if (value == null || value === '') {
-        return null; // let `required` handle empty case
+        return null;
       }
 
       if (isNaN(value) || value < minAge || value > maxAge) {

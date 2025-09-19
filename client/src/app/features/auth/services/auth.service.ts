@@ -3,18 +3,24 @@ import { BehaviorSubject, from, map, Observable, tap } from "rxjs";
 import { User } from "../model/user.model";
 import { Preferences } from '@capacitor/preferences';
 import { AuthHttpService, AuthResponse, LoginPayload, SignupPayload } from "./auth-http.service";
+import { ProfileService } from "../../profile/services/profile.service";
 
 @Injectable({providedIn: "root"})
 export class AuthService {
   private user = new BehaviorSubject<User | null>(null);
   activeLogoutTimer: ReturnType<typeof setTimeout> | null = null;
 
-  constructor(private authHttpService: AuthHttpService  ){}
+  constructor(
+    private profileService : ProfileService,
+    private authHttpService: AuthHttpService,
+  ){}
 
   login(data: LoginPayload): Observable<AuthResponse>{
    return this.authHttpService.logIn(data).pipe(
     tap((result) => {
-      console.log(result);
+      if (result?.data?.user?.id){
+        this.setAuthData(result);
+      }
     })
    );
   }
@@ -22,7 +28,9 @@ export class AuthService {
   signup(data: SignupPayload): Observable<AuthResponse>{
     return this.authHttpService.signup(data).pipe(
       tap((result) => {
-        console.log(result);
+        if (result?.data?.user?.id){
+          this.setAuthData(result);
+        }
       })
     )
   }
@@ -30,7 +38,6 @@ export class AuthService {
       if (this.activeLogoutTimer) {
         clearTimeout(this.activeLogoutTimer);
       }
-
       this.activeLogoutTimer = setTimeout(() => {
         this.logout();
       }, duration);
@@ -44,7 +51,7 @@ export class AuthService {
         }
 
         const parseData = JSON.parse(storedData.value) as {
-          id: number;
+          id: string;
           _token: string;
           tokenExpirationDate: string;
         };
@@ -100,9 +107,30 @@ export class AuthService {
     this.removeStoredData();
   }
 
-  get userId(): Observable<number | null> {
+  get userId(): Observable<string | null> {
     return this.user.asObservable().pipe(
       map((user) => user?.id ?? null)
     );
   }
+
+   private setAuthData(authData: AuthResponse) {
+    const expirationTime = new Date(new Date().getTime() + authData.expireIn);
+    const buildUser = new User(
+      authData.data.user.id,
+      authData.token,
+      expirationTime,
+    );
+
+    this.user.next(buildUser);
+    this.storeAuthData(buildUser);
+  }
+
+
+  private storeAuthData = async (dataToStore: User) => {
+    const data = JSON.stringify(dataToStore);
+    await Preferences.set({
+      key: 'authData',
+      value: data,
+    });
+  };
 }
