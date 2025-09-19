@@ -56,10 +56,10 @@ export class ProfilesController {
   })
   async getUserProfile(
     @Req() req: Request & { user: { id: string } },
-  ): Promise<GetProfilesResponseDto> {
+  ): Promise<GetProfileResponseDto> {
     const { id: userId } = req.user;
-    const profiles: Profile[] =
-      await this.profilesService.getPotentialMatchProfiles(userId);
+    const profiles: Profile =
+      await this.profilesService.getProfileByUser(userId);
 
     return {
       status: 'Success',
