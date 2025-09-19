@@ -19,7 +19,7 @@ export class AuthService {
    );
   }
 
-  signUp(data: SignupPayload): Observable<AuthResponse>{
+  signup(data: SignupPayload): Observable<AuthResponse>{
     return this.authHttpService.signup(data).pipe(
       tap((result) => {
         console.log(result);
