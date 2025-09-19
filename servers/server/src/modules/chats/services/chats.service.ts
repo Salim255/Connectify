@@ -109,4 +109,20 @@ export class ChatsService {
       .setParameter('userId', userId)
       .getMany();
   }
+
+  async findExistingChat(
+    senderProfileId: string,
+    receiverProfileId: string,
+  ): Promise<Chat | null> {
+    return await this.chatRepo
+      .createQueryBuilder('chat')
+      .innerJoin('chat.participants', 'chatUser')
+      .where('chatUser.profileId IN (:...profileIds)', {
+        profileIds: [senderProfileId, receiverProfileId],
+      })
+      .groupBy('chat.id')
+      .having('COUNT(DISTINCT chatUser.profileId) = 2')
+      .andWhere('chat.isGroup = false') // optional: only for direct chats
+      .getOne();
+  };
 }
