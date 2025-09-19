@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   CreateChatDto,
   CreateChatResponseDto,
+  CreateChatWithMessageDto,
   GetAllChatsResponseDto,
   GetUserChatsResponseDto,
 } from '../dto/chats-dto';
@@ -14,6 +15,39 @@ import { JwtAuthGuard } from '../../auth/guard/jwt-token.guard';
 @Controller('chats')
 export class ChatsController {
   constructor(private chatsService: ChatsService) {}
+
+  @Post('/chat-with-message')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Create chat with message router' })
+  @ApiBody({
+    type: CreateChatWithMessageDto,
+    required: true,
+    description: 'Create with chat message  payload',
+  })
+  @ApiResponse({
+    status: 201,
+    type: CreateChatResponseDto,
+    description: 'Create chat response',
+  })
+  async createChatWithMessage(
+    @Body() body: CreateChatWithMessageDto,
+    @Req() req: Request & { user: { id: string } },
+  ): Promise<CreateChatResponseDto> {
+    const { id: userId } = req.user;
+    const { content, senderProfileId, receiverProfileId } = body;
+    const chat: Chat = await this.chatsService.createChatWithMessage({
+      content,
+      senderProfileId,
+      receiverProfileId,
+      userId,
+    });
+    return {
+      status: 'Success',
+      data: {
+        chat,
+      },
+    };
+  }
 
   @Post()
   @UseGuards(JwtAuthGuard)
@@ -62,7 +96,7 @@ export class ChatsController {
     summary: 'Fetch all chats route',
   })
   @ApiResponse({
-    type: GetAllChatsResponseDto,
+    type: GetUserChatsResponseDto,
     status: 2000,
     description: 'Get all chats response',
   })
