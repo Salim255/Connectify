@@ -2,22 +2,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, from, map, Observable, tap } from "rxjs";
 import { User } from "../model/user.model";
 import { Preferences } from '@capacitor/preferences';
-import { AuthHttpService, LogInPayload } from "./auth-http.service";
-
-export type AuthResponse = {
-  status: string;
-  token: string;
-  expireIn: number;
-  data: {
-    user : {
-      email: string;
-      id: string;
-      isActive: boolean;
-      isEmailVerified: boolean;
-      role: string;
-    }
-  }
-}
+import { AuthHttpService, AuthResponse, LoginPayload } from "./auth-http.service";
 
 @Injectable({providedIn: "root"})
 export class AuthService {
@@ -26,12 +11,16 @@ export class AuthService {
 
   constructor(private authHttpService: AuthHttpService  ){}
 
-  loginUser(data: LogInPayload): Observable<AuthResponse>{
+  login(data: LoginPayload): Observable<AuthResponse>{
    return this.authHttpService.logIn(data).pipe(
     tap((result) => {
       console.log(result);
     })
    );
+  }
+
+  signUp(){
+
   }
   private autoLogout(duration: number): void {
       if (this.activeLogoutTimer) {
