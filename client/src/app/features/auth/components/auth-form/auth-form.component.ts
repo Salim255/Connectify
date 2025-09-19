@@ -33,7 +33,7 @@ export class AuthFormComponent {
     this.authFormField = this.buildForm.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(3)]],
-      ...(this.isLoginMode() ? {}: { passwordConfirm: ['', Validators.required, Validators.minLength(3) ]})
+      ...(!this.isLoginMode() ? {}: { passwordConfirm: ['', [Validators.required, Validators.minLength(3)] ]})
     },
     { validators: this.isLoginMode() ? null : this.passwordMatchValidator }
   )
@@ -46,6 +46,8 @@ export class AuthFormComponent {
     console.log(this.authFormField.value);
     if (this.isLoginMode()) {
       this.authService.login(this.authFormField.value).subscribe();
+    } else {
+      this.authService.signup(this.authFormField.value).subscribe();
     }
   }
 
