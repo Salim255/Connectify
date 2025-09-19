@@ -43,7 +43,6 @@ export class AuthFormComponent {
     if(this.authFormField.invalid){
       return;
     }
-    console.log(this.authFormField.value);
     if (this.isLoginMode()) {
       this.authService.login(this.authFormField.value).subscribe();
     } else {

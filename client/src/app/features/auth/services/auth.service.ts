@@ -44,7 +44,7 @@ export class AuthService {
         }
 
         const parseData = JSON.parse(storedData.value) as {
-          id: number;
+          id: string;
           _token: string;
           tokenExpirationDate: string;
         };
@@ -104,5 +104,17 @@ export class AuthService {
     return this.user.asObservable().pipe(
       map((user) => user?.id ?? null)
     );
+  }
+
+   private setAuthData(authData: AuthResponse) {
+
+    const expirationTime = new Date(new Date().getTime() + authData.expireIn);
+    const buildUser = new User(
+      authData.data.user.id,
+      authData.token,
+      expirationTime,
+    );
+    this.user.next(buildUser);
+    this.storeAuthData(buildUser);
   }
 }
