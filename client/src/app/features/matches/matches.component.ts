@@ -13,13 +13,11 @@ import { Subscription } from "rxjs";
 
 export class MatchesComponent implements OnInit, OnDestroy{
   pageName: PAGES = PAGES.MATCHES;
-  matches: Match [];
+  matches: Match [] | null = null;
 
   matchesSubscription!: Subscription;
 
-  constructor(private matchesService: MatchesService){
-    this.matches = this.matchesService.MATCHES_PLACEHOLDER;
-  }
+  constructor(private matchesService: MatchesService){}
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -33,7 +31,7 @@ export class MatchesComponent implements OnInit, OnDestroy{
 
   subscribeToMatches(){
     this.matchesSubscription = this.matchesService.getMatches$.subscribe(matches => {
-      console.log(matches, "hello from matches");
+      this.matches = matches;
     })
   }
 
