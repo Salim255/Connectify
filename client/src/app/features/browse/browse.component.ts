@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { BrowseService } from "./services/browse.serve";
+import { BrowseService } from "./services/browse.service";
 import { BrowseProfile } from "./model/browse.model";
 import { PAGES } from "src/app/shared/components/header/header.component";
 import { Subscription } from "rxjs";
@@ -13,19 +13,23 @@ import { Subscription } from "rxjs";
 
 export class BrowseComponent implements OnInit {
   pageName: PAGES = PAGES.BROWSE;
-  browseProfiles: BrowseProfile [];
+  browseProfiles: BrowseProfile [] | null = null;
 
   browseProfilesSubscription!: Subscription;
 
-  constructor(private browseService: BrowseService){
-    this.browseProfiles = this.browseService.BROWSE_PROFILES;
-  }
+  constructor(private browseService: BrowseService){}
+
   ngOnInit(): void {
     this.subscribeToBrowseProfiles();
   }
 
+  ionViewWillEnter(){
+    this.browseService.getBrowseProfiles().subscribe();
+  }
 
   subscribeToBrowseProfiles(): void{
-    this.browseProfilesSubscription = this.browseService.getBrowseProfiles().subscribe();
+    this.browseProfilesSubscription = this.browseService.getProfiles$.subscribe(profiles=> {
+      this.browseProfiles = profiles;
+    })
   }
 }
