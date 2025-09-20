@@ -99,7 +99,7 @@ export class ChatsService {
       ]
   }
 
-  fetchUserChats(): Observable<any>{
+  fetchUserChats(): Observable<ChatsResponse>{
     return this.chatsHttpService.fetchChats().pipe(
       tap((response) => {
         console.log(response);

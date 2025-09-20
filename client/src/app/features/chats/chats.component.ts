@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Chats } from "./model/chats.model";
 import { ChatsService } from "./services/chats.service";
 import { Router } from "@angular/router";
@@ -12,7 +12,7 @@ import { Subscription } from "rxjs";
   styleUrls: ['./chats.component.scss'],
   standalone: false,
 })
-export class ChatsComponent {
+export class ChatsComponent implements OnInit, OnDestroy {
   pageName: PAGES = PAGES.CHATS;
   chats: Chats;
 
@@ -45,5 +45,9 @@ export class ChatsComponent {
   get allChats(): Chat [] {
     const lstChat = this.chats;
     return lstChat;
+  }
+
+  ngOnDestroy(): void {
+    this.chatsSubscription?.unsubscribe();
   }
 }
