@@ -106,6 +106,7 @@ export class ChatsService {
       })
     )
   }
+
   setUserChats(chats: Chat[] | null): void{
     this.matchesSubject.next(chats);
   }
