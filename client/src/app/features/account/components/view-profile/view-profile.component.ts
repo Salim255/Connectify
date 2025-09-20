@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { AccountHeaderService } from "../../services/account-header.service";
 import { AccountService } from "../../services/account.service";
 import { Profile } from "src/app/features/profile/model/profile.model";
@@ -11,15 +11,13 @@ import { Subscription } from "rxjs";
   standalone: false
 })
 
-export class ViewProfileComponent {
+export class ViewProfileComponent implements OnInit {
   accountProfile: Profile | null = null;
   accountProfileSubscription!: Subscription;
 
   constructor(private accountService: AccountService){}
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.subscribeToAccountProfile();
   }
 
