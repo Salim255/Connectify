@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { AccountHeaderService } from "../../services/account-header.service";
 import { AccountService } from "../../services/account.service";
 import { Profile } from "src/app/features/profile/model/profile.model";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-view-profile',
@@ -11,8 +12,20 @@ import { Profile } from "src/app/features/profile/model/profile.model";
 })
 
 export class ViewProfileComponent {
-  accountProfile: Profile;
-  constructor(private accountService: AccountService){
-  this.accountProfile = this.accountService.accountProfile;
+  accountProfile: Profile | null = null;
+  accountProfileSubscription!: Subscription;
+
+  constructor(private accountService: AccountService){}
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.subscribeToAccountProfile();
+  }
+
+  subscribeToAccountProfile(){
+    this.accountProfileSubscription = this.accountService.getAccountProfile.subscribe(profile => {
+      this.accountProfile = profile;
+    })
   }
 }
