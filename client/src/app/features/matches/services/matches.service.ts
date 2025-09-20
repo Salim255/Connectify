@@ -3,12 +3,14 @@ import { Match, MatchStatus } from "../model/match.model";
 import { Profile } from "../../profile/model/profile.model";
 import { ProfileService } from "../../profile/services/profile.service";
 import { MatchesHttpService } from "./matches-http.service";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class MatchesService {
   profiles: Profile [];
   MATCHES_PLACEHOLDER: Match[];
+  private matchesSubject = new BehaviorSubject<Match[] | null>(null);
+
   constructor(
     private matchesHttpService: MatchesHttpService,
     private profileService: ProfileService,
@@ -70,5 +72,9 @@ export class MatchesService {
 
   getUserMatches(): Observable<any>{
     return this.matchesHttpService.fetchMatches();
+  }
+
+  setMatches(matches: Match[] | null): void{
+    this.matchesSubject.next(matches);
   }
 }
