@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { CanActivate, UrlTree } from "@angular/router";
-import { map, Observable, take } from "rxjs";
+import { combineLatest, filter, map, Observable, take } from "rxjs";
 import { ProfileService } from "src/app/features/profile/services/profile.service";
 import { Router } from "@angular/router";
 
@@ -13,7 +13,12 @@ export class ProfileGuard implements CanActivate {
   ){}
 
   canActivate(): Observable<boolean | UrlTree> {
-    return this.profileService.getProfile$.pipe(
+    return combineLatest([
+      this.profileService.getProfile$,
+      this.profileService.isLoadedProfile$,
+    ])
+    .pipe(
+      filter(([_, loaded ]) => loaded),
       take(1),
       map((profile) => {
         if(!profile){

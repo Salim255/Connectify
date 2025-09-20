@@ -1,10 +1,17 @@
 import { Injectable } from "@angular/core";
 import { Profile } from "../model/profile.model";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, tap } from "rxjs";
+import { ProfileHttpService, ProfileResponse } from "./profile-http.service";
+import { Router } from "@angular/router";
 
 @Injectable({providedIn: 'root'})
 export class ProfileService {
   profileSubject = new BehaviorSubject<Profile | null>(null);
+  private profileLoadedSubject = new BehaviorSubject<boolean>(false);
+
+  isLoadedProfile$ = this.profileLoadedSubject.asObservable();
+
+  constructor(private profileHttpService: ProfileHttpService){}
 
   PROFILES_PLACEHOLDER: Profile[] = [
       {
@@ -202,7 +209,17 @@ export class ProfileService {
   setProfile(profile: Profile){
     this.profileSubject.next(profile);
   }
+  fetchProfile(): Observable<ProfileResponse>{
+    return this.profileHttpService.fetchProfile().pipe(
+      tap((response) => {
+        if (response?.data?.profile) {
+          this.setProfile(response.data.profile);
+        }
 
+        this.profileLoadedSubject.next(true);
+      })
+    );
+  }
   get getProfile$(): Observable<Profile | null>{
     return this.profileSubject.asObservable();
   }
