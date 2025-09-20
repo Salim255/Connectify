@@ -2,12 +2,17 @@ import { Injectable } from "@angular/core";
 import { Match, MatchStatus } from "../model/match.model";
 import { Profile } from "../../profile/model/profile.model";
 import { ProfileService } from "../../profile/services/profile.service";
+import { MatchesHttpService } from "./matches-http.service";
+import { Observable } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class MatchesService {
   profiles: Profile [];
   MATCHES_PLACEHOLDER: Match[];
-  constructor(private profileService: ProfileService){
+  constructor(
+    private matchesHttpService: MatchesHttpService,
+    private profileService: ProfileService,
+  ){
     this.profiles = this.profileService.PROFILES_PLACEHOLDER;
     this.MATCHES_PLACEHOLDER = [
       {
@@ -63,4 +68,7 @@ export class MatchesService {
     ];
   }
 
+  getUserMatches(): Observable<any>{
+    return this.matchesHttpService.fetchMatches();
+  }
 }
