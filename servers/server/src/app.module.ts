@@ -10,6 +10,7 @@ import { UserModule } from './modules/users/user.module';
 import { ProfilesModule } from './modules/profiles/profiles.module';
 import { ChatUsersModule } from './modules/chat-users/chat-users.module';
 import { MessagesModule } from './modules/messages/messages.module';
+import { SocketModule } from './socket/socket.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { MessagesModule } from './modules/messages/messages.module';
     AuthModule,
     ChatsModule,
     DatabaseModule,
+    SocketModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
