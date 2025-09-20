@@ -77,4 +77,8 @@ export class MatchesService {
   setMatches(matches: Match[] | null): void{
     this.matchesSubject.next(matches);
   }
+
+  get getMatches$(): Observable<Match[] | null>{
+    return this.matchesSubject.asObservable();
+  }
 }
