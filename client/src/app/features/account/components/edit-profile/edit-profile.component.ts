@@ -42,8 +42,6 @@ export class EditProfileComponent implements OnInit {
       bio: [this.accountProfile?.bio, Validators.required],
       lifestyle: ['', Validators.required]
     });
-
-    console.log(this.editProfileForm.value, "Hello from form build");
   }
 
   onFileSelected(event: Event):void {
