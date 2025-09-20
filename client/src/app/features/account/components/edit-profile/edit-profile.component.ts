@@ -26,6 +26,7 @@ export class EditProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
+    this. subscribeToAccountProfile();
   }
 
   buildForm(){
