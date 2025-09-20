@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from "@angular/core";
 import { PAGES } from "src/app/shared/components/header/header.component";
 import { AccountHeaderService } from "./services/account-header.service";
 import { Subscription } from "rxjs";
+import { AccountService } from "./services/account.service";
 
 @Component({
   selector: 'app-account',
@@ -13,15 +14,25 @@ import { Subscription } from "rxjs";
 export class AccountComponent implements OnInit {
   pageName: PAGES = PAGES.ACCOUNT;
   private hideAccountHeaderSubscription!: Subscription;
+  private accountProfileSubscription!: Subscription;
 
-  constructor(private accountHeaderService: AccountHeaderService){}
+  constructor(
+    private accountService: AccountService,
+    private accountHeaderService: AccountHeaderService,
+  ){}
 
   isHidden = signal<boolean>(false)
 
   ngOnInit(): void {
     this.subscribeToHideHeader();
+    this.subscribeToAccountProfile();
   }
 
+  private subscribeToAccountProfile(){
+    this.accountProfileSubscription = this.accountService.getAccountProfile.subscribe(profile => {
+      console.log(profile);
+    })
+  }
   private subscribeToHideHeader(){
     this.hideAccountHeaderSubscription = this.accountHeaderService.getHideHeaderStatus$.subscribe(
       status => {
@@ -34,5 +45,6 @@ export class AccountComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.hideAccountHeaderSubscription?.unsubscribe();
+    this.accountProfileSubscription?.unsubscribe();
   }
 }
