@@ -18,7 +18,7 @@ export class MatchesHttpService {
 
   constructor(private http: HttpClient){}
 
-  fetchMatches():Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}/users`);
+  fetchMatches():Observable<MatchesResponse>{
+    return this.http.get<MatchesResponse>(`${this.baseUrl}/users`);
   }
 }
