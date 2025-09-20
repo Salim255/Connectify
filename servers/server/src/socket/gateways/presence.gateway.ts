@@ -2,10 +2,11 @@ import { Logger } from '@nestjs/common';
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
+  SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 
 // This gateway is a core gateway and should be registered at the
 //  application level, not just inside a feature module.
@@ -20,11 +21,24 @@ export class PresenceGateWay
 
   constructor() {}
 
-  handleConnection(client: any) {
-    this.logger.log('Hello from connection');
+  // Triggered automatically when a client connects
+  handleConnection(client: Socket) {
+    this.logger.log(`Client connected: ${client.id}`);
   }
 
-  handleDisconnect(client: any) {
-    this.logger.log('Hello from disconnection');
+  // Triggered automatically when a client disconnects
+  handleDisconnect(client: Socket) {
+    this.logger.log(`Client disconnected: ${client.id}`);
+  }
+
+  // This method listens for the 'ping' event sent by the client
+  @SubscribeMessage('ping')
+  handlePing(client: Socket, payload: any) {
+    this.logger.log(`Received ping from ${client.id}`, payload); // Log the ping
+    // Respond to the client with a 'pong' event and a message + timestamp
+    client.emit('pong', {
+      message: 'pong received',
+      time: new Date(),
+    });
   }
 }
