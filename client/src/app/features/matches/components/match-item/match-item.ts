@@ -18,7 +18,7 @@ export class MatchItemComponent {
   }
 
   get avatar(): string{
-    console.log(this.match())
+   // console.log(this.match())
     return this.match()?.profile?.avatarUrl ?? '';
   }
 
