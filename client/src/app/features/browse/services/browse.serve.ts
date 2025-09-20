@@ -2,11 +2,13 @@ import { Injectable } from "@angular/core";
 import { Profile } from "../../profile/model/profile.model";
 import { ProfileService } from "../../profile/services/profile.service";
 import { BrowseHttpService } from "./browse-http.service";
-import { Observable, tap } from "rxjs";
+import { BehaviorSubject, Observable, tap } from "rxjs";
 @Injectable({providedIn: 'root'})
 
 export class BrowseService {
   BROWSE_PROFILES: Profile [];
+
+  browseProfileSubscription = new BehaviorSubject<Profile[] | null>(null);
 
   constructor(
     private browseHttpService: BrowseHttpService,
@@ -21,5 +23,9 @@ export class BrowseService {
         console.log(response);
       })
     );
+  }
+
+  get getProfiles$(): Observable<Profile[] | null>{
+    return this.browseProfileSubscription.asObservable();
   }
 }
