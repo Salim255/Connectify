@@ -3,7 +3,7 @@ import { Chats } from "../model/chats.model";
 import { ProfileService } from "../../profile/services/profile.service";
 import { Profile } from "../../profile/model/profile.model";
 import { ChatsHttpService } from "./chats-http.service";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, tap } from "rxjs";
 import { Chat } from "../../chat/model/chat.model";
 
 @Injectable({providedIn: 'root'})
@@ -99,6 +99,13 @@ export class ChatsService {
       ]
   }
 
+  fetchUserChats(): Observable<any>{
+    return this.chatsHttpService.fetchChats().pipe(
+      tap((response) => {
+        console.log(response);
+      })
+    )
+  }
   setUserChats(chats: Chat[] | null): void{
     this.matchesSubject.next(chats);
   }
