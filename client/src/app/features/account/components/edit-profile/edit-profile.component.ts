@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AccountService } from "../../services/account.service";
 import { Profile } from "src/app/features/profile/model/profile.model";
 import { PhotoCaptureResult, PhotoService } from "src/app/core/services/media/photo.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-edit-profile',
@@ -14,15 +15,14 @@ import { PhotoCaptureResult, PhotoService } from "src/app/core/services/media/ph
 export class EditProfileComponent implements OnInit {
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
   editProfileForm!: FormGroup;
-  accountProfile: Profile;
+  accountProfile: Profile | null = null;
+  accountProfileSubscription!: Subscription;
 
   constructor(
     private photoService: PhotoService,
     private accountService: AccountService,
     private formBuilder: FormBuilder,
-  ){
-    this.accountProfile = this.accountService.accountProfile;
-  }
+  ){}
 
   ngOnInit(): void {
     this.buildForm();
@@ -30,15 +30,15 @@ export class EditProfileComponent implements OnInit {
 
   buildForm(){
     this.editProfileForm = this.formBuilder.group({
-      avatar: [this.accountProfile.avatarUrl, Validators.required],
-      name: [this.accountProfile.name, Validators.required],
-      age: [this.accountProfile.age, Validators.required],
-      gender: [this.accountProfile.gender, Validators.required],
+      avatar: [this.accountProfile?.avatarUrl, Validators.required],
+      name: [this.accountProfile?.name, Validators.required],
+      age: [this.accountProfile?.age, Validators.required],
+      gender: [this.accountProfile?.gender, Validators.required],
       location: [
         `${this.accountProfile?.location?.country}, ${this.accountProfile?.location?.city} `,
          Validators.required,
         ],
-      bio: [this.accountProfile.bio, Validators.required],
+      bio: [this.accountProfile?.bio, Validators.required],
       lifestyle: ['', Validators.required]
     })
   }
@@ -53,7 +53,10 @@ export class EditProfileComponent implements OnInit {
     if (result && result as PhotoCaptureResult) {
       //this.photoUploads[this.clickedPhotoIndex] = result.formData;
       //this.photos.at(this.clickedPhotoIndex).setValue(result.preview );
-      this.accountProfile.avatarUrl = result.preview;
+      if (this.accountProfile) {
+        this.accountProfile.avatarUrl = result.preview;
+      }
+
     }
   }
 
@@ -85,5 +88,11 @@ export class EditProfileComponent implements OnInit {
     const input = this.fileInputRef.nativeElement;
     input.value = ''; // reset input so it always triggers change
     input.click();
+  }
+
+  subscribeToAccountProfile(){
+    this.accountProfileSubscription = this.accountService.getAccountProfile.subscribe(profile => {
+      this.accountProfile = profile;
+    })
   }
 }
