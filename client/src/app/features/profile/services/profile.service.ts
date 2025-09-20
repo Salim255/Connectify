@@ -11,10 +11,7 @@ export class ProfileService {
 
   isLoadedProfile$ = this.profileLoadedSubject.asObservable();
 
-  constructor(
-    private router: Router,
-    private profileHttpService: ProfileHttpService,
-  ){}
+  constructor(private profileHttpService: ProfileHttpService){}
 
   PROFILES_PLACEHOLDER: Profile[] = [
       {
@@ -210,7 +207,6 @@ export class ProfileService {
     ];
 
   setProfile(profile: Profile){
-    console.log(profile);
     this.profileSubject.next(profile);
   }
   fetchProfile(): Observable<ProfileResponse>{
