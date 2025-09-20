@@ -2,13 +2,22 @@ import { Injectable } from "@angular/core";
 import { Chats } from "../model/chats.model";
 import { ProfileService } from "../../profile/services/profile.service";
 import { Profile } from "../../profile/model/profile.model";
+import { ChatsHttpService } from "./chats-http.service";
+import { BehaviorSubject, Observable } from "rxjs";
+import { Chat } from "../../chat/model/chat.model";
 
 @Injectable({providedIn: 'root'})
 export class ChatsService {
   profiles: Profile [];
   // Placeholder chats
  CHATS_PLACEHOLDER: Chats;
- constructor(private profileService: ProfileService){
+
+ matchesSubject = new BehaviorSubject< Chat[] | null>(null);
+
+ constructor(
+  private chatsHttpService: ChatsHttpService,
+  private profileService: ProfileService,
+ ){
     this.profiles = this.profileService.PROFILES_PLACEHOLDER;
     this.CHATS_PLACEHOLDER =
        [
@@ -88,5 +97,9 @@ export class ChatsService {
           updatedAt: new Date(),
         },
       ]
+  }
+
+  get getUserChats$(): Observable<Chat[] | null>{
+    return this.matchesSubject.asObservable();
   }
 }
