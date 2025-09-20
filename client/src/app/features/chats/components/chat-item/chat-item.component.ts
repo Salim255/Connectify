@@ -15,7 +15,7 @@ export class ChatItemComponent {
   openChat(chat: Chat | undefined): void {}
 
   get avatarUrl(): string {
-    return this.chat()?.participants[0].profile.avatarUrl ?? '';
+    return this.chat()?.participants[0]?.profile?.avatarUrl ?? '';
   }
 
   get unreadCount(): number{

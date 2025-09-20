@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Chats } from "../model/chats.model";
 import { ProfileService } from "../../profile/services/profile.service";
 import { Profile } from "../../profile/model/profile.model";
-import { ChatsHttpService } from "./chats-http.service";
+import { ChatsHttpService, ChatsResponse } from "./chats-http.service";
 import { BehaviorSubject, Observable, tap } from "rxjs";
 import { Chat } from "../../chat/model/chat.model";
 
@@ -103,6 +103,7 @@ export class ChatsService {
     return this.chatsHttpService.fetchChats().pipe(
       tap((response) => {
         console.log(response);
+        this.setUserChats(response?.data?.chats ?? null)
       })
     )
   }

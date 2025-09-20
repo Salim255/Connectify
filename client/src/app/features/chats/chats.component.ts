@@ -14,7 +14,7 @@ import { Subscription } from "rxjs";
 })
 export class ChatsComponent implements OnInit, OnDestroy {
   pageName: PAGES = PAGES.CHATS;
-  chats: Chats;
+  chats: Chats | null = null;
 
   private chatsSubscription!: Subscription;
 
@@ -23,8 +23,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.subscribeToChats();
   }
 
@@ -35,6 +33,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   subscribeToChats(){
     this.chatsSubscription =  this.chatsService.getUserChats$.subscribe(chats => {
       console.log(chats);
+      this.chats = chats;
     })
   }
 
@@ -42,9 +41,9 @@ export class ChatsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/chat'])
   }
 
-  get allChats(): Chat [] {
+  get allChats(): Chat [] | [] {
     const lstChat = this.chats;
-    return lstChat;
+    return lstChat ??  [];
   }
 
   ngOnDestroy(): void {
