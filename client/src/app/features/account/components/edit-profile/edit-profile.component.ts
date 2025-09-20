@@ -25,8 +25,8 @@ export class EditProfileComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    this.buildForm();
     this. subscribeToAccountProfile();
+    this.buildForm();
   }
 
   buildForm(){
@@ -41,10 +41,12 @@ export class EditProfileComponent implements OnInit {
         ],
       bio: [this.accountProfile?.bio, Validators.required],
       lifestyle: ['', Validators.required]
-    })
+    });
+
+    console.log(this.editProfileForm.value, "Hello from form build");
   }
 
-    onFileSelected(event: Event):void {
+  onFileSelected(event: Event):void {
 
     const input = event.target as HTMLInputElement;
     if (!input.files?.length) return;
