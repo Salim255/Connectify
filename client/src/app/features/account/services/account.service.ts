@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { ProfileService } from "../../profile/services/profile.service";
 import { Profile } from "../../profile/model/profile.model";
 import { BehaviorSubject, Observable } from "rxjs";
 
