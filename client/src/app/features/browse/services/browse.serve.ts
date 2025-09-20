@@ -17,7 +17,7 @@ export class BrowseService {
     this.BROWSE_PROFILES  = this.profileService.PROFILES_PLACEHOLDER;
   }
 
-  getProfiles():Observable<any>{
+  getBrowseProfiles():Observable<any>{
     return this.browseHttpService.fetchProfiles().pipe(
       tap((response) => {
         console.log(response);
@@ -25,6 +25,9 @@ export class BrowseService {
     );
   }
 
+  setBrowseProfiles(profiles: Profile[] | null): void {
+    this.browseProfileSubscription.next(profiles)
+  }
   get getProfiles$(): Observable<Profile[] | null>{
     return this.browseProfileSubscription.asObservable();
   }
