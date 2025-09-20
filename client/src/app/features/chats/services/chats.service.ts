@@ -99,6 +99,10 @@ export class ChatsService {
       ]
   }
 
+  setUserChats(chats: Chat[] | null): void{
+    this.matchesSubject.next(chats);
+  }
+
   get getUserChats$(): Observable<Chat[] | null>{
     return this.matchesSubject.asObservable();
   }
