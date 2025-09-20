@@ -44,6 +44,7 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
+    console.log('destroy')
     this.hideAccountHeaderSubscription?.unsubscribe();
     this.accountProfileSubscription?.unsubscribe();
   }

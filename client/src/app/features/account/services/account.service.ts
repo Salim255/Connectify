@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 export class AccountService {
   accountProfileSubject = new BehaviorSubject<Profile | null>(null);
 
-  constructor(private profileService: ProfileService){}
+  constructor(){}
 
   setAccountProfile(profile: Profile): void{
     this.accountProfileSubject.next(profile);
