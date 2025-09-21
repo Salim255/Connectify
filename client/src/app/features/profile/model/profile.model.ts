@@ -1,5 +1,6 @@
 export interface Profile {
   id: string;                          // unique profile ID
+  userId: string;
   name: string;                        // display name
   age: number;                         // required for dating/browse
   gender?: 'male' | 'female' | 'non-binary' | 'other';

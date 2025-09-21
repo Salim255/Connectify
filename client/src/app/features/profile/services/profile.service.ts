@@ -21,6 +21,7 @@ export class ProfileService {
       {
         id: 'p1',
         name: 'Alice Johnson',
+        userId: '1',
         age: 25,
         gender: 'female',
         avatarUrl: 'https://images.pexels.com/photos/2787341/pexels-photo-2787341.jpeg',
@@ -39,6 +40,7 @@ export class ProfileService {
       },
       {
         id: 'p2',
+        userId: '1',
         name: 'Bob Smith',
         age: 28,
         gender: 'male',
@@ -58,6 +60,7 @@ export class ProfileService {
       },
       {
         id: 'p3',
+        userId: '1',
         name: 'Clara Lee',
         age: 23,
         gender: 'female',
@@ -77,6 +80,7 @@ export class ProfileService {
       },
       {
         id: 'p4',
+            userId: '1',
         name: 'David Kim',
         age: 30,
         gender: 'male',
@@ -96,6 +100,7 @@ export class ProfileService {
       },
       {
         id: 'p5',
+            userId: '1',
         name: 'Emma Wilson',
         age: 27,
         gender: 'female',
@@ -115,6 +120,7 @@ export class ProfileService {
       },
       {
         id: 'p6',
+            userId: '1',
         name: 'Frank Miller',
         age: 29,
         gender: 'male',
@@ -134,6 +140,7 @@ export class ProfileService {
       },
       {
         id: 'p7',
+            userId: '1',
         name: 'Grace Park',
         age: 24,
         gender: 'female',
@@ -153,6 +160,7 @@ export class ProfileService {
       },
       {
         id: 'p8',
+            userId: '1',
         name: 'Henry Davis',
         age: 31,
         gender: 'male',
@@ -172,6 +180,7 @@ export class ProfileService {
       },
       {
         id: 'p9',
+            userId: '1',
         name: 'Isabella Martinez',
         age: 26,
         gender: 'female',
@@ -191,6 +200,7 @@ export class ProfileService {
       },
       {
         id: 'p10',
+            userId: '1',
         name: 'Jack Thompson',
         age: 32,
         gender: 'male',

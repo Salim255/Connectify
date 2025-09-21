@@ -6,6 +6,8 @@ import { Observable, of } from "rxjs";
 import { ChatHttpService } from "./chat-http.service";
 import { AccountService } from "../../account/services/account.service";
 import { Chat } from "../model/chat.model";
+import { MessageHttpService, MessagePostPayload } from "./message-http.service";
+import { AuthService } from "../../auth/services/auth.service";
 
 @Injectable({providedIn: 'root'})
 export class ChatService{
@@ -143,11 +145,12 @@ export class ChatService{
   ];
 
   partnerProfile: Profile;
-
   constructor(
+    private messageHttpService: MessageHttpService,
     private chatHttpService: ChatHttpService,
     private profileService:  ProfileService,
     private accountService: AccountService,
+    private authService: AuthService,
   ){
     this.partnerProfile = this.profileService.PROFILES_PLACEHOLDER[0];
   }
@@ -167,7 +170,11 @@ export class ChatService{
     return this.chatHttpService.createChat(data);
   }
 
-  sendMessage(data: any){
-    return this.chatHttpService.sendMessage(data);
+  sendMessage(content: string): Observable<any>{
+    const userid = this.accountService?.accountProfile?.userId;
+    const chatId = this.activeChat.id;
+     if (!userid || !chatId ) return of(null);
+    const payload: MessagePostPayload = { chatId, senderId: userid, content }
+    return this.messageHttpService.createMessage(payload);
   }
 }

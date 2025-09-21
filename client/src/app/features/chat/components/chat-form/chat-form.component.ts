@@ -16,8 +16,9 @@ export class ChatFomComponent {
   constructor(private chatService: ChatService){}
 
   onSubmit(form: NgForm): void {
-    if(!this.textMessage.trim().length) return;
-    console.log(this.textMessage);
+
+    if(!this.textMessage.trim().length || !form.valid ) return;
+
     this.chatService.sendMessage(this.textMessage).subscribe({
       next: (res) => {
         console.log(res)
