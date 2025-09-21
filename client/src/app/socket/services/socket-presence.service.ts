@@ -49,5 +49,6 @@ export class SocketCoreService {
   disconnect(): void {
     this.socket?.disconnect();
     this.socket = null;
+    //
   }
 }
