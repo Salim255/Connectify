@@ -35,4 +35,8 @@ export class ChatHttpService {
       }
     })
   }
+
+  createChat(data: any){
+    return this.http.post<any>(this.baseUrl, {data})
+  }
 }
