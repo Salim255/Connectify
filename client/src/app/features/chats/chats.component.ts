@@ -37,7 +37,8 @@ export class ChatsComponent implements OnInit, OnDestroy {
     })
   }
 
-  selectChat(): void {
+  selectChat(chat: Chat): void {
+    //console.log(chat);
     this.router.navigate(['/chat'])
   }
 

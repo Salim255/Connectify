@@ -3,7 +3,7 @@
    <app-custom-grid>
      <ion-list>
         @for(chat of allChats; track chat.id){
-          <app-chat-item (click)="selectChat()" [chat]="chat"></app-chat-item>
+          <app-chat-item (click)="selectChat(chat)" [chat]="chat"></app-chat-item>
         }
       </ion-list>
    </app-custom-grid>

@@ -14,7 +14,8 @@ export class MatchItemComponent {
   constructor(private router: Router){}
 
   onChat(){
-    this.router.navigate(['/chat'])
+    console.log(this.match())
+    //this.router.navigate(['/chat'])
   }
 
   get avatar(): string{

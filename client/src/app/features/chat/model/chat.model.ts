@@ -1,8 +1,8 @@
 import { Message } from "../../chat/model/message.model";
 import { Profile } from "../../profile/model/profile.model";
 
-export interface Chat {
-  id: string;                     // Unique conversation ID
+export class Chat {
+  id: string | null;              // Unique conversation ID
   participants: ChatUser[];       // Users involved in this chat
   messages: Message[];            // Messages in the chat
   title?: string;                 // Optional: conversation title (for groups)
@@ -14,6 +14,24 @@ export interface Chat {
   pinned?: boolean;               // Optional: for pinning favorite chats
   archived?: boolean;             // Optional: if chat is archived
   muted?: boolean;
+
+  constructor(
+    id: string | null = null,
+    participants: ChatUser [] = [],
+    messages: Message[] = [],
+    isGroup: boolean = false,
+  ){
+    this.id = id;
+    this.participants = participants;
+    this.messages = messages;
+    this.isGroup = isGroup;
+    this.unreadCount = 0;
+    this.createdAt = new Date();
+    this.updatedAt = new Date();
+    this.pinned = false;
+    this.archived = false;
+    this.muted = false;
+  }
 }
 
 export interface ChatUser {
