@@ -4,6 +4,7 @@ import { User } from "../model/user.model";
 import { Preferences } from '@capacitor/preferences';
 import { AuthHttpService, AuthResponse, LoginPayload, SignupPayload } from "./auth-http.service";
 import { ProfileService } from "../../profile/services/profile.service";
+import { SocketCoreService } from "src/app/socket/services/socket-presence.service";
 
 @Injectable({providedIn: "root"})
 export class AuthService {
@@ -11,6 +12,7 @@ export class AuthService {
   activeLogoutTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor(
+    private socketCoreService: SocketCoreService,
     private profileService : ProfileService,
     private authHttpService: AuthHttpService,
   ){}
@@ -105,8 +107,8 @@ export class AuthService {
     }
 
     this.user.next(null);
+    this.socketCoreService.disconnect();
     this.removeStoredData();
-    console.log(this.user.value, 'hello');
   }
 
   get userId(): Observable<string | null> {
