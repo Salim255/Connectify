@@ -106,6 +106,7 @@ export class AuthService {
 
     this.user.next(null);
     this.removeStoredData();
+    console.log(this.user.value, 'hello');
   }
 
   get userId(): Observable<string | null> {
