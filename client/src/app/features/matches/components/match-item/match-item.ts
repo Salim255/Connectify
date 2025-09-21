@@ -1,6 +1,7 @@
 import { Component, input } from "@angular/core";
 import { Router } from "@angular/router";
 import { Match } from "../../model/match.model";
+import { ChatService } from "src/app/features/chat/services/chat.service";
 
 @Component({
   selector: 'app-match-item',
@@ -11,10 +12,17 @@ import { Match } from "../../model/match.model";
 export class MatchItemComponent {
   match = input<Match>();
 
-  constructor(private router: Router){}
+  constructor(
+    private chatService: ChatService,
+    private router: Router){}
 
   onChat(){
-    console.log(this.match())
+    console.log(this.match());
+    const participantId = this.match()?.profile?.id ?? null;
+    if (!participantId)  return;
+    this.chatService.fetchChatByUsersIds(participantId).subscribe(res=>{
+      console.log(res);
+    });
     //this.router.navigate(['/chat'])
   }
 

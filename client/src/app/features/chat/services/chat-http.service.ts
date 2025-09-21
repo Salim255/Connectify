@@ -11,10 +11,14 @@ export class ChatHttpService {
   constructor(private http: HttpClient){}
 
   fetchChatByChatId(chatId: string): Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}/${chatId}`)
+    return this.http.get<any>(`${this.baseUrl}`, {
+      params: {chatId}
+    })
   }
 
-  fetchChatByUsersIds(): Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}/by-users-ids`)
+  fetchChatByUsersIds(participantId: string): Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}/users`,{
+      params: { participantId }
+    })
   }
 }

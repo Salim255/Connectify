@@ -42,3 +42,13 @@ export class GetAllChatsResponseDto {
 }
 
 export class GetUserChatsResponseDto extends GetAllChatsResponseDto {}
+
+export class GetSingleChatResponseDto {
+  @ApiProperty({ description: 'Get single chat status' })
+  status: string;
+
+  @ApiProperty({ description: 'Response data' })
+  data: {
+    chat: Chat;
+  };
+}
