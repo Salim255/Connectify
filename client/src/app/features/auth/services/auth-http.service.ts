@@ -33,6 +33,7 @@ export class AuthHttpService {
   private baseUrl: string = `${this.ENV.apiUrl}/users`;
 
   constructor(private http: HttpClient){}
+
   logIn(data: LoginPayload): Observable<AuthResponse>{
     return this.http.post<AuthResponse>(`${this.baseUrl}/login`, data);
   }

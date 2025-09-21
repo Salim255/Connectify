@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, take } from "rxjs";
 import { io, Socket } from "socket.io-client";
 import { environment } from "../../../environments/environment";
+import { Preferences } from "@capacitor/preferences";
 
 export enum ConnectionStatus {
   Online = 'online',
@@ -13,17 +14,34 @@ export class SocketCoreService {
   private socket: Socket | null = null;
   private ENV = environment;
   private baseUrl: string = `${this.ENV.socketUrl}`;
+  private token: string | null = null;
 
   private connectionStatusSubject =
     new BehaviorSubject<ConnectionStatus>(ConnectionStatus.Offline);
   readonly connectionStatus$ = this.connectionStatusSubject.asObservable();
+
   constructor( ){}
 
-  initialize(userId: string): void {
+  async loadToken(): Promise<void> {
+    const { value } = await Preferences.get({ key: 'authData' });
+    if (value) {
+      const parsedData = JSON.parse(value) as {
+        _token: string;
+        userId: string;
+        tokenExpirationDate: string;
+      };
+      this.token = parsedData._token;
+    }
+  }
+
+  async initialize(userId: string): Promise<void> {
      // If a socket instance already exists, don’t recreate it
     if (this.socket) {
       return;
     }
+
+    // Fetch token from Capacitor Preferences
+    const { value } = await Preferences.get({ key: 'authData' });
 
     this.socket = io(this.baseUrl, {
       reconnection: true,
@@ -49,6 +67,5 @@ export class SocketCoreService {
   disconnect(): void {
     this.socket?.disconnect();
     this.socket = null;
-
   }
 }
