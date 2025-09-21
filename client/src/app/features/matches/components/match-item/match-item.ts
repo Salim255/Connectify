@@ -15,10 +15,10 @@ export class MatchItemComponent {
 
   constructor(
     private chatService: ChatService,
-    private router: Router){}
+    private router: Router,
+  ){}
 
   onChat(){
-    console.log(this.match());
     const profile = this.match()?.profile;
 
     if (!profile)  return;

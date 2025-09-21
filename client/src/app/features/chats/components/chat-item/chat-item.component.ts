@@ -1,6 +1,6 @@
 import { Component, input } from "@angular/core";
 import { Chat } from "src/app/features/chat/model/chat.model";
-
+import { ChatService } from "src/app/features/chat/services/chat.service";
 
 @Component({
   selector: 'app-chat-item',
@@ -12,7 +12,11 @@ import { Chat } from "src/app/features/chat/model/chat.model";
 export class ChatItemComponent {
   chat = input<Chat>();
 
-  openChat(chat: Chat | undefined): void {}
+  constructor(private chatService : ChatService ){}
+
+  openChat(): void {
+    console.log(this.chat())
+  }
 
   get avatarUrl(): string {
     return this.chat()?.participants[0]?.profile?.avatarUrl ?? '';

@@ -18,7 +18,10 @@ export class ChatsComponent implements OnInit, OnDestroy {
 
   private chatsSubscription!: Subscription;
 
-  constructor(private router: Router, private chatsService:ChatsService){
+  constructor(
+    private router: Router,
+    private chatsService: ChatsService,
+  ){
     this.chats = this.chatsService.CHATS_PLACEHOLDER;
   }
 
@@ -35,11 +38,6 @@ export class ChatsComponent implements OnInit, OnDestroy {
       console.log(chats);
       this.chats = chats;
     })
-  }
-
-  selectChat(chat: Chat): void {
-    //console.log(chat);
-    this.router.navigate(['/chat'])
   }
 
   get allChats(): Chat [] | [] {

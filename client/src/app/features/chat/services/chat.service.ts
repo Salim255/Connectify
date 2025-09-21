@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Message } from "../model/message.model";
 import { Profile } from "../../profile/model/profile.model";
 import { ProfileService } from "../../profile/services/profile.service";
-import { Observable, of, tap } from "rxjs";
+import { BehaviorSubject, Observable, of, tap } from "rxjs";
 import { ChatHttpService, CreateChatPayload } from "./chat-http.service";
 import { AccountService } from "../../account/services/account.service";
 import { Chat } from "../model/chat.model";
@@ -11,8 +11,8 @@ import { AuthService } from "../../auth/services/auth.service";
 
 @Injectable({providedIn: 'root'})
 export class ChatService{
-  activeChat: Chat = new Chat(null);
- placeholderMessages: Message[] = [
+  private activeChatSubject = new BehaviorSubject< Chat>(new Chat(null));
+  placeholderMessages: Message[] = [
   {
     id: 'msg1',
     chatId: 'conv1',
@@ -172,11 +172,11 @@ export class ChatService{
 
   sendMessage(content: string): Observable<any>{
     const profile = this.accountService?.accountProfile;
-    const chatId = this.activeChat.id;
+    const chatId = this.getActiveChat.id;
     if (!profile ) return of(null);
 
     if (!chatId) {
-    const receiverProfile = this.activeChat.participants[0].profile;
+    const receiverProfile = this.getActiveChat.participants[0].profile;
     const payLoad: CreateChatPayload = {
         content,
         senderProfileId: profile.id,
@@ -190,5 +190,13 @@ export class ChatService{
     }
     const payload: MessagePostPayload = { chatId, senderId: profile.userId, content }
     return this.messageHttpService.createMessage(payload);
+  }
+
+  setActiveChat(chat: Chat){
+    this.activeChatSubject.next(chat);
+  }
+
+  get getActiveChat(): Chat{
+    return this.activeChatSubject.value;
   }
 }
