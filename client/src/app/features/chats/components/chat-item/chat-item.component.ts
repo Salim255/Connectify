@@ -1,4 +1,5 @@
 import { Component, input } from "@angular/core";
+import { Router } from "@angular/router";
 import { Chat } from "src/app/features/chat/model/chat.model";
 import { ChatService } from "src/app/features/chat/services/chat.service";
 
@@ -12,10 +13,16 @@ import { ChatService } from "src/app/features/chat/services/chat.service";
 export class ChatItemComponent {
   chat = input<Chat>();
 
-  constructor(private chatService : ChatService ){}
+  constructor(
+    private router: Router,
+    private chatService : ChatService,
+  ){}
 
   openChat(): void {
-    console.log(this.chat())
+    const chat = this.chat();
+    if(!chat) return;
+    this.chatService.setActiveChat(chat);
+    this.router.navigate(['/chat']);
   }
 
   get avatarUrl(): string {

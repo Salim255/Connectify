@@ -25,9 +25,9 @@ export class MatchItemComponent {
     this.chatService.fetchChatByProfilesIds(profile.id).subscribe({
       next: (response) => {
         if (response?.data?.chat?.id){
-          this.chatService.activeChat = response.data.chat;
+          this.chatService.setActiveChat(response.data.chat);
         } else {
-          this.chatService.activeChat = new Chat(null, [{ profile: profile }])
+          this.chatService.setActiveChat(new Chat(null, [{ profile: profile }]))
         }
         this.router.navigate(['/chat'])
       },

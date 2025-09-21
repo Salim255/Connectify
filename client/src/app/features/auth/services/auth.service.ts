@@ -33,6 +33,7 @@ export class AuthService {
       tap((result) => {
         if (result?.data?.user?.id){
           this.setAuthData(result);
+          this.profileService.fetchProfile().subscribe();
         }
       })
     )

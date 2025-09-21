@@ -64,7 +64,15 @@ export class GetProfilesResponseDto {
   };
 }
 
-export class GetProfileResponseDto extends CreateProfileResponseDto {}
+export class GetProfileResponseDto {
+  @ApiProperty({ description: 'Profile create response status' })
+  status: string;
+
+  @ApiProperty({ description: 'Response data' })
+  data: {
+    profile: Profile | null;
+  };
+}
 
 export class UpdateProfileConnectionStatusDto {
   status: ProfileConnectionStatus;

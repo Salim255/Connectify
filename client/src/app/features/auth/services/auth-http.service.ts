@@ -38,7 +38,8 @@ export class AuthHttpService {
     return this.http.post<AuthResponse>(`${this.baseUrl}/login`, data);
   }
 
-   signup(data: SignupPayload): Observable<AuthResponse>{
+  signup(data: SignupPayload): Observable<AuthResponse>{
+    console.log(data)
     return this.http.post<AuthResponse>(`${this.baseUrl}/signup`, data);
   }
 }

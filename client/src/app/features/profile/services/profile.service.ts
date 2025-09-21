@@ -227,6 +227,7 @@ export class ProfileService {
   fetchProfile(): Observable<ProfileResponse>{
     return this.profileHttpService.fetchProfile().pipe(
       tap((response) => {
+        console.log(response, "hello profile servcie")
         if (response?.data?.profile) {
           this.setProfile(response.data.profile);
           this.accountService.setAccountProfile(response.data.profile);

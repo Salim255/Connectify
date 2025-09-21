@@ -13,7 +13,7 @@ export class ChatComponent implements OnInit{
   activeChat: Chat;
   constructor(private chatService: ChatService){
     //this.messages =  this.chatService.placeholderMessages;
-    this.activeChat = this.chatService.activeChat;
+    this.activeChat = this.chatService.getActiveChat;
     this.messages = this.activeChat.messages;
   }
 
@@ -21,6 +21,6 @@ export class ChatComponent implements OnInit{
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     console.log("hellof rom chat compoent");
-    console.log(this.chatService.activeChat);
+    console.log(this.activeChat);
   }
 }

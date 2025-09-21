@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  NotFoundException,
-  Post,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ProfilesService } from '../services/profiles.service';
 import {
@@ -70,15 +62,10 @@ export class ProfilesController {
     const profile: Profile | null =
       await this.profilesService.getProfileByUserId(userId);
 
-    if (!profile) {
-      throw new NotFoundException(
-        `Profile for user ID ${userId} was not found or could not be retrieved.`,
-      );
-    }
     return {
       status: 'Success',
       data: {
-        profile,
+        profile: profile,
       },
     };
   }
