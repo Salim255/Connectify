@@ -1,11 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { ProfilesService } from 'src/modules/profiles/services/profiles.service';
 
 @Injectable()
 export class PresenceService {
   private onlineUsers = new Map<string, string>();
   private logger = new Logger();
 
-  constructor() {}
+  constructor(private profilesService: ProfilesService) {}
 
   registerUser(userId: string, socketId: string): void {
     // Save the socket

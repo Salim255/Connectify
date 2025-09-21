@@ -9,6 +9,14 @@ export enum UserGender {
   OTHER = 'other',
 }
 
+export enum ProfileConnectionStatus {
+  ONLINE = 'online',
+  OFFLINE = 'offline',
+  AWAY = 'away',
+  BUSY = 'busy',
+  INVISIBLE = 'invisible',
+}
+
 export class CreateProfileDto {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   @IsNotEmpty()

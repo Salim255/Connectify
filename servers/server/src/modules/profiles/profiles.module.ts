@@ -9,5 +9,6 @@ import { AuthModule } from '../auth/auth.module';
   imports: [AuthModule, DatabaseModule],
   providers: [profileRepository, ProfilesService],
   controllers: [ProfilesController],
+  exports: [ProfilesService],
 })
 export class ProfilesModule {}

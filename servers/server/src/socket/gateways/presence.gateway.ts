@@ -11,7 +11,7 @@ import { JwtTokenService } from 'src/modules/auth/services/jwt-token.service';
 import { PresenceService } from '../services/presence.service';
 
 // This gateway is a core gateway and should be registered at the
-//  application level, not just inside a feature module.
+// application level, not just inside a feature module.
 @WebSocketGateway({ core: true })
 export class PresenceGateWay
   implements OnGatewayConnection, OnGatewayDisconnect
