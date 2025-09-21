@@ -2,6 +2,7 @@ import { Component, input } from "@angular/core";
 import { Router } from "@angular/router";
 import { Match } from "../../model/match.model";
 import { ChatService } from "src/app/features/chat/services/chat.service";
+import { Chat } from "src/app/features/chat/model/chat.model";
 
 @Component({
   selector: 'app-match-item',
@@ -18,12 +19,23 @@ export class MatchItemComponent {
 
   onChat(){
     console.log(this.match());
-    const participantId: string | null = this.match()?.profile?.id ?? null;
-    if (!participantId)  return;
-    this.chatService.fetchChatByProfilesIds(participantId).subscribe(res=>{
-      console.log(res);
+    const profile = this.match()?.profile;
+
+    if (!profile)  return;
+    this.chatService.fetchChatByProfilesIds(profile.id).subscribe({
+      next: (response) => {
+        if (response?.data?.chat?.id){
+          this.chatService.activeChat = response.data.chat;
+        } else {
+          this.chatService.activeChat = new Chat(null, [{ profile: profile }])
+        }
+        this.router.navigate(['/chat'])
+      },
+      error: () => {
+
+      }
     });
-    //this.router.navigate(['/chat'])
+
   }
 
   get avatar(): string{

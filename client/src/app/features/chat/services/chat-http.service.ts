@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Chat } from "../model/chat.model";
 
-export type ChatResponse = {
+export type GetChatResponse = {
   status: 'Success';
   data: {
     chat: Chat
@@ -18,13 +18,16 @@ export class ChatHttpService {
 
   constructor(private http: HttpClient){}
 
-  fetchChatByChatId(chatId: string): Observable<any>{
+  fetchChatByChatId(chatId: string): Observable<GetChatResponse>{
     return this.http.get<any>(`${this.baseUrl}`, {
       params: {chatId}
     })
   }
 
-  fetchChatByProfilesIds(senderProfileId: string, receiverProfileId: string): Observable<any>{
+  fetchChatByProfilesIds(
+    senderProfileId: string,
+    receiverProfileId: string,
+  ): Observable< GetChatResponse>{
     return this.http.get<any>(`${this.baseUrl}/profiles`,{
       params: {
         senderProfileId,

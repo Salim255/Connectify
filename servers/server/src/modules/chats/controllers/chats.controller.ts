@@ -137,9 +137,7 @@ export class ChatsController {
       senderProfileId,
       receiverProfileId,
     );
-    if (!chat) {
-      throw new NotFoundException(`No chat found`);
-    }
+
     return {
       status: 'Success',
       data: { chat: chat },

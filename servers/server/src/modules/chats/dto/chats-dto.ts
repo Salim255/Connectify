@@ -49,6 +49,6 @@ export class GetSingleChatResponseDto {
 
   @ApiProperty({ description: 'Response data' })
   data: {
-    chat: Chat;
+    chat: Chat | null;
   };
 }

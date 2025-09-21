@@ -5,10 +5,11 @@ import { ProfileService } from "../../profile/services/profile.service";
 import { Observable, of } from "rxjs";
 import { ChatHttpService } from "./chat-http.service";
 import { AccountService } from "../../account/services/account.service";
+import { Chat } from "../model/chat.model";
 
 @Injectable({providedIn: 'root'})
 export class ChatService{
-
+  activeChat: Chat = new Chat(null);
  placeholderMessages: Message[] = [
   {
     id: 'msg1',
@@ -158,6 +159,6 @@ export class ChatService{
   fetchChatByProfilesIds(senderProfileId: string ){
     const hostProfile = this.accountService.accountProfile;
     if(!hostProfile) throw of(null);
-    return this.chatHttpService.fetchChatByProfilesIds(senderProfileId, hostProfile.id );
+    return this.chatHttpService.fetchChatByProfilesIds(senderProfileId, `547f0bd1-d544-4fa1-ac96-639fd40eb94a` );
   }
 }
