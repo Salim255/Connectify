@@ -4,6 +4,13 @@ import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Chat } from "../model/chat.model";
 
+
+export type CreateChatPayload = {
+  content: string;
+  receiverProfileId: string;
+  senderProfileId: string;
+}
+
 export type GetChatResponse = {
   status: 'Success';
   data: {
@@ -27,8 +34,8 @@ export class ChatHttpService {
   fetchChatByProfilesIds(
     senderProfileId: string,
     receiverProfileId: string,
-  ): Observable< GetChatResponse>{
-    return this.http.get<any>(`${this.baseUrl}/profiles`,{
+  ): Observable<GetChatResponse>{
+    return this.http.get<GetChatResponse>(`${this.baseUrl}/profiles`,{
       params: {
         senderProfileId,
         receiverProfileId,
@@ -36,11 +43,11 @@ export class ChatHttpService {
     })
   }
 
-  createChat(data: any){
-    return this.http.post<any>(this.baseUrl, {data})
+  createChat(data: CreateChatPayload): Observable<GetChatResponse>{
+    return this.http.post<GetChatResponse>(`${this.baseUrl}/chat-with-message`, {data})
   }
 
-  sendMessage(data: any){
+  sendMessage(data: any): Observable<any>{
     return this.http.post<any>(this.baseUrl, {data})
   }
 }

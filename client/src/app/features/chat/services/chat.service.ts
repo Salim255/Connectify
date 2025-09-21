@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { Message } from "../model/message.model";
 import { Profile } from "../../profile/model/profile.model";
 import { ProfileService } from "../../profile/services/profile.service";
-import { Observable, of } from "rxjs";
-import { ChatHttpService } from "./chat-http.service";
+import { Observable, of, tap } from "rxjs";
+import { ChatHttpService, CreateChatPayload } from "./chat-http.service";
 import { AccountService } from "../../account/services/account.service";
 import { Chat } from "../model/chat.model";
 import { MessageHttpService, MessagePostPayload } from "./message-http.service";
@@ -171,10 +171,24 @@ export class ChatService{
   }
 
   sendMessage(content: string): Observable<any>{
-    const userid = this.accountService?.accountProfile?.userId;
+    const profile = this.accountService?.accountProfile;
     const chatId = this.activeChat.id;
-     if (!userid || !chatId ) return of(null);
-    const payload: MessagePostPayload = { chatId, senderId: userid, content }
+    if (!profile ) return of(null);
+
+    if (!chatId) {
+    const receiverProfile = this.activeChat.participants[0].profile;
+    const payLoad: CreateChatPayload = {
+        content,
+        senderProfileId: profile.id,
+        receiverProfileId: receiverProfile.id,
+      }
+      return this.chatHttpService.createChat(payLoad).pipe(
+        tap((response) => {
+          console.log(response);
+        })
+      );
+    }
+    const payload: MessagePostPayload = { chatId, senderId: profile.userId, content }
     return this.messageHttpService.createMessage(payload);
   }
 }
