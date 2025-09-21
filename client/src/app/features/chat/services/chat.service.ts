@@ -162,4 +162,12 @@ export class ChatService{
     //`547f0bd1-d544-4fa1-ac96-639fd40eb94a`
     return this.chatHttpService.fetchChatByProfilesIds( hostProfile.id, receiverProfileId );
   }
+
+  createChat(data: any){
+    return this.chatHttpService.createChat(data);
+  }
+
+  sendMessage(data: any){
+    return this.chatHttpService.sendMessage(data);
+  }
 }

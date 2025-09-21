@@ -39,4 +39,8 @@ export class ChatHttpService {
   createChat(data: any){
     return this.http.post<any>(this.baseUrl, {data})
   }
+
+  sendMessage(data: any){
+    return this.http.post<any>(this.baseUrl, {data})
+  }
 }
