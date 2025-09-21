@@ -23,6 +23,8 @@ export class PresenceGateWay
 
   // Triggered automatically when a client connects
   handleConnection(client: Socket) {
+    const { token } = client.handshake.auth;
+    this.logger.log(token);
     this.logger.log(`Client connected: ${client.id}`);
   }
 
