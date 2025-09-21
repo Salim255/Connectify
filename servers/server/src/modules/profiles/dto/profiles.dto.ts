@@ -65,3 +65,8 @@ export class GetProfilesResponseDto {
 }
 
 export class GetProfileResponseDto extends CreateProfileResponseDto {}
+
+export class UpdateProfileConnectionStatusDto {
+  status: ProfileConnectionStatus;
+  userId: string;
+}

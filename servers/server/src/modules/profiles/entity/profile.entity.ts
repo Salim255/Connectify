@@ -8,6 +8,7 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
+import { ProfileConnectionStatus, UserGender } from '../dto/profiles.dto';
 
 @Entity('profiles')
 export class Profile {
@@ -33,7 +34,7 @@ export class Profile {
     type: 'enum',
     enum: ['male', 'female', 'non-binary', 'other'],
   })
-  gender: 'male' | 'female' | 'non-binary' | 'other';
+  gender: UserGender;
 
   @Column()
   avatarUrl: string;
@@ -76,7 +77,7 @@ export class Profile {
     enum: ['online', 'offline', 'away', 'busy', 'invisible'],
     default: 'offline',
   })
-  status?: 'online' | 'offline' | 'away' | 'busy' | 'invisible';
+  status?: ProfileConnectionStatus;
 
   @Column({ type: 'timestamp', nullable: true })
   lastSeen?: Date;
