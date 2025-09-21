@@ -8,12 +8,21 @@ export class PresenceService {
   constructor() {}
 
   registerUser(userId: string, socketId: string): void {
-    // 1: Save the socket
+    // Save the socket
     this.onlineUsers.set(userId, socketId);
   }
 
-  // offline => Online
-  updateUserConnectionStatus(): void {
-    //
+  unregisterUser(userId?: string, socketId?: string) {
+    if (userId) {
+      this.onlineUsers.delete(userId);
+    } else if (socketId) {
+      // find the userId by socketId
+      for (const [uid, sid] of this.onlineUsers.entries()) {
+        if (sid === socketId) {
+          this.onlineUsers.delete(uid);
+          break;
+        }
+      }
+    }
   }
 }
