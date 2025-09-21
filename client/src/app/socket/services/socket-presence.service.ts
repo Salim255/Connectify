@@ -40,8 +40,10 @@ export class SocketCoreService {
       return;
     }
 
-    // Fetch token from Capacitor Preferences
-    const { value } = await Preferences.get({ key: 'authData' });
+   // Ensure token is loaded before connecting
+    if (!this.token) {
+      await this.loadToken();
+    }
 
     this.socket = io(this.baseUrl, {
       reconnection: true,
