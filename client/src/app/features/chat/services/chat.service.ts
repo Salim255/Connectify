@@ -156,9 +156,10 @@ export class ChatService{
     return this.chatHttpService.fetchChatByChatId(chatId);
   }
 
-  fetchChatByProfilesIds(senderProfileId: string ){
+  fetchChatByProfilesIds(receiverProfileId: string ){
     const hostProfile = this.accountService.accountProfile;
     if(!hostProfile) throw of(null);
-    return this.chatHttpService.fetchChatByProfilesIds(senderProfileId, `547f0bd1-d544-4fa1-ac96-639fd40eb94a` );
+    //`547f0bd1-d544-4fa1-ac96-639fd40eb94a`
+    return this.chatHttpService.fetchChatByProfilesIds( hostProfile.id, receiverProfileId );
   }
 }

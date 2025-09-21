@@ -24,6 +24,7 @@ export class MatchItemComponent {
     if (!profile)  return;
     this.chatService.fetchChatByProfilesIds(profile.id).subscribe({
       next: (response) => {
+        console.log(response)
         if (response?.data?.chat?.id){
           this.chatService.activeChat = response.data.chat;
         } else {
@@ -32,7 +33,7 @@ export class MatchItemComponent {
         this.router.navigate(['/chat'])
       },
       error: () => {
-
+        // Try later
       }
     });
 
