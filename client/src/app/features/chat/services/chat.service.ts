@@ -143,4 +143,12 @@ export class ChatService{
   constructor(private profileService:  ProfileService){
     this.partnerProfile = this.profileService.PROFILES_PLACEHOLDER[0];
   }
+
+  fetchChatById(){
+
+  }
+
+  fetchChatByUsersIds(){
+
+  }
 }
