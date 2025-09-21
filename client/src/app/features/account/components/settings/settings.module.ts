@@ -5,6 +5,7 @@ import { SettingsRoutingModule } from "./settings-routing.module";
 import { SettingsComponent } from "./settings.component";
 import { SharedModule } from "src/app/shared/shared.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { LogoutComponent } from "../logout/logout.component";
 
 
 @NgModule({
@@ -16,9 +17,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     IonicModule,
     SettingsRoutingModule,
     SharedModule
-],
-  declarations: [SettingsComponent]
+  ],
+  declarations: [LogoutComponent, SettingsComponent]
 })
-export class SettingsModule {
-
-}
+export class SettingsModule {}
