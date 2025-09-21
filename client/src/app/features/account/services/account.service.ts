@@ -12,7 +12,11 @@ export class AccountService {
     this.accountProfileSubject.next(profile);
   }
 
-  get getAccountProfile(): Observable<Profile | null>{
+  get getAccountProfile$(): Observable<Profile | null>{
     return this.accountProfileSubject.asObservable();
+  }
+
+  get accountProfile(): Profile | null{
+    return this.accountProfileSubject.value;
   }
 }

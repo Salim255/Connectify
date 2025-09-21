@@ -22,7 +22,7 @@ export class ViewProfileComponent implements OnInit {
   }
 
   subscribeToAccountProfile(){
-    this.accountProfileSubscription = this.accountService.getAccountProfile.subscribe(profile => {
+    this.accountProfileSubscription = this.accountService.getAccountProfile$.subscribe(profile => {
       console.log(profile, "Hello world✅✅");
       this.accountProfile = profile;
     })

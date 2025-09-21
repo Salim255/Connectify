@@ -25,7 +25,7 @@ export class AccountDashboardComponent implements OnInit{
   }
 
   subscribeToAccountProfile(){
-    this.accountProfileSubscription = this.accountService.getAccountProfile.subscribe(profile => {
+    this.accountProfileSubscription = this.accountService.getAccountProfile$.subscribe(profile => {
       if(profile) {
         this.accountProfile = profile;
       }

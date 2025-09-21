@@ -2,8 +2,9 @@ import { Injectable } from "@angular/core";
 import { Message } from "../model/message.model";
 import { Profile } from "../../profile/model/profile.model";
 import { ProfileService } from "../../profile/services/profile.service";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { ChatHttpService } from "./chat-http.service";
+import { AccountService } from "../../account/services/account.service";
 
 @Injectable({providedIn: 'root'})
 export class ChatService{
@@ -144,7 +145,9 @@ export class ChatService{
 
   constructor(
     private chatHttpService: ChatHttpService,
-    private profileService:  ProfileService){
+    private profileService:  ProfileService,
+    private accountService: AccountService,
+  ){
     this.partnerProfile = this.profileService.PROFILES_PLACEHOLDER[0];
   }
 
@@ -152,7 +155,9 @@ export class ChatService{
     return this.chatHttpService.fetchChatByChatId(chatId);
   }
 
-  fetchChatByUsersIds(participantId: string){
-    return this.chatHttpService.fetchChatByUsersIds(participantId);
+  fetchChatByProfilesIds(senderProfileId: string ){
+    const hostProfile = this.accountService.accountProfile;
+    if(!hostProfile) throw of(null);
+    return this.chatHttpService.fetchChatByProfilesIds(senderProfileId, hostProfile.id );
   }
 }

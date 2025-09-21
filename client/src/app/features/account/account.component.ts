@@ -29,7 +29,7 @@ export class AccountComponent implements OnInit {
   }
 
   private subscribeToAccountProfile(){
-    this.accountProfileSubscription = this.accountService.getAccountProfile.subscribe(profile => {
+    this.accountProfileSubscription = this.accountService.getAccountProfile$.subscribe(profile => {
       console.log(profile);
     })
   }

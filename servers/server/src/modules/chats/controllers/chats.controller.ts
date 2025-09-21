@@ -133,8 +133,6 @@ export class ChatsController {
     @Query('senderProfileId') senderProfileId: string,
     @Query('receiverProfileId') receiverProfileId: string,
   ): Promise<GetSingleChatResponseDto> {
-    console.log( senderProfileId,
-      receiverProfileId)
     const chat: Chat | null = await this.chatsService.findChatByProfiles(
       senderProfileId,
       receiverProfileId,

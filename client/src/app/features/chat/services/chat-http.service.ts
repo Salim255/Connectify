@@ -16,9 +16,12 @@ export class ChatHttpService {
     })
   }
 
-  fetchChatByUsersIds(participantId: string): Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}/users`,{
-      params: { participantId }
+  fetchChatByProfilesIds(senderProfileId: string, receiverProfileId: string): Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}/profiles`,{
+      params: {
+        senderProfileId,
+        receiverProfileId,
+      }
     })
   }
 }

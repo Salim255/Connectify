@@ -18,9 +18,9 @@ export class MatchItemComponent {
 
   onChat(){
     console.log(this.match());
-    const participantId = this.match()?.profile?.id ?? null;
+    const participantId: string | null = this.match()?.profile?.id ?? null;
     if (!participantId)  return;
-    this.chatService.fetchChatByUsersIds(participantId).subscribe(res=>{
+    this.chatService.fetchChatByProfilesIds(participantId).subscribe(res=>{
       console.log(res);
     });
     //this.router.navigate(['/chat'])
