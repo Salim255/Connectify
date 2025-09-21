@@ -27,24 +27,26 @@ export class PresenceGateWay
   ) {}
 
   // Triggered automatically when a client connects
-  handleConnection(client: Socket) {
+  async handleConnection(client: Socket) {
     const { token } = client.handshake.auth;
     try {
       const { id: userId } = this.jwtTokenService.verifyToken(
         (token as string) ?? '',
       );
       this.logger.log('✅ User connected with success...', userId);
-      this.presenceService.registerUser(userId, client.id);
+      await this.presenceService.registerUser(userId, client.id);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       this.logger.log('❌ Invalid token, disconnecting client...');
+      await this.presenceService.unregisterUser(client.id);
       client.disconnect();
     }
   }
 
   // Triggered automatically when a client disconnects
-  handleDisconnect(client: Socket) {
+  async handleDisconnect(client: Socket) {
     this.logger.log(`Client disconnected: ${client.id}`);
+    await this.presenceService.unregisterUser(client.id);
   }
 
   // This method listens for the 'ping' event sent by the client
