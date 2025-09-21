@@ -7,6 +7,8 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { JwtTokenService } from 'src/modules/auth/services/jwt-token.service';
+import { PresenceService } from '../services/presence.service';
 
 // This gateway is a core gateway and should be registered at the
 //  application level, not just inside a feature module.
@@ -19,13 +21,25 @@ export class PresenceGateWay
 
   private logger = new Logger('Presence GateWay');
 
-  constructor() {}
+  constructor(
+    private presenceService: PresenceService,
+    private jwtTokenService: JwtTokenService,
+  ) {}
 
   // Triggered automatically when a client connects
   handleConnection(client: Socket) {
     const { token } = client.handshake.auth;
-    this.logger.log(token);
-    this.logger.log(`Client connected: ${client.id}`);
+    try {
+      const { id: userId } = this.jwtTokenService.verifyToken(
+        (token as string) ?? '',
+      );
+      this.logger.log('✅ User connected with success...', userId);
+      this.presenceService.registerUser(userId, client.id);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      this.logger.log('❌ Invalid token, disconnecting client...');
+      client.disconnect();
+    }
   }
 
   // Triggered automatically when a client disconnects
