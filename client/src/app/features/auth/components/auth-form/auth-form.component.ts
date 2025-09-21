@@ -55,7 +55,7 @@ export class AuthFormComponent {
       this.authService.login(this.authFormField.value).subscribe({
         next: (response) => {
 
-          this.socketCoreService.initialize(response.data.user.id);
+          this.socketCoreService.initialize();
           this.router.navigate(['/browse']);
         },
         error: () => {}
@@ -63,7 +63,7 @@ export class AuthFormComponent {
     } else {
       this.authService.signup(this.authFormField.value).subscribe({
         next: (response) => {
-           this.socketCoreService.initialize(response.data.user.id);
+           this.socketCoreService.initialize();
           this.router.navigate(['/browse']);
         },
         error: () => {}

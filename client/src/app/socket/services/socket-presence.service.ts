@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, take } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { io, Socket } from "socket.io-client";
 import { environment } from "../../../environments/environment";
 import { Preferences } from "@capacitor/preferences";
@@ -15,6 +15,7 @@ export class SocketCoreService {
   private ENV = environment;
   private baseUrl: string = `${this.ENV.socketUrl}`;
   private token: string | null = null;
+  private userId: string | null = null;
 
   private connectionStatusSubject =
     new BehaviorSubject<ConnectionStatus>(ConnectionStatus.Offline);
@@ -31,16 +32,17 @@ export class SocketCoreService {
         tokenExpirationDate: string;
       };
       this.token = parsedData._token;
+      this.userId = parsedData.userId;
     }
   }
 
-  async initialize(userId: string): Promise<void> {
+  async initialize(): Promise<void> {
      // If a socket instance already exists, don’t recreate it
     if (this.socket) {
       return;
     }
 
-   // Ensure token is loaded before connecting
+    // Ensure token is loaded before connecting
     if (!this.token) {
       await this.loadToken();
     }
@@ -51,10 +53,13 @@ export class SocketCoreService {
       reconnectionDelay: 1000,
       transports: ['websocket'],
       withCredentials: true,
+      auth: {
+        token: this.token, // use the class property
+      },
     });
 
     this.socket?.on('connect', () => {
-      this.socket?.emit('register-user', userId);
+      this.socket?.emit('register-user', this.userId);
     });
 
     this.socket?.on('disconnect', () => {
