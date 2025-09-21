@@ -2,6 +2,7 @@ import { Component, signal } from "@angular/core";
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { AuthService } from "../../services/auth.service";
 import { Router } from "@angular/router";
+import { SocketCoreService } from "src/app/socket/services/socket-presence.service";
 
 @Component({
   selector: "app-auth-form",
@@ -15,6 +16,7 @@ export class AuthFormComponent {
   isLoginMode = signal<boolean>(true);
 
   constructor(
+    private socketCoreService:  SocketCoreService,
     private router: Router,
     private authService: AuthService,
     private buildForm: FormBuilder,
@@ -51,15 +53,18 @@ export class AuthFormComponent {
     if (this.isLoginMode()) {
 
       this.authService.login(this.authFormField.value).subscribe({
-        next: () => {
-          this.router.navigate(['/browse'])
+        next: (response) => {
+
+          this.socketCoreService.initialize(response.data.user.id);
+          this.router.navigate(['/browse']);
         },
         error: () => {}
       });
     } else {
       this.authService.signup(this.authFormField.value).subscribe({
-        next: () => {
-          this.router.navigate(['/browse'])
+        next: (response) => {
+           this.socketCoreService.initialize(response.data.user.id);
+          this.router.navigate(['/browse']);
         },
         error: () => {}
       });

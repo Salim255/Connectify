@@ -19,7 +19,7 @@ export class SocketCoreService {
   readonly connectionStatus$ = this.connectionStatusSubject.asObservable();
   constructor( ){}
 
-  initialize(userId: number): void {
+  initialize(userId: string): void {
      // If a socket instance already exists, don’t recreate it
     if (this.socket) {
       return;
