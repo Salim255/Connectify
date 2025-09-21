@@ -140,4 +140,31 @@ export class ChatsService {
       .andWhere('chat.isGroup = false') // optional: only for direct chats
       .getOne();
   }
+
+  async findChatByProfiles(
+    senderProfileId: string,
+    receiverProfileId: string,
+  ): Promise<Chat | null> {
+    return await this.chatRepo
+      .createQueryBuilder('chat')
+      .leftJoinAndSelect('chat.participants', 'chatUser')
+      .leftJoinAndSelect('chatUser.profile', 'profile')
+      .leftJoinAndSelect('profile.user', 'user')
+      .leftJoinAndSelect('chat.messages', 'message')
+      .where('chat.isGroup = false')
+      .andWhere((qb) => {
+        const subQuery = qb
+          .subQuery()
+          .select('cu.chatId')
+          .from('chat_users', 'cu')
+          .where('cu.profileId IN (:...profileIds)')
+          .groupBy('cu.chatId')
+          .having('COUNT(DISTINCT cu.profileId) = 2')
+          .getQuery();
+        return 'chat.id IN ' + subQuery;
+      })
+      .setParameter('profileIds', [senderProfileId, receiverProfileId])
+      .orderBy('message.createdAt', 'ASC') // optional: sort messages
+      .getOne();
+  }
 }

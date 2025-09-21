@@ -1,4 +1,14 @@
-import { Body, Controller, Get, NotFoundException, Param, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   CreateChatDto,
@@ -109,6 +119,35 @@ export class ChatsController {
     };
   }
 
+  @Get('/profiles')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    summary: 'Fetch single chat by chat participants ids route',
+  })
+  @ApiResponse({
+    type: GetSingleChatResponseDto,
+    status: 2000,
+    description: 'Get single chat by Id response',
+  })
+  async getChatByProfileIds(
+    @Query('senderProfileId') senderProfileId: string,
+    @Query('receiverProfileId') receiverProfileId: string,
+  ): Promise<GetSingleChatResponseDto> {
+    console.log( senderProfileId,
+      receiverProfileId)
+    const chat: Chat | null = await this.chatsService.findChatByProfiles(
+      senderProfileId,
+      receiverProfileId,
+    );
+    if (!chat) {
+      throw new NotFoundException(`No chat found`);
+    }
+    return {
+      status: 'Success',
+      data: { chat: chat },
+    };
+  }
+
   @Get('/:chatId')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({
@@ -124,9 +163,7 @@ export class ChatsController {
   ): Promise<GetSingleChatResponseDto> {
     const chat: Chat | null = await this.chatsService.getSingleChat(chatId);
     if (!chat) {
-      throw new NotFoundException(
-        `Chat with ID ${chatId} was created but could not be retrieved`,
-      );
+      throw new NotFoundException(`Chat with ID ${chatId} not found`);
     }
     return {
       status: 'Success',
