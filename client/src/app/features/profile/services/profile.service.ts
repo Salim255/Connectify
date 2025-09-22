@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Profile } from "../model/profile.model";
+import { Profile, ProfileGender } from "../model/profile.model";
 import { BehaviorSubject, Observable, tap } from "rxjs";
 import { ProfileHttpService, ProfileResponse } from "./profile-http.service";
 import { Router } from "@angular/router";
@@ -23,7 +23,7 @@ export class ProfileService {
         name: 'Alice Johnson',
         userId: '1',
         age: 25,
-        gender: 'female',
+        gender: ProfileGender.FEMALE,
         avatarUrl: 'https://images.pexels.com/photos/2787341/pexels-photo-2787341.jpeg',
         photos: ['https://randomuser.me/api/portraits/women/1.jpg', 'https://randomuser.me/api/portraits/women/11.jpg'],
         bio: 'Loves hiking and outdoor adventures.',
@@ -34,7 +34,7 @@ export class ProfileService {
         verified: true,
         status: 'online',
         lastSeen: new Date(),
-        preferences: { theme: 'light', discovery: { minAge: 22, maxAge: 30, distanceKm: 50, interestedIn: ['male'] } },
+        preferences: { theme: 'light', discovery: { minAge: 22, maxAge: 30, distanceKm: 50, interestedIn: [ProfileGender.MALE] } },
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -43,7 +43,7 @@ export class ProfileService {
         userId: '1',
         name: 'Bob Smith',
         age: 28,
-        gender: 'male',
+        gender: ProfileGender.MALE,
         avatarUrl: 'https://randomuser.me/api/portraits/men/2.jpg',
         photos: ['https://randomuser.me/api/portraits/men/2.jpg'],
         bio: 'Coffee enthusiast and book lover.',
@@ -54,7 +54,7 @@ export class ProfileService {
         verified: false,
         status: 'away',
         lastSeen: new Date(),
-        preferences: { theme: 'dark', discovery: { minAge: 25, maxAge: 35, distanceKm: 100, interestedIn: ['female'] } },
+        preferences: { theme: 'dark', discovery: { minAge: 25, maxAge: 35, distanceKm: 100, interestedIn: [ProfileGender.FEMALE] } },
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -63,7 +63,7 @@ export class ProfileService {
         userId: '1',
         name: 'Clara Lee',
         age: 23,
-        gender: 'female',
+        gender: ProfileGender.FEMALE,
         avatarUrl: 'https://randomuser.me/api/portraits/women/3.jpg',
         photos: ['https://randomuser.me/api/portraits/women/3.jpg'],
         bio: 'Passionate about music and travel.',
@@ -83,7 +83,7 @@ export class ProfileService {
             userId: '1',
         name: 'David Kim',
         age: 30,
-        gender: 'male',
+        gender: ProfileGender.MALE,
         avatarUrl: 'https://randomuser.me/api/portraits/men/4.jpg',
         photos: ['https://randomuser.me/api/portraits/men/4.jpg'],
         bio: 'Fitness coach and foodie.',
@@ -103,7 +103,7 @@ export class ProfileService {
             userId: '1',
         name: 'Emma Wilson',
         age: 27,
-        gender: 'female',
+        gender: ProfileGender.FEMALE,
         avatarUrl: 'https://randomuser.me/api/portraits/women/5.jpg',
         photos: ['https://randomuser.me/api/portraits/women/5.jpg'],
         bio: 'Designer and coffee addict.',
@@ -123,7 +123,7 @@ export class ProfileService {
             userId: '1',
         name: 'Frank Miller',
         age: 29,
-        gender: 'male',
+        gender: ProfileGender.MALE,
         avatarUrl: 'https://randomuser.me/api/portraits/men/6.jpg',
         photos: ['https://randomuser.me/api/portraits/men/6.jpg'],
         bio: 'Tech geek and gamer.',
@@ -143,7 +143,7 @@ export class ProfileService {
             userId: '1',
         name: 'Grace Park',
         age: 24,
-        gender: 'female',
+        gender: ProfileGender.FEMALE,
         avatarUrl: 'https://randomuser.me/api/portraits/women/7.jpg',
         photos: ['https://randomuser.me/api/portraits/women/7.jpg'],
         bio: 'Yoga lover and traveler.',
@@ -163,7 +163,7 @@ export class ProfileService {
             userId: '1',
         name: 'Henry Davis',
         age: 31,
-        gender: 'male',
+        gender: ProfileGender.MALE,
         avatarUrl: 'https://randomuser.me/api/portraits/men/8.jpg',
         photos: ['https://randomuser.me/api/portraits/men/8.jpg'],
         bio: 'Entrepreneur and coffee lover.',
@@ -183,7 +183,7 @@ export class ProfileService {
             userId: '1',
         name: 'Isabella Martinez',
         age: 26,
-        gender: 'female',
+        gender: ProfileGender.MALE,
         avatarUrl: 'https://randomuser.me/api/portraits/women/9.jpg',
         photos: ['https://randomuser.me/api/portraits/women/9.jpg'],
         bio: 'Photographer and foodie.',
@@ -203,7 +203,7 @@ export class ProfileService {
             userId: '1',
         name: 'Jack Thompson',
         age: 32,
-        gender: 'male',
+        gender: ProfileGender.MALE,
         avatarUrl: 'https://randomuser.me/api/portraits/men/10.jpg',
         photos: ['https://randomuser.me/api/portraits/men/10.jpg'],
         bio: 'Musician and adventurer.',
@@ -222,6 +222,7 @@ export class ProfileService {
 
   setProfile(profile: Profile | null){
     this.profileSubject.next(profile);
+    this.profileLoadedSubject.next(true);
   }
 
   fetchProfile(): Observable<ProfileResponse>{
@@ -232,7 +233,6 @@ export class ProfileService {
         } else {
           this.setProfile(null);
         }
-        this.profileLoadedSubject.next(true);
       })
     );
   }
