@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, signal } from "@angular/core";
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
 
 @Component({
@@ -10,7 +10,11 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 
 export class ProfileSetupFormComponent {
   profileForm!: FormGroup;
+  showDatePicker =  signal<boolean>(false);
 
+  onAgeFocus() {
+    this.showDatePicker.set(true);
+  }
   GENDERS = [
     { value: 'male', label: 'Male' },
     { value: 'female', label: 'Female' },
