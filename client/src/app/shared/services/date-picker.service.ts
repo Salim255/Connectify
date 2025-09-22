@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { DatePickerComponent } from '../kits/date-picker/date-picker.component';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DatePickerService {
-  selectedDate: string | null = null; ;
+  selectedDate: string | null = null;
+
+  selectedDateSubject = new BehaviorSubject<string | null>(null);
+
   constructor(private modalCtrl:  ModalController) {}
 
   /**
@@ -28,5 +32,13 @@ export class DatePickerService {
 
   async dismiss(data?: any, role: string = 'cancel'): Promise<void> {
     await this.modalCtrl.dismiss(data, role);
+  }
+
+  setSelectedDate(selectDate: string | null){
+    this.selectedDateSubject.next(selectDate);
+  }
+
+  get selectedDate$(): Observable<string | null>{
+    return this.selectedDateSubject.asObservable();
   }
 }
