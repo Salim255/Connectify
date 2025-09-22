@@ -20,11 +20,6 @@ export enum ProfileConnectionStatus {
 export class CreateProfileDto {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   @IsNotEmpty()
-  @ApiProperty({ description: 'Profile id' })
-  userId?: 'uuid';
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-  @IsNotEmpty()
   @ApiProperty({ description: 'Profile name' })
   name: string;
 

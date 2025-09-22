@@ -25,7 +25,6 @@ export class ProfileSetupFormComponent {
   profileForm!: FormGroup;
   showDatePicker =  signal<boolean>(false);
   selectedDateSubscription!: Subscription;
-  private userId: string | null;
 
   onAgeFocus(event: any) {
     this.datePickerService.OnDateModal();
@@ -44,9 +43,7 @@ export class ProfileSetupFormComponent {
     private profileSetupService: ProfileSetupService,
     private datePickerService: DatePickerService,
     private formBuilder: FormBuilder,
-    private authService: AuthService,
   ) {
-    this.userId = this.authService.getUserId ?? null;
   }
 
   ngOnInit() {
@@ -81,7 +78,6 @@ export class ProfileSetupFormComponent {
 
   private buildFom(){
     this.profileForm = this.formBuilder.group({
-      userId: [this.userId, Validators.required],
       name: [null, Validators.required],
       age: [null, [Validators.required, this.ageValidator(18, 100)]],
       avatarUrl: ["https://example.com/images/profile-salim.jpg", Validators.required],
@@ -90,8 +86,14 @@ export class ProfileSetupFormComponent {
   }
 
   onSubmit(){
-    if(!this.profileForm.valid) return;
-    this.profileSetupService.createProfile(this.profileForm.value).subscribe();
+
+    //if(!this.profileForm.valid) return;
+    console.log(this.profileForm.value);
+    this.profileSetupService.createProfile(this.profileForm.value).subscribe({
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
   get formattedAge(): string {
     const raw = this.profileForm.get('age')?.value;

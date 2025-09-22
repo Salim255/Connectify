@@ -13,14 +13,16 @@ export class ProfilesService {
     @Inject(PROFILE_REPOSITORY) private profileRep: Repository<Profile>,
   ) {}
 
-  async createProfile(createPayload: CreateProfileDto): Promise<Profile> {
+  async createProfile(
+    createPayload: CreateProfileDto & { userId: string },
+  ): Promise<Profile> {
     const profile: Profile = this.profileRep.create(createPayload);
     return await this.profileRep.save(profile);
   }
 
   async getProfileByUserId(userId: string): Promise<Profile | null> {
     const profile: Profile | null = await this.profileRep.findOneBy({ userId });
-    console.log(profile, "hello profile ✅✅");
+    console.log(profile, 'hello profile ✅✅');
     return profile;
   }
 

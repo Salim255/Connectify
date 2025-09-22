@@ -7,7 +7,6 @@ import { ProfileService } from "../../profile/services/profile.service";
 import { Router } from "@angular/router";
 
 export type CreateProfilePayload = {
-  userId: string;
   name: string;
   age: Date;
   gender: ProfileGender;
@@ -35,6 +34,7 @@ export class ProfileSetupService {
   createProfile(profilePayload: CreateProfilePayload ): Observable<CreateProfileResponse>{
     return this.http.post<CreateProfileResponse>(this.baseUrl, profilePayload).pipe(
       tap((response) => {
+        console.log(response);
         const profile = response.data.profile;
         if(profile.id) {
           this.profileService.setProfile(profile);

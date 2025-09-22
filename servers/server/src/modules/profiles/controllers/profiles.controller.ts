@@ -30,8 +30,10 @@ export class ProfilesController {
   })
   async createProfile(
     @Body() body: CreateProfileDto,
+    @Req() req: Request & { user: { id: 'uuid' } },
   ): Promise<CreateProfileResponseDto> {
-    const { userId, name, age, gender, avatarUrl } = body;
+    const { id: userId } = req.user;
+    const { name, age, gender, avatarUrl } = body;
     const profile: Profile = await this.profilesService.createProfile({
       userId,
       name,
