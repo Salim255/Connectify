@@ -10,6 +10,8 @@ import { DatePickerService } from '../../services/date-picker.service';
 export class DatePickerComponent {
   minDate: string;
   maxDate: string;
+  selectedDate: string | null = null;
+
   constructor(private datePicker: DatePickerService) {
     const today = new Date();
 
@@ -25,10 +27,11 @@ export class DatePickerComponent {
 
   selectDate(event: any) {
     const value = event.detail.value;
-    console.log(value);
+    this.selectedDate = value;
   }
 
   onDismiss(){
+    this.datePicker.setSelectedDate(this.selectedDate);
     this.datePicker.dismiss();
   }
 }

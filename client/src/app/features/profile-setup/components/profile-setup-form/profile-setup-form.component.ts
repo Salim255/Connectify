@@ -1,5 +1,14 @@
+import { formatDate } from "@angular/common";
 import { Component, signal } from "@angular/core";
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from "@angular/forms";
+import { Subscription } from "rxjs";
 import { DatePickerService } from "src/app/shared/services/date-picker.service";
 
 @Component({
@@ -12,11 +21,13 @@ import { DatePickerService } from "src/app/shared/services/date-picker.service";
 export class ProfileSetupFormComponent {
   profileForm!: FormGroup;
   showDatePicker =  signal<boolean>(false);
+  selectedDateSubscription!: Subscription;
 
   onAgeFocus(event: any) {
     this.datePickerService.OnDateModal();
     //this.datePickerService.openDatePicker();
   }
+
   GENDERS = [
     { value: 'male', label: 'Male' },
     { value: 'female', label: 'Female' },
@@ -27,12 +38,23 @@ export class ProfileSetupFormComponent {
 
   constructor(
     private datePickerService: DatePickerService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+  ) { }
 
   ngOnInit() {
     this.buildFom();
+    this.subscribeToSelectedDate();
   }
 
+  private subscribeToSelectedDate(){
+    this.selectedDateSubscription = this.datePickerService.selectedDate$.subscribe(selectedDate =>{
+      console.log(selectedDate, "Hello")
+      if (selectedDate){
+        this.profileForm.get('age')?.setValue(selectedDate);
+      }
+    }
+    )
+  }
   private ageValidator(minAge = 18, maxAge = 100): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
@@ -60,5 +82,12 @@ export class ProfileSetupFormComponent {
 
   onSubmit(){
     console.log(this.profileForm.value);
+  }
+  get formattedAge(): string {
+    const raw = this.profileForm.get('age')?.value;
+    return raw ? formatDate(raw, 'dd / MM / yyyy', 'en-GB') : '';
+  }
+  ngOnDestroy(): void {
+    this.selectedDateSubscription?.unsubscribe();
   }
 }

@@ -1,13 +1,13 @@
 <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
   <ion-list>
     <ion-item>
-      <ion-label position="floating"> Name</ion-label>
+      <ion-label position="stack"> Name</ion-label>
       <ion-input formControlName="name" type="text"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">age</ion-label>
-      <ion-input (click)="onAgeFocus($event)"  type="text"></ion-input>
+      <ion-label position="stack">age</ion-label>
+      <ion-input  [value]="formattedAge" (click)="onAgeFocus($event)" placeholder=" dd / mm / yyyy"  type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stack">gender</ion-label>
