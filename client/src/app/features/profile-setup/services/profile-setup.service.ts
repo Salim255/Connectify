@@ -1,7 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
-import { ProfileGender } from "../../profile/model/profile.model";
+import { Profile, ProfileGender } from "../../profile/model/profile.model";
+import { Observable } from "rxjs";
 
 export type CreateProfilePayload = {
   userId: string;
@@ -11,6 +12,13 @@ export type CreateProfilePayload = {
   avatarUrl: string;
 }
 
+export type CreateProfileResponse = {
+  status: 'Success',
+  data: {
+    profile: Profile
+  }
+}
+
 @Injectable({providedIn: 'root'})
 export class ProfileSetupService {
   private ENV = environment;
@@ -18,7 +26,7 @@ export class ProfileSetupService {
 
   constructor(private http: HttpClient){}
 
-  createProfile(profilePayload: CreateProfilePayload ){
+  createProfile(profilePayload: CreateProfilePayload ): Observable<any>{
     return this.http.post<any>(this.baseUrl, profilePayload)
   }
 }
