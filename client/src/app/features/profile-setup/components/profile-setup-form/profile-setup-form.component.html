@@ -12,8 +12,8 @@
     <ion-item>
       <ion-label position="stack">gender</ion-label>
       <ion-select formControlName="gender" aria-label="Fruit" interface="popover" placeholder="Select your gender">
-        @for(gender of  GENDERS; track gender.value){
-          <ion-select-option [value]="gender.value"> {{ gender.label }}</ion-select-option>
+        @for(gender of GENDERS; track gender.value){
+          <ion-select-option [value]="gender.value"> {{ gender.label }} </ion-select-option>
         }
       </ion-select>
     </ion-item>

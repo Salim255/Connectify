@@ -1,9 +1,15 @@
+export enum ProfileGender {
+  MALE='male',
+  FEMALE='female',
+  NON_BINARY='non-binary',
+  OTHER='other',
+}
 export interface Profile {
   id: string;                          // unique profile ID
   userId: string;
   name: string;                        // display name
   age: number;                         // required for dating/browse
-  gender?: 'male' | 'female' | 'non-binary' | 'other';
+  gender?: ProfileGender;
   avatarUrl?: string;                  // main photo
   photos: string[];                    // gallery
   bio?: string;                        // personal description
@@ -35,7 +41,7 @@ export interface Profile {
       minAge?: number;
       maxAge?: number;
       distanceKm?: number;
-      interestedIn?: ('male' | 'female' | 'non-binary' | 'any')[];
+      interestedIn?: ProfileGender[];
     };
   };
 
