@@ -26,7 +26,7 @@ export class ProfileSetupService {
 
   constructor(private http: HttpClient){}
 
-  createProfile(profilePayload: CreateProfilePayload ): Observable<any>{
-    return this.http.post<any>(this.baseUrl, profilePayload)
+  createProfile(profilePayload: CreateProfilePayload ): Observable<CreateProfileResponse>{
+    return this.http.post<CreateProfileResponse>(this.baseUrl, profilePayload)
   }
 }
