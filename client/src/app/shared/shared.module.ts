@@ -8,7 +8,7 @@ import { DatePickerComponent } from "./kits/date-picker/date-picker.component";
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [ IonicModule],
-  declarations: [ DatePickerComponent, LocationPickerComponent, CustomGridComponent, HeaderComponent ],
+  declarations: [DatePickerComponent, LocationPickerComponent, CustomGridComponent, HeaderComponent ],
   exports: [DatePickerComponent, LocationPickerComponent, CustomGridComponent,  HeaderComponent ]
 })
 export class SharedModule {

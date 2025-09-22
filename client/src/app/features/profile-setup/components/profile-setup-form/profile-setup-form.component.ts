@@ -1,5 +1,6 @@
 import { Component, signal } from "@angular/core";
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
+import { DatePickerService } from "src/app/shared/services/date-picker.service";
 
 @Component({
   selector: 'app-profile-setup-form',
@@ -12,8 +13,9 @@ export class ProfileSetupFormComponent {
   profileForm!: FormGroup;
   showDatePicker =  signal<boolean>(false);
 
-  onAgeFocus() {
-    this.showDatePicker.set(true);
+  onAgeFocus(event: any) {
+    this.datePickerService.OnDateModal();
+    //this.datePickerService.openDatePicker();
   }
   GENDERS = [
     { value: 'male', label: 'Male' },
@@ -23,7 +25,9 @@ export class ProfileSetupFormComponent {
     { value: 'other', label: 'Other' }
   ];
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private datePickerService: DatePickerService,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.buildFom();

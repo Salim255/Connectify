@@ -6,11 +6,9 @@
     </ion-item>
 
     <ion-item>
-
-    <!--   <ion-datetime formControlName="age" presentation="date-time" [preferWheel]="true"></ion-datetime> -->
-    </ion-item>
       <ion-label position="floating">age</ion-label>
-      <ion-datetime formControlName="age" presentation="date" [preferWheel]="true"></ion-datetime>
+      <ion-input (click)="onAgeFocus($event)"  type="text"></ion-input>
+    </ion-item>
     <ion-item>
       <ion-label position="stack">gender</ion-label>
       <ion-select formControlName="gender" aria-label="Fruit" interface="popover" placeholder="Select your gender">

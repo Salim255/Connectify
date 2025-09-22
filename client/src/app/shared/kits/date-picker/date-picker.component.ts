@@ -1,24 +1,34 @@
 import { Component } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { DatePickerService } from '../../services/date-picker.service';
 
 @Component({
-  template: `
-    <ion-content>
-      <ion-datetime
-        presentation="date"
-        [preferWheel]="true"
-        (ionChange)="selectDate($event)">
-      </ion-datetime>
-    </ion-content>
-  `,
+  selector: 'app-date-picker',
+  templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.scss'],
   standalone: false
 })
 export class DatePickerComponent {
-  constructor(private popoverCtrl: PopoverController) {}
+  minDate: string;
+  maxDate: string;
+  constructor(private datePicker: DatePickerService) {
+    const today = new Date();
+
+    // Minimum date: e.g. 100 years ago (so you don't allow unrealistic ages)
+    const min = new Date(today.getFullYear() - 100, today.getMonth(), today.getDate());
+
+    // Maximum date: today minus 18 years
+    const max = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+
+    this.minDate = min.toISOString().split('T')[0]; // YYYY-MM-DD
+    this.maxDate = max.toISOString().split('T')[0];
+  }
 
   selectDate(event: any) {
     const value = event.detail.value;
-    this.popoverCtrl.dismiss(value);
+    console.log(value);
+  }
+
+  onDismiss(){
+    this.datePicker.dismiss();
   }
 }

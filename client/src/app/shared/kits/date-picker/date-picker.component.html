@@ -1,0 +1,12 @@
+<ion-content>
+  <div class="date-picker-modal">
+    <ion-icon name="close-outline" (click)="onDismiss()"></ion-icon>
+    <ion-datetime
+      presentation="date"
+      [preferWheel]="true"
+      [min]="minDate"
+      [max]="maxDate"
+      (ionChange)="selectDate($event)">
+    </ion-datetime>
+  </div>
+</ion-content>
