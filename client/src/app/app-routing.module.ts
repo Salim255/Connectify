@@ -5,8 +5,8 @@ import { AuthGuard } from './core/guard/auth.guard';
 const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: () => import('./features/profile-setup/profile-setup.module').then(m => m.ProfileSetupModule)
-    /* loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule), */
+/*     loadChildren: () => import('./features/profile-setup/profile-setup.module').then(m => m.ProfileSetupModule) */
+    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
   },
   {
     path: '',

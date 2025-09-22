@@ -4,12 +4,15 @@ import {
   AbstractControl,
   FormBuilder,
   FormGroup,
+  NgForm,
   ValidationErrors,
   ValidatorFn,
   Validators,
 } from "@angular/forms";
 import { Subscription } from "rxjs";
+import { AuthService } from "src/app/features/auth/services/auth.service";
 import { DatePickerService } from "src/app/shared/services/date-picker.service";
+import { ProfileSetupService } from "../../services/profile-setup.service";
 
 @Component({
   selector: 'app-profile-setup-form',
@@ -22,6 +25,7 @@ export class ProfileSetupFormComponent {
   profileForm!: FormGroup;
   showDatePicker =  signal<boolean>(false);
   selectedDateSubscription!: Subscription;
+  private userId: string | null;
 
   onAgeFocus(event: any) {
     this.datePickerService.OnDateModal();
@@ -37,9 +41,13 @@ export class ProfileSetupFormComponent {
   ];
 
   constructor(
+    private profileSetupService: ProfileSetupService,
     private datePickerService: DatePickerService,
     private formBuilder: FormBuilder,
-  ) { }
+    private authService: AuthService,
+  ) {
+    this.userId = this.authService.getUserId ?? null;
+  }
 
   ngOnInit() {
     this.buildFom();
@@ -73,15 +81,17 @@ export class ProfileSetupFormComponent {
 
   private buildFom(){
     this.profileForm = this.formBuilder.group({
+      userId: [this.userId, Validators.required],
       name: [null, Validators.required],
       age: [null, [Validators.required, this.ageValidator(18, 100)]],
-      photo: [null, Validators.required],
+      avatarUrl: ["https://example.com/images/profile-salim.jpg", Validators.required],
       gender: [null, Validators.required],
     });
   }
 
   onSubmit(){
-    console.log(this.profileForm.value);
+    if(!this.profileForm.valid) return;
+    this.profileSetupService.createProfile(this.profileForm.value).subscribe();
   }
   get formattedAge(): string {
     const raw = this.profileForm.get('age')?.value;
