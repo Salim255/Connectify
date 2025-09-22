@@ -220,19 +220,18 @@ export class ProfileService {
       },
     ];
 
-  setProfile(profile: Profile){
+  setProfile(profile: Profile | null){
     this.profileSubject.next(profile);
   }
 
   fetchProfile(): Observable<ProfileResponse>{
     return this.profileHttpService.fetchProfile().pipe(
       tap((response) => {
-        console.log(response, "hello profile servcie")
-        if (response?.data?.profile) {
-          this.setProfile(response.data.profile);
+        if (response?.data?.profile?.id) {
           this.accountService.setAccountProfile(response.data.profile);
+        } else {
+          this.setProfile(null);
         }
-
         this.profileLoadedSubject.next(true);
       })
     );

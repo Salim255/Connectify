@@ -64,10 +64,12 @@ export class AuthFormComponent {
       this.authService.signup(this.authFormField.value).subscribe({
         next: (response) => {
           console.log(response)
-          this.socketCoreService.initialize();
+          //this.socketCoreService.initialize();
           this.router.navigate(['/browse']);
         },
-        error: () => {}
+        error: (err) => {
+          console.log(err)
+        }
       });
     }
   }

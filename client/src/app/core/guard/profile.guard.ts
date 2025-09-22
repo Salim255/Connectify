@@ -20,7 +20,8 @@ export class ProfileGuard implements CanActivate {
     .pipe(
       filter(([_, loaded ]) => loaded),
       take(1),
-      map((profile) => {
+      map(([profile, _]) => {
+        console.log(profile, "hello profile")
         if(!profile){
           return this.router.parseUrl('/profile-setup');
         }

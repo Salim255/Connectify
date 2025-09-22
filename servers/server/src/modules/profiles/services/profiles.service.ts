@@ -19,7 +19,9 @@ export class ProfilesService {
   }
 
   async getProfileByUserId(userId: string): Promise<Profile | null> {
-    return await this.profileRep.findOneBy({ userId });
+    const profile: Profile | null = await this.profileRep.findOneBy({ userId });
+    console.log(profile, "hello profile ✅✅");
+    return profile;
   }
 
   async getPotentialMatchProfiles(userId: string): Promise<Profile[]> {
