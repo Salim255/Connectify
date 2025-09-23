@@ -10,14 +10,23 @@ export type ProfilesResponse = {
     profiles: BrowseProfile []
   }
 }
+
+export type InitiateMatchDto = {
+  toUserId: string;
+}
+
 @Injectable({providedIn: 'root'})
 export class BrowseHttpService {
   private ENV = environment;
-  private baseUrl: string = `${this.ENV.apiUrl}/profiles`;
+  private baseUrl: string = `${this.ENV.apiUrl}`;
 
   constructor(private http: HttpClient){}
 
   fetchProfiles():Observable<ProfilesResponse>{
-    return this.http.get<ProfilesResponse>(this.baseUrl);
+    return this.http.get<ProfilesResponse>(`${this.baseUrl}/profiles`);
+  }
+
+  initiateMatch(matchPayload: InitiateMatchDto){
+    return this.http.post<any>(`${this.baseUrl}/matches`, matchPayload)
   }
 }
