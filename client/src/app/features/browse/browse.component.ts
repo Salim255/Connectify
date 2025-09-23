@@ -35,8 +35,8 @@ export class BrowseComponent implements OnInit {
     })
   }
 
-  onLike(profile: Profile){
-    const payload:InitiateMatchDto = { toUserId: profile.userId}
-    this.browseService.initiateMatch(payload);
+  onLike(profile: BrowseProfile){
+    const payload:InitiateMatchDto = { toUserId: profile.userId };
+    this.browseService.initiateMatch(payload).subscribe();
   }
 }

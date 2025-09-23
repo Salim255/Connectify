@@ -25,7 +25,7 @@ export class BrowseItemComponent {
     const profile = this.profile();
     if (!profile) return;
     this.profileService.setProfile(profile);
-    this.router.navigate(['/profile'])
+    //this.router.navigate(['/profile'])
   }
 
 }

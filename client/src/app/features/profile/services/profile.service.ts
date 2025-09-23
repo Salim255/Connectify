@@ -230,6 +230,7 @@ export class ProfileService {
       tap((response) => {
         if (response?.data?.profile?.id) {
           this.accountService.setAccountProfile(response.data.profile);
+          this.setProfile(response?.data?.profile);
         } else {
           this.setProfile(null);
         }

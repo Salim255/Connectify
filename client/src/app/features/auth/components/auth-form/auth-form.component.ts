@@ -46,15 +46,16 @@ export class AuthFormComponent {
   }
 
   onSubmit(){
-    console.log(this.authFormField.value, this.isLoginMode(), this.authFormField.valid);
+
     if(this.authFormField.invalid){
       return;
     }
+    console.log(this.authFormField.value, this.isLoginMode(), this.authFormField.valid);
     if (this.isLoginMode()) {
-
-      this.authService.login(this.authFormField.value).subscribe({
+      const {email, password} = this.authFormField.value;
+      this.authService.login({ email, password }).subscribe({
         next: (response) => {
-
+          console.log(response);
           this.socketCoreService.initialize();
           this.router.navigate(['/browse']);
         },
@@ -66,6 +67,7 @@ export class AuthFormComponent {
           console.log(response)
           //this.socketCoreService.initialize();
           this.router.navigate(['/browse']);
+
         },
         error: (err) => {
           console.log(err)

@@ -8,7 +8,9 @@ import { CreateMatchDto, MatchWithPartnerProfile } from '../dto/matches-dto';
 export class MatchesService {
   constructor(@Inject(MATCH_REPOSITORY) private matchRepo: Repository<Match>) {}
 
-  async initiateMatch(createMatchPayload: CreateMatchDto): Promise<Match> {
+  async initiateMatch(
+    createMatchPayload: CreateMatchDto & { fromUserId: string },
+  ): Promise<Match> {
     const match: Match = this.matchRepo.create(createMatchPayload);
     return this.matchRepo.save(match);
   }

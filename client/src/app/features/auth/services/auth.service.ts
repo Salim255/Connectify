@@ -133,6 +133,7 @@ export class AuthService {
   get getUserId(){
     return this.user.value?.id;
   }
+
   private storeAuthData = async (dataToStore: User) => {
     const data = JSON.stringify(dataToStore);
     await Preferences.set({

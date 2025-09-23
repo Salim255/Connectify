@@ -26,6 +26,7 @@ import {
 import { MatchesService } from '../services/matches.service';
 import { Match } from '../entity/match.entity';
 import { JwtAuthGuard } from 'src/modules/auth/guard/jwt-token.guard';
+import { Request } from 'express';
 
 @ApiTags('Matches')
 @Controller('matches')
@@ -47,8 +48,11 @@ export class MatchesController {
   })
   async initiateMatch(
     @Body() body: CreateMatchDto,
+    @Req() req: Request & { user: { id: string } },
   ): Promise<InitiatedMatchResponseDto> {
-    const { toUserId, fromUserId } = body;
+    const { id: fromUserId } = req.user;
+    console.log(fromUserId, '✅✅✅💥💥');
+    const { toUserId } = body;
     const match: Match = await this.matchesService.initiateMatch({
       toUserId,
       fromUserId,
