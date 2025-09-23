@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Profile } from "../../profile/model/profile.model";
 import { ProfileService } from "../../profile/services/profile.service";
-import { BrowseHttpService, ProfilesResponse } from "./browse-http.service";
+import { BrowseHttpService, InitiateMatchDto, ProfilesResponse } from "./browse-http.service";
 import { BehaviorSubject, Observable, tap } from "rxjs";
 @Injectable({providedIn: 'root'})
 
@@ -27,6 +27,10 @@ export class BrowseService {
         }
       })
     );
+  }
+
+  initiateMatch(fromUserId: InitiateMatchDto){
+    return this.browseHttpService.createMatch(fromUserId);
   }
 
   setBrowseProfiles(profiles: Profile[] | null): void {

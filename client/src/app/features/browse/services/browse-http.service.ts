@@ -26,7 +26,7 @@ export class BrowseHttpService {
     return this.http.get<ProfilesResponse>(`${this.baseUrl}/profiles`);
   }
 
-  initiateMatch(matchPayload: InitiateMatchDto){
+  createMatch(matchPayload: InitiateMatchDto){
     return this.http.post<any>(`${this.baseUrl}/matches`, matchPayload)
   }
 }

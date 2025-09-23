@@ -3,6 +3,8 @@ import { BrowseService } from "./services/browse.service";
 import { BrowseProfile } from "./model/browse.model";
 import { PAGES } from "src/app/shared/components/header/header.component";
 import { Subscription } from "rxjs";
+import { Profile } from "../profile/model/profile.model";
+import { InitiateMatchDto } from "./services/browse-http.service";
 
 @Component({
   selector: 'app-browse',
@@ -31,5 +33,10 @@ export class BrowseComponent implements OnInit {
     this.browseProfilesSubscription = this.browseService.getProfiles$.subscribe(profiles=> {
       this.browseProfiles = profiles;
     })
+  }
+
+  onLike(profile: Profile){
+    const payload:InitiateMatchDto = { toUserId: profile.userId}
+    this.browseService.initiateMatch(payload);
   }
 }
