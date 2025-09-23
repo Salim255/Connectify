@@ -15,7 +15,7 @@ import { InitiateMatchDto } from "./services/browse-http.service";
 
 export class BrowseComponent implements OnInit {
   pageName: PAGES = PAGES.BROWSE;
-  browseProfiles: BrowseProfile [] | null = null;
+  browseProfiles: BrowseProfile [] = [];
 
   browseProfilesSubscription!: Subscription;
 
@@ -31,12 +31,22 @@ export class BrowseComponent implements OnInit {
 
   subscribeToBrowseProfiles(): void{
     this.browseProfilesSubscription = this.browseService.getProfiles$.subscribe(profiles=> {
-      this.browseProfiles = profiles;
+      this.browseProfiles = profiles ?? [];
     })
   }
 
   onLike(profile: BrowseProfile){
     const payload:InitiateMatchDto = { toUserId: profile.userId };
-    this.browseService.initiateMatch(payload).subscribe();
+    this.browseService.initiateMatch(payload).subscribe({
+      next: () => {
+        // Remove the liked profile from the list
+        this.browseProfiles = this.browseProfiles?.filter(
+          (p) => p.userId !== profile.userId
+        );
+      },
+      error: () => {
+
+      }
+    });
   }
 }
