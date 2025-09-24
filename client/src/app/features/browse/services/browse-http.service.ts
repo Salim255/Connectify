@@ -26,7 +26,11 @@ export class BrowseHttpService {
     return this.http.get<PotentialMatchesResponse>(`${this.baseUrl}/users/potential-matches`);
   }
 
-  createMatch(matchPayload: InitiateMatchDto){
+  createMatch(matchPayload: InitiateMatchDto): Observable<any>{
     return this.http.post<any>(`${this.baseUrl}`, matchPayload)
+  }
+
+  acceptMatch(matchId: string):Observable<any>{
+    return this.http.patch<any>(`${this.baseUrl}${matchId}`, {})
   }
 }

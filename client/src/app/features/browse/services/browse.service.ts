@@ -35,8 +35,8 @@ export class BrowseService {
     return this.browseHttpService.createMatch(fromUserId);
   }
 
-  accepteMatch(){
-
+  acceptMatch(matchId: string){
+    return this.browseHttpService.acceptMatch(matchId);
   }
 
   setBrowseProfiles(profiles: PotentialMatch[] | null): void {
