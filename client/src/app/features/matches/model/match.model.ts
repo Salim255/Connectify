@@ -9,12 +9,12 @@ export enum MatchStatus {
 }
 
 export interface Match {
-  id: string;           // match ID
+  id?: string;           // match ID
   profile: Profile;     // matched profile
   matchedAt?: Date;     // timestamp of the match
-  status: MatchStatus;
-  isFavorite: boolean;
-  isHidden: boolean,
-  createdAt: Date;
-  updatedAt: Date;
+  status?: MatchStatus;
+  isFavorite?: boolean;
+  isHidden?: boolean,
+  createdAt?: Date;
+  updatedAt?: Date;
 }

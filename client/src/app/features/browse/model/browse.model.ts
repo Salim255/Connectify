@@ -1,4 +1,4 @@
-import { Profile } from "../../profile/model/profile.model";
+import { Match } from "../../matches/model/match.model";
 
-export interface BrowseProfile extends Profile {}
+export interface BrowseProfile extends Match {}
 

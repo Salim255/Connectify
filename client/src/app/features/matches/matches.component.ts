@@ -29,6 +29,7 @@ export class MatchesComponent implements OnInit, OnDestroy{
 
   subscribeToMatches(){
     this.matchesSubscription = this.matchesService.getMatches$.subscribe(matches => {
+      console.log(matches);
       this.matches = matches;
     })
   }

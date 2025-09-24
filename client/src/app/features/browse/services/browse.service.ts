@@ -3,12 +3,13 @@ import { Profile } from "../../profile/model/profile.model";
 import { ProfileService } from "../../profile/services/profile.service";
 import { BrowseHttpService, InitiateMatchDto, ProfilesResponse } from "./browse-http.service";
 import { BehaviorSubject, Observable, tap } from "rxjs";
+import { BrowseProfile } from "../model/browse.model";
 @Injectable({providedIn: 'root'})
 
 export class BrowseService {
   BROWSE_PROFILES: Profile [];
 
-  browseProfileSubscription = new BehaviorSubject<Profile[] | null>(null);
+  browseProfileSubscription = new BehaviorSubject<BrowseProfile[] | null>(null);
 
   constructor(
     private browseHttpService: BrowseHttpService,
@@ -33,10 +34,10 @@ export class BrowseService {
     return this.browseHttpService.createMatch(fromUserId);
   }
 
-  setBrowseProfiles(profiles: Profile[] | null): void {
+  setBrowseProfiles(profiles: BrowseProfile[] | null): void {
     this.browseProfileSubscription.next(profiles)
   }
-  get getProfiles$(): Observable<Profile[] | null>{
+  get getProfiles$(): Observable<BrowseProfile[] | null>{
     return this.browseProfileSubscription.asObservable();
   }
 }

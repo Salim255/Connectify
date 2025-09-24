@@ -1,8 +1,8 @@
 <app-header [headerTitle]="pageName"></app-header>
 <ion-content>
   <app-custom-grid>
-     @for(profile of  browseProfiles; track profile.id) {
-      <app-browse-item [profile]="profile" (click)="onLike(profile)"></app-browse-item>
+     @for(match of  browseProfiles; track match.id) {
+      <app-browse-item [profile]="match.profile" (click)="onLike(match)"></app-browse-item>
     }
   </app-custom-grid>
 </ion-content>
