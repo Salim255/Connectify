@@ -2,12 +2,12 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { BrowseProfile } from "../model/browse.model";
+import { PotentialMatch } from "../model/browse.model";
 
 export type PotentialMatchesResponse = {
   status: 'Success';
   data: {
-    matches: BrowseProfile []
+    matches: PotentialMatch []
   }
 }
 

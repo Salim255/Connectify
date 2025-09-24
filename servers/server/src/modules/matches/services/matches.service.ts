@@ -70,30 +70,34 @@ export class MatchesService {
   async getPotentialMatchesByUser(userId: string): Promise<PotentialMatch[]> {
     const query = `
     SELECT 
-      NULL::uuid          AS id,
-      row_to_json(p.*)    AS profile,
-      NULL::timestamp     AS "matchedAt",
-      NULL::text          AS status,
-      NULL::boolean       AS "isFavorite",
-      NULL::boolean       AS "isHidden",
-      NULL::timestamp     AS "createdAt",
-      NULL::timestamp     AS "updatedAt"
+      m.id,
+      row_to_json(p.*)      AS profile,
+      m."matchedAt",
+      m.status,
+      m."isFavorite",
+      m."isHidden",
+      m."createdAt",
+      m."updatedAt"
     FROM profiles p
+    LEFT JOIN matches m
+      ON m."fromUserId" = p."userId"
+      AND m."toUserId" = $1
+      AND m.status = 'pending'
     WHERE p."userId" != $1
+      -- Exclude if I already sent a request
       AND NOT EXISTS (
-        -- Rule 3: exclude if current user already sent a request
         SELECT 1
-        FROM matches m
-        WHERE m."fromUserId" = $1
-          AND m."toUserId" = p."userId"
+        FROM matches mx
+        WHERE mx."fromUserId" = $1
+          AND mx."toUserId" = p."userId"
       )
+      -- Exclude if they sent me a request that is not pending
       AND NOT EXISTS (
-        -- Rule 2: exclude if they sent me a request that is not pending
         SELECT 1
-        FROM matches m
-        WHERE m."toUserId" = $1
-          AND m."fromUserId" = p."userId"
-          AND m.status <> 'pending'
+        FROM matches mx
+        WHERE mx."toUserId" = $1
+          AND mx."fromUserId" = p."userId"
+          AND mx.status <> 'pending'
       );
     `;
     const potentialMatches: PotentialMatch[] = await this.matchRepo.query(

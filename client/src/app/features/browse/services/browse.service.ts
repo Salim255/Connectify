@@ -3,13 +3,13 @@ import { Profile } from "../../profile/model/profile.model";
 import { ProfileService } from "../../profile/services/profile.service";
 import { BrowseHttpService, InitiateMatchDto, PotentialMatchesResponse } from "./browse-http.service";
 import { BehaviorSubject, Observable, tap } from "rxjs";
-import { BrowseProfile } from "../model/browse.model";
-@Injectable({providedIn: 'root'})
+import { PotentialMatch } from "../model/browse.model";
 
+@Injectable({providedIn: 'root'})
 export class BrowseService {
   BROWSE_PROFILES: Profile [];
 
-  browseProfileSubscription = new BehaviorSubject<BrowseProfile[] | null>(null);
+  browseProfileSubscription = new BehaviorSubject<PotentialMatch[] | null>(null);
 
   constructor(
     private browseHttpService: BrowseHttpService,
@@ -35,10 +35,14 @@ export class BrowseService {
     return this.browseHttpService.createMatch(fromUserId);
   }
 
-  setBrowseProfiles(profiles: BrowseProfile[] | null): void {
+  accepteMatch(){
+
+  }
+
+  setBrowseProfiles(profiles: PotentialMatch[] | null): void {
     this.browseProfileSubscription.next(profiles)
   }
-  get getProfiles$(): Observable<BrowseProfile[] | null>{
+  get getPotentialMatches$(): Observable<PotentialMatch[] | null>{
     return this.browseProfileSubscription.asObservable();
   }
 }

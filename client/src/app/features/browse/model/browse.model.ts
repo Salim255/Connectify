@@ -1,4 +1,4 @@
 import { Match } from "../../matches/model/match.model";
 
-export interface BrowseProfile extends Match {}
+export interface PotentialMatch extends Match {}
 
