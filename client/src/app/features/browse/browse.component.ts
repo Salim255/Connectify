@@ -37,8 +37,11 @@ export class BrowseComponent implements OnInit {
   onLike(match: PotentialMatch){
     if(match.id) {
       this.browseService.acceptMatch(match.id).subscribe({
-        next: () => {
-
+        next: (match) => {
+          console.log(match);
+          this.browseProfiles = this.browseProfiles?.filter(
+            (p) => p.profile.userId !== match.profile.userId
+          );
         },
         error: () => {
 
