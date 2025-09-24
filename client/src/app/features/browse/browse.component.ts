@@ -35,18 +35,28 @@ export class BrowseComponent implements OnInit {
   }
 
   onLike(match: PotentialMatch){
+    if(match.id) {
+      this.browseService.acceptMatch(match.id).subscribe({
+        next: () => {
 
-    const payload:InitiateMatchDto = { toUserId: match.profile.userId };
-    this.browseService.initiateMatch(payload).subscribe({
-      next: () => {
-        // Remove the liked profile from the list
-        this.browseProfiles = this.browseProfiles?.filter(
-          (p) => p.profile.userId !== match.profile.userId
-        );
-      },
-      error: () => {
+        },
+        error: () => {
 
-      }
-    });
+        }
+      })
+    }else {
+      const payload:InitiateMatchDto = { toUserId: match.profile.userId };
+      this.browseService.initiateMatch(payload).subscribe({
+        next: () => {
+          // Remove the liked profile from the list
+          this.browseProfiles = this.browseProfiles?.filter(
+            (p) => p.profile.userId !== match.profile.userId
+          );
+        },
+        error: () => {
+
+        }
+      });
+    }
   }
 }
