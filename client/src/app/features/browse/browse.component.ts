@@ -3,7 +3,6 @@ import { BrowseService } from "./services/browse.service";
 import { BrowseProfile } from "./model/browse.model";
 import { PAGES } from "src/app/shared/components/header/header.component";
 import { Subscription } from "rxjs";
-import { Profile } from "../profile/model/profile.model";
 import { InitiateMatchDto } from "./services/browse-http.service";
 
 @Component({

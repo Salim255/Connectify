@@ -27,20 +27,22 @@ export class ProfilesService {
   }
 
   async getPotentialMatchProfiles(userId: string): Promise<Profile[]> {
-    // const query = `SELECT * FROM profiles`;
     const query = `
       SELECT p.*
       FROM profiles p
       WHERE p."userId" != $1
-        AND p."userId" NOT IN (
-          SELECT 
-            CASE 
-              WHEN m."fromUserId" = $1 THEN m."toUserId"
-              WHEN m."toUserId" = $1 THEN m."fromUserId"
-            END
+        AND NOT EXISTS (
+          SELECT 1
           FROM matches m
-          WHERE m.status = 'matched'
-            AND ($1 IN (m."fromUserId", m."toUserId"))
+          WHERE m."fromUserId" = $1
+            AND m."toUserId" = p."userId"
+        )
+        AND NOT EXISTS (
+          SELECT 1
+          FROM matches m
+          WHERE m."toUserId" = $1
+            AND m."fromUserId" = p."userId"
+            AND m.status <> 'pending'
         )
     `;
     return await this.profileRep.query(query, [userId]);
