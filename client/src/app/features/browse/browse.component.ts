@@ -25,12 +25,12 @@ export class BrowseComponent implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.browseService.getBrowseProfiles().subscribe();
+    this.browseService.getBrowsePotentialMatches().subscribe();
   }
 
   subscribeToBrowseProfiles(): void{
-    this.browseProfilesSubscription = this.browseService.getProfiles$.subscribe(profiles=> {
-      this.browseProfiles = profiles ?? [];
+    this.browseProfilesSubscription = this.browseService.getProfiles$.subscribe(potentialMatches=> {
+      this.browseProfiles = potentialMatches ?? [];
     })
   }
 
