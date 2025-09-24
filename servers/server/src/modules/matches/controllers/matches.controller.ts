@@ -20,8 +20,10 @@ import {
   CreateMatchDto,
   GetMatchesByUserResponseDto,
   GetMatchesResponseDto,
+  GetPotentialMatchesByUserResponseDto,
   InitiatedMatchResponseDto,
   MatchWithPartnerProfile,
+  PotentialMatch,
 } from '../dto/matches-dto';
 import { MatchesService } from '../services/matches.service';
 import { Match } from '../entity/match.entity';
@@ -136,16 +138,16 @@ export class MatchesController {
     summary: `Get all potential matches by user route`,
   })
   @ApiResponse({
-    type: GetMatchesByUserResponseDto,
+    type: GetPotentialMatchesByUserResponseDto,
     description: 'Potential Matches by user response',
     status: 200,
   })
   async getPotentialMatchesByUser(
     @Req() req: Request & { user: { id: string } },
-  ): Promise<GetMatchesByUserResponseDto> {
+  ): Promise<GetPotentialMatchesByUserResponseDto> {
     const { id: userId } = req.user;
-    const matches: MatchWithPartnerProfile[] =
-      await this.matchesService.getMatchesByUser(userId);
+    const matches: PotentialMatch[] =
+      await this.matchesService.getPotentialMatchesByUser(userId);
 
     return {
       status: 'Success',

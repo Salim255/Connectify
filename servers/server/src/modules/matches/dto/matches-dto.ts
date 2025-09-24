@@ -3,7 +3,7 @@ import { Match, MatchStatus } from '../entity/match.entity';
 import { IsUUID, IsNotEmpty } from 'class-validator';
 import { Profile } from 'src/modules/profiles/entity/profile.entity';
 
-export class PotentialMatchWithPartnerProfile {
+export class PotentialMatch {
   id?: string; // match ID
   profile: Profile; // matched profile
   matchedAt?: Date; // timestamp of the match
@@ -71,6 +71,6 @@ export class GetPotentialMatchesByUserResponseDto {
 
   @ApiProperty({ description: 'Response data' })
   data: {
-    matches: PotentialMatchWithPartnerProfile[];
+    matches: PotentialMatch[];
   };
 }

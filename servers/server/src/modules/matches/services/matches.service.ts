@@ -2,7 +2,11 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { MATCH_REPOSITORY } from 'src/common/constants/constants';
 import { Repository } from 'typeorm';
 import { Match, MatchStatus } from '../entity/match.entity';
-import { CreateMatchDto, MatchWithPartnerProfile } from '../dto/matches-dto';
+import {
+  CreateMatchDto,
+  MatchWithPartnerProfile,
+  PotentialMatch,
+} from '../dto/matches-dto';
 
 @Injectable()
 export class MatchesService {
@@ -63,7 +67,39 @@ export class MatchesService {
     return matches;
   }
 
-  getPotentialMatchesByUser(userId: string){
-      return null;
+  async getPotentialMatchesByUser(userId: string): Promise<PotentialMatch[]> {
+    const query = `
+    SELECT 
+      NULL::uuid          AS id,
+      row_to_json(p.*)    AS profile,
+      NULL::timestamp     AS "matchedAt",
+      NULL::text          AS status,
+      NULL::boolean       AS "isFavorite",
+      NULL::boolean       AS "isHidden",
+      NULL::timestamp     AS "createdAt",
+      NULL::timestamp     AS "updatedAt"
+    FROM profiles p
+    WHERE p."userId" != $1
+      AND NOT EXISTS (
+        -- Rule 3: exclude if current user already sent a request
+        SELECT 1
+        FROM matches m
+        WHERE m."fromUserId" = $1
+          AND m."toUserId" = p."userId"
+      )
+      AND NOT EXISTS (
+        -- Rule 2: exclude if they sent me a request that is not pending
+        SELECT 1
+        FROM matches m
+        WHERE m."toUserId" = $1
+          AND m."fromUserId" = p."userId"
+          AND m.status <> 'pending'
+      );
+    `;
+    const potentialMatches: PotentialMatch[] = await this.matchRepo.query(
+      query,
+      [userId],
+    );
+    return potentialMatches;
   }
 }
