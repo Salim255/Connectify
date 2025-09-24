@@ -31,6 +31,6 @@ export class BrowseHttpService {
   }
 
   acceptMatch(matchId: string):Observable<any>{
-    return this.http.patch<any>(`${this.baseUrl}${matchId}/accept`, {})
+    return this.http.patch<any>(`${this.baseUrl}/${matchId}/accept`, {})
   }
 }
