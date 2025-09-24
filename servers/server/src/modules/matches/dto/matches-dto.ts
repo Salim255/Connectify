@@ -53,3 +53,13 @@ export class GetMatchesByUserResponseDto {
     matches: MatchWithPartnerProfile[];
   };
 }
+
+export class GetPotentialMatchesByUserResponseDto {
+  @ApiProperty({ description: 'Response status' })
+  status: string;
+
+  @ApiProperty({ description: 'Response data' })
+  data: {
+    matches: MatchWithPartnerProfile[];
+  };
+}

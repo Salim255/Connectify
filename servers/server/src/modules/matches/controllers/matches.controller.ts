@@ -128,4 +128,30 @@ export class MatchesController {
       },
     };
   }
+
+  @Get('/users/potential-matches')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
+  @ApiOperation({
+    summary: `Get all potential matches by user route`,
+  })
+  @ApiResponse({
+    type: GetMatchesByUserResponseDto,
+    description: 'Potential Matches by user response',
+    status: 200,
+  })
+  async getPotentialMatchesByUser(
+    @Req() req: Request & { user: { id: string } },
+  ): Promise<GetMatchesByUserResponseDto> {
+    const { id: userId } = req.user;
+    const matches: MatchWithPartnerProfile[] =
+      await this.matchesService.getMatchesByUser(userId);
+
+    return {
+      status: 'Success',
+      data: {
+        matches,
+      },
+    };
+  }
 }

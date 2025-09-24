@@ -62,4 +62,8 @@ export class MatchesService {
 
     return matches;
   }
+
+  getPotentialMatchesByUser(userId: string){
+      return null;
+  }
 }
