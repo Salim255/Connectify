@@ -18,7 +18,8 @@ export class BrowseItemComponent {
   ){}
 
   get profileAvatar(): string{
-    return this.profile()?.avatarUrl ?? '';
+   // return this.profile()?.avatarUrl ?? '';
+   return "https://www.pexels.com/photo/photo-of-woman-near-chain-link-fence-2853592/";
   }
 
   onViewProfile(){
