@@ -1,6 +1,9 @@
 <ion-card (click)="onViewProfile()" class="browse-item">
- <!--  <img class="browse-item__img" alt="avatar" [src]="profileAvatar" />
+<!--  <img class="browse-item__img" alt="avatar" [src]="profileAvatar" /> -->
   <ion-card-content class="browse-item__content">
-    Here's a small text description for the card content. Nothing more, nothing less.
-  </ion-card-content> -->
+    <div>
+      {{ profile()?.name }}
+      {{profile()?.age | date}}
+    </div>
+  </ion-card-content>
 </ion-card>
