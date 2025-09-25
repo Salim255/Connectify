@@ -1,8 +1,13 @@
-<app-header [headerTitle]="pageName"></app-header>
+<!-- <app-header [headerTitle]="pageName"></app-header> -->
 <ion-content>
-  <app-custom-grid>
-     @for(match of  browseProfiles; track match.profile.id) {
-      <app-browse-item [profile]="match.profile" (click)="onLike(match)"></app-browse-item>
+  <div class="browse-container">
+    @for(match of browseProfiles; track match.profile.id) {
+      <app-browse-item
+        class="browse-item"
+        [profile]="match.profile"
+        (click)="onLike(match)">
+      </app-browse-item>
     }
-  </app-custom-grid>
+  </div>
 </ion-content>
+

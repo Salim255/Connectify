@@ -19,7 +19,8 @@ export class BrowseItemComponent {
 
   get profileAvatar(): string{
    // return this.profile()?.avatarUrl ?? '';
-   return "https://www.pexels.com/photo/photo-of-woman-near-chain-link-fence-2853592/";
+   //return "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D";
+   return '';
   }
 
   onViewProfile(){
