@@ -40,7 +40,8 @@ export class MatchItemComponent {
 
   get avatar(): string{
    // console.log(this.match())
-    return this.match()?.profile?.avatarUrl ?? '';
+   return "https://images.unsplash.com/photo-1742201877377-03d18a323c18?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMxfHRvd0paRnNrcEdnfHxlbnwwfHx8fHw%3D"
+    //return this.match()?.profile?.avatarUrl ?? 'https://images.unsplash.com/photo-1742201877377-03d18a323c18?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMxfHRvd0paRnNrcEdnfHxlbnwwfHx8fHw%3D';
   }
 
   get matchAge(): number {

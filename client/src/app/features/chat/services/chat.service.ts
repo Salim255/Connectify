@@ -199,4 +199,8 @@ export class ChatService{
   get getActiveChat(): Chat{
     return this.activeChatSubject.value;
   }
+
+  get partnerProfile$(): Profile | null {
+    return this.activeChatSubject.value.participants[0].profile;
+  }
 }

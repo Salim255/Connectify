@@ -5,9 +5,9 @@
     </ion-buttons>
 
     <ion-title>
-      {{ chatTitle }}
+      {{ name }}
       <ion-avatar (click)="onProfile()">
-        <img alt="avatar" [src]="profile.avatarUrl">
+        <img alt="avatar" [src]="avatar">
       </ion-avatar>
      @if(chatStatus){
        <div class="chat-status">
