@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { Message } from "../model/message.model";
 import { Profile } from "../../profile/model/profile.model";
 import { ProfileService } from "../../profile/services/profile.service";
-import { BehaviorSubject, Observable, of, tap } from "rxjs";
-import { ChatHttpService, CreateChatPayload } from "./chat-http.service";
+import { BehaviorSubject, Observable, of, tap, throwError } from "rxjs";
+import { ChatHttpService, CreateChatPayload, GetChatResponse } from "./chat-http.service";
 import { AccountService } from "../../account/services/account.service";
 import { Chat } from "../model/chat.model";
 import { MessageHttpService, MessagePostPayload } from "./message-http.service";
@@ -166,11 +166,13 @@ export class ChatService{
     return this.chatHttpService.fetchChatByProfilesIds( hostProfile.id, receiverProfileId );
   }
 
-  sendMessage(content: string): Observable<any>{
+  sendMessage(content: string): Observable<GetChatResponse | Message >{
     const profile = this.accountService?.accountProfile;
     const activeChat = this.getActiveChat;
 
-    if (!profile || !activeChat || !activeChat.participants?.length) return of(null);
+    if (!profile || !activeChat || !activeChat.participants?.length){
+        return throwError(() => new Error('Unable to send message. Please try again.'));
+    };
 
     const chatId = this.getActiveChat.id;
     if (!chatId) {
@@ -191,7 +193,11 @@ export class ChatService{
       );
     }
     const payload: MessagePostPayload = { chatId, senderId: profile.userId, content }
-    return this.messageHttpService.createMessage(payload);
+    return this.messageHttpService.createMessage(payload).pipe(
+      tap((res) => {
+        console.log('Message response:',res);
+      })
+    );
   }
 
   setActiveChat(chat: Chat){
