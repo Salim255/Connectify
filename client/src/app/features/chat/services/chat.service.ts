@@ -166,10 +166,6 @@ export class ChatService{
     return this.chatHttpService.fetchChatByProfilesIds( hostProfile.id, receiverProfileId );
   }
 
-  createChat(data: any){
-    return this.chatHttpService.createChat(data);
-  }
-
   sendMessage(content: string): Observable<any>{
     const profile = this.accountService?.accountProfile;
     const chatId = this.getActiveChat.id;
