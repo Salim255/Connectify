@@ -44,10 +44,10 @@ export class ChatHttpService {
   }
 
   createChat(data: CreateChatPayload): Observable<GetChatResponse>{
-    return this.http.post<GetChatResponse>(`${this.baseUrl}/chat-with-message`, {data})
+    return this.http.post<GetChatResponse>(`${this.baseUrl}/chat-with-message`, data)
   }
 
   sendMessage(data: any): Observable<any>{
-    return this.http.post<any>(this.baseUrl, {data})
+    return this.http.post<any>(this.baseUrl, data)
   }
 }

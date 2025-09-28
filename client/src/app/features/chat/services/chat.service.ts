@@ -168,19 +168,25 @@ export class ChatService{
 
   sendMessage(content: string): Observable<any>{
     const profile = this.accountService?.accountProfile;
-    const chatId = this.getActiveChat.id;
-    if (!profile ) return of(null);
+    const activeChat = this.getActiveChat;
 
+    if (!profile || !activeChat || !activeChat.participants?.length) return of(null);
+
+    const chatId = this.getActiveChat.id;
     if (!chatId) {
-    const receiverProfile = this.getActiveChat.participants[0].profile;
-    const payLoad: CreateChatPayload = {
-        content,
-        senderProfileId: profile.id,
-        receiverProfileId: receiverProfile.id,
-      }
+      const receiverProfile = this.getActiveChat.participants[0].profile;
+
+      const payLoad: CreateChatPayload = {
+          content,
+          senderProfileId: profile.id,
+          receiverProfileId: receiverProfile.id,
+        }
       return this.chatHttpService.createChat(payLoad).pipe(
         tap((response) => {
-          console.log(response);
+          const chat = response.data.chat;
+          if (chat.id){
+            this.setActiveChat(chat);
+          }
         })
       );
     }
