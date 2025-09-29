@@ -3,7 +3,9 @@
   <app-custom-grid>
    <div class="dashboard">
       <ion-item lines="none" class="dashboard__hero">
-        <img alt="avatar" [src]="getAvatarUrl">
+       <ion-avatar>
+         <img alt="avatar" [src]="getAvatarUrl">
+       </ion-avatar>
       </ion-item>
       <ion-item lines="none" class="dashboard__btns">
         <a (click)="onNavigate('settings')">

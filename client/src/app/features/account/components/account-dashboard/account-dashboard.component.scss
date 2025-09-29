@@ -6,10 +6,13 @@
   &__hero {
     text-align: center;
     margin: 0 auto;
-    img {
+    ion-avatar {
       height: 10rem;
       width: 10rem;
-      border-radius: 50%;
+      //border-radius: 50%;
+      img {
+        object-position: top;
+      }
     }
   }
   &__btns {
