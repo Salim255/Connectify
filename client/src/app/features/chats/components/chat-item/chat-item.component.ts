@@ -26,7 +26,8 @@ export class ChatItemComponent {
   }
 
   get avatarUrl(): string {
-    return this.chat()?.participants[0]?.profile?.avatarUrl ?? '';
+    //return this.chat()?.participants[0]?.profile?.avatarUrl ?? '';
+    return "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D";
   }
 
   get unreadCount(): number{
