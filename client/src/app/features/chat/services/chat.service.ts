@@ -171,7 +171,7 @@ export class ChatService{
     const activeChat = this.getActiveChat;
 
     if (!profile || !activeChat || !activeChat.participants?.length){
-        return throwError(() => new Error('Unable to send message. Please try again.'));
+      return throwError(() => new Error('Unable to send message. Please try again.'));
     };
 
     const chatId = this.getActiveChat.id;
