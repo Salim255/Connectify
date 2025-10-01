@@ -41,4 +41,5 @@ export class ChatItemComponent {
   get lasMessageDate(): Date{
     return new Date();
   }
+  //
 }
