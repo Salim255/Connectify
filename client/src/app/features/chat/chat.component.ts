@@ -3,6 +3,7 @@ import { ChatService } from "./services/chat.service";
 import { Message } from "./model/message.model";
 import { Chat } from "./model/chat.model";
 import { ChatGatewayService } from "./gateway/chat.gateway";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-chat',
@@ -13,7 +14,7 @@ import { ChatGatewayService } from "./gateway/chat.gateway";
 export class ChatComponent implements OnInit{
   messages: Message [];
   activeChat: Chat;
-
+  activeChatSubscription!: Subscription;
   constructor(
     private chatGatewayService: ChatGatewayService,
     private chatService: ChatService,

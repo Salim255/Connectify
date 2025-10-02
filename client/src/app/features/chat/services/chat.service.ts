@@ -199,8 +199,9 @@ export class ChatService{
       tap((res) => {
         console.log('Message response:',res);
         const chat = this.getActiveChat;
-
         this.chatGatewayService.notifySendMessage(chat.id);
+        const message = res as Message;
+        this.addMessageToChat(message);
       })
     );
   }
@@ -215,5 +216,13 @@ export class ChatService{
 
   get partnerProfile$(): Profile | null {
     return this.activeChatSubject.value.participants[0].profile;
+  }
+
+  addMessageToChat(message: Message){
+    const chat: Chat = this.getActiveChat;
+    console.log(chat.messages);
+    chat.messages = [...chat.messages, message];
+     console.log(chat.messages);
+    this.setActiveChat(chat);
   }
 }
