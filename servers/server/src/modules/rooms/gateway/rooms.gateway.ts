@@ -20,4 +20,13 @@ export class RoomsGateWay {
   ) {
     this.logger.log(`Client ${client.id} joined room ${roomId}`);
   }
+
+  @UseGuards(JwtWsAuthGuard)
+  @SubscribeMessage('user:leaveRoom')
+  handleLeaveRoom(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() roomId: string,
+  ) {
+    this.logger.log(`Client ${client.id} left room ${roomId}`);
+  }
 }

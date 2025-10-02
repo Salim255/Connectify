@@ -38,13 +38,13 @@ export class ChatGatewayService {
     this.socket.emit('message:send', payload);
   }
 
-  notifyInRoom(roomId: string): void {
+  notifyJoinRoom(roomId: string): void {
     console.log(roomId);
     this.socket.emit('user:joinRoom', roomId);
   }
 
-  notifyLeftRoom(roomId: string): void {
-    this.socket.emit('user:leftRoom', roomId);
+  notifyLeaveRoom(roomId: string): void {
+    this.socket.emit('user:leaveRoom', roomId);
   }
 
   initializeChatGateway(){

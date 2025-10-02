@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from './features/auth/services/auth.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { ActionPerformed, PushNotificationSchema, PushNotifications, Token } from '@capacitor/push-notifications';
 
 @Component({
   selector: 'app-root',
