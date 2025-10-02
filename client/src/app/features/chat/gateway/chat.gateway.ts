@@ -36,6 +36,10 @@ export class ChatGatewayService {
   sendMessage(payload: { chatId: string; senderId: string; content: string }): void {
     this.socket.emit('message:send', payload);
   }
+
+  notifyOnline(userId: string): void {
+    this.socket.emit('user:online', userId);
+  }
   initializeChatGateway(){
     console.log('Hello from Chat gateway')
   }
