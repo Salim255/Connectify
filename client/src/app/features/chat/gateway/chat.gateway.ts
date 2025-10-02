@@ -19,7 +19,10 @@ export class ChatGatewayService {
   }
 
   private registerListeners(): void {
-
+    this.socket.on('message:receive', (message) => {
+      console.log('New message received:', message);
+      // You can push this to a BehaviorSubject or call a handler
+    });
   }
 
   initializeChatGateway(){
