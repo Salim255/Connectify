@@ -3,6 +3,7 @@ import { BehaviorSubject } from "rxjs";
 import { io, Socket } from "socket.io-client";
 import { environment } from "../../../environments/environment";
 import { Preferences } from "@capacitor/preferences";
+import { ChatGatewayService } from "src/app/features/chat/gateway/chat.gateway";
 
 export enum ConnectionStatus {
   Online = 'online',
@@ -21,7 +22,7 @@ export class SocketCoreService {
     new BehaviorSubject<ConnectionStatus>(ConnectionStatus.Offline);
   readonly connectionStatus$ = this.connectionStatusSubject.asObservable();
 
-  constructor( ){}
+  constructor(){}
 
   async loadToken(): Promise<void> {
     const { value } = await Preferences.get({ key: 'authData' });
