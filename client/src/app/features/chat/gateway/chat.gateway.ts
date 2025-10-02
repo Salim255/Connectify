@@ -7,6 +7,9 @@ export type TypingPayload = {
   typing: boolean;
 }
 
+export type SendMessagePayload = {
+
+}
 @Injectable({providedIn: 'root'})
 export class ChatGatewayService {
   private socket: Socket;
@@ -57,6 +60,10 @@ export class ChatGatewayService {
     } else {
       this.socket.emit('user:stop-typing', payload.roomId);
     }
+  }
+
+  notifySendMessage(payload: any ){
+    this.socket.emit('user:send-message', payload.roomId);
   }
 
   initializeChatGateway(){

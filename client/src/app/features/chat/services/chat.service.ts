@@ -8,6 +8,7 @@ import { AccountService } from "../../account/services/account.service";
 import { Chat } from "../model/chat.model";
 import { MessageHttpService, MessagePostPayload } from "./message-http.service";
 import { AuthService } from "../../auth/services/auth.service";
+import { ChatGatewayService } from "../gateway/chat.gateway";
 
 @Injectable({providedIn: 'root'})
 export class ChatService{
@@ -151,6 +152,7 @@ export class ChatService{
     private profileService:  ProfileService,
     private accountService: AccountService,
     private authService: AuthService,
+    private chatGatewayService : ChatGatewayService,
   ){
     this.partnerProfile = this.profileService.PROFILES_PLACEHOLDER[0];
   }
@@ -196,6 +198,9 @@ export class ChatService{
     return this.messageHttpService.createMessage(payload).pipe(
       tap((res) => {
         console.log('Message response:',res);
+        const chat = this.getActiveChat;
+
+        this.chatGatewayService.notifySendMessage(chat.id);
       })
     );
   }
