@@ -45,6 +45,6 @@ export class RoomsGateWay {
     @ConnectedSocket() client: Socket,
     @MessageBody() roomId: string,
   ) {
-    this.logger.log(`Client ${client.id} stop typing to room ${roomId}`);
+    this.logger.log(`Client ${client.id} stop typing 🛑 to room ${roomId}`);
   }
 }
