@@ -40,7 +40,7 @@ export class ChatGatewayService {
 
   notifyInRoom(roomId: string): void {
     console.log(roomId);
-    this.socket.emit('user:inRoom', roomId);
+    this.socket.emit('user:joinRoom', roomId);
   }
 
   notifyLeftRoom(roomId: string): void {
