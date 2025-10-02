@@ -9,10 +9,10 @@ import { Socket } from 'socket.io';
 import { JwtWsAuthGuard } from 'src/modules/auth/guard/jwt-token-ws.guard';
 
 @WebSocketGateway()
-@UseGuards(JwtWsAuthGuard)
 export class RoomsGateWay {
   private logger = new Logger('Rooms Logger');
 
+  @UseGuards(JwtWsAuthGuard)
   @SubscribeMessage('user:joinRoom')
   handleJoinRoom(
     @ConnectedSocket() client: Socket,

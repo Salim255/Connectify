@@ -5,7 +5,6 @@ import { JwtTokenService } from '../services/jwt-token.service';
 interface AuthenticatedSocket extends Socket {
   data: {
     userId: string;
-    // Add other fields if needed
   };
 }
 
@@ -21,6 +20,7 @@ export class JwtWsAuthGuard implements CanActivate {
       const { id: userId } = this.jwtTokenService.verifyToken(token);
       client.data.userId = userId;
       return true;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       return false;
     }
