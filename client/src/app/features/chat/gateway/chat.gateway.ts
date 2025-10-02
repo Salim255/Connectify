@@ -19,6 +19,7 @@ export class ChatGatewayService {
   }
 
   private registerListeners(): void {
+    console.log('Listener running....')
     this.socket.on('message:receive', (message) => {
       console.log('New message received:', message);
       // You can push this to a BehaviorSubject or call a handler
@@ -37,13 +38,15 @@ export class ChatGatewayService {
     this.socket.emit('message:send', payload);
   }
 
-  notifyOnline(userId: string): void {
-    this.socket.emit('user:online', userId);
+  notifyInRoom(roomId: string): void {
+    console.log(roomId);
+    this.socket.emit('user:inRoom', roomId);
   }
 
-  notifyOffline(userId: string): void {
-    this.socket.emit('user:offline', userId);
+  notifyLeftRoom(roomId: string): void {
+    this.socket.emit('user:leftRoom', roomId);
   }
+
   initializeChatGateway(){
     console.log('Hello from Chat gateway')
   }

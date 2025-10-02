@@ -21,13 +21,11 @@ export class ChatComponent implements OnInit{
     //this.messages =  this.chatService.placeholderMessages;
     this.activeChat = this.chatService.getActiveChat;
     this.messages = this.activeChat.messages;
-    this.chatGatewayService.initializeChatGateway();
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    console.log("hellof rom chat compoent");
     console.log(this.activeChat);
+    if (this.activeChat.id) this.chatGatewayService.notifyInRoom(this.activeChat.id);
+
   }
 }

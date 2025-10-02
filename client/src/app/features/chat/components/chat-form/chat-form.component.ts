@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { ChatService } from "../../services/chat.service";
 import { NgForm } from "@angular/forms";
+import { ChatGatewayService } from "../../gateway/chat.gateway";
 
 @Component({
   selector: 'app-chat-form',
@@ -13,7 +14,10 @@ import { NgForm } from "@angular/forms";
 export class ChatFomComponent {
   textMessage: string = '';
 
-  constructor(private chatService: ChatService){}
+  constructor(
+    private chatGatewayService : ChatGatewayService,
+    private chatService: ChatService,
+  ){}
 
   onSubmit(form: NgForm): void {
 
@@ -21,7 +25,8 @@ export class ChatFomComponent {
 
     this.chatService.sendMessage(this.textMessage).subscribe({
       next: (res) => {
-        console.log(res)
+        console.log(res);
+       // this.chatGatewayService.
       },
       error: (err) => {
         console.log(err);
