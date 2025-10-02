@@ -40,6 +40,10 @@ export class ChatGatewayService {
   notifyOnline(userId: string): void {
     this.socket.emit('user:online', userId);
   }
+
+  notifyOffline(userId: string): void {
+    this.socket.emit('user:offline', userId);
+  }
   initializeChatGateway(){
     console.log('Hello from Chat gateway')
   }
