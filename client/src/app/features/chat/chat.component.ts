@@ -15,6 +15,7 @@ export class ChatComponent implements OnInit{
   messages: Message [];
   activeChat: Chat;
   activeChatSubscription!: Subscription;
+
   constructor(
     private chatGatewayService: ChatGatewayService,
     private chatService: ChatService,
@@ -25,13 +26,19 @@ export class ChatComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log(this.activeChat);
+    this.subscribeToActiveChat();
     if (this.activeChat.id) this.chatGatewayService.notifyJoinRoom(this.activeChat.id);
   }
 
+  subscribeToActiveChat(){
+    this.activeChatSubscription = this.chatService.getActiveChat$.subscribe((activeChat) => {
+      console.log( activeChat);
+      this.activeChat = activeChat;
+    }
+    )
+  }
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
+    this.activeChatSubscription?.unsubscribe();
     if (this.activeChat.id) this.chatGatewayService.notifyLeaveRoom(this.activeChat.id);
   }
 }

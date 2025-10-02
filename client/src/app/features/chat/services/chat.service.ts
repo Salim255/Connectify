@@ -13,6 +13,8 @@ import { ChatGatewayService } from "../gateway/chat.gateway";
 @Injectable({providedIn: 'root'})
 export class ChatService{
   private activeChatSubject = new BehaviorSubject< Chat>(new Chat(null));
+  getActiveChat$ = this.activeChatSubject.asObservable();
+
   placeholderMessages: Message[] = [
   {
     id: 'msg1',
@@ -222,7 +224,7 @@ export class ChatService{
     const chat: Chat = this.getActiveChat;
     console.log(chat.messages);
     chat.messages = [...chat.messages, message];
-     console.log(chat.messages);
+    console.log(chat.messages);
     this.setActiveChat(chat);
   }
 }
