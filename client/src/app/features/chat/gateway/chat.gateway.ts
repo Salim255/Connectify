@@ -23,6 +23,10 @@ export class ChatGatewayService {
       console.log('New message received:', message);
       // You can push this to a BehaviorSubject or call a handler
     });
+
+    this.socket.on('user:online', (userId) => {
+      console.log('User is online:', userId);
+    });
   }
 
   initializeChatGateway(){
