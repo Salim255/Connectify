@@ -29,4 +29,22 @@ export class RoomsGateWay {
   ) {
     this.logger.log(`Client ${client.id} left room ${roomId}`);
   }
+
+  @UseGuards(JwtWsAuthGuard)
+  @SubscribeMessage('user:typing')
+  handleTyping(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() roomId: string,
+  ) {
+    this.logger.log(`Client ${client.id} typing to room ${roomId}`);
+  }
+
+  @UseGuards(JwtWsAuthGuard)
+  @SubscribeMessage('user:stop-typing')
+  handleStopTyping(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() roomId: string,
+  ) {
+    this.logger.log(`Client ${client.id} stop typing to room ${roomId}`);
+  }
 }
