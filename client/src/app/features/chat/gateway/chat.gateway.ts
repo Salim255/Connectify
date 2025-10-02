@@ -27,6 +27,10 @@ export class ChatGatewayService {
     this.socket.on('user:online', (userId) => {
       console.log('User is online:', userId);
     });
+
+    this.socket.on('user:offline', (userId) => {
+      console.log('User is offline:', userId);
+    });
   }
 
   initializeChatGateway(){
