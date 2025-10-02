@@ -47,4 +47,13 @@ export class RoomsGateWay {
   ) {
     this.logger.log(`Client ${client.id} stop typing 🛑 to room ${roomId}`);
   }
+
+  @UseGuards(JwtWsAuthGuard)
+  @SubscribeMessage('user:send-message')
+  handleSendMessage(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() roomId: string,
+  ) {
+    this.logger.log(`Client ${client.id} send message ✅ to room ${roomId}`);
+  }
 }
