@@ -2,8 +2,12 @@ import { Injectable } from "@angular/core";
 import { Socket } from "socket.io-client";
 import { SocketCoreService } from "src/app/socket/services/socket-presence.service";
 
-@Injectable({providedIn: 'root'})
+export type TypingPayload = {
+  roomId: string;
+  typing: boolean;
+}
 
+@Injectable({providedIn: 'root'})
 export class ChatGatewayService {
   private socket: Socket;
 
@@ -45,6 +49,14 @@ export class ChatGatewayService {
 
   notifyLeaveRoom(roomId: string): void {
     this.socket.emit('user:leaveRoom', roomId);
+  }
+
+  notifyTyping(payload: TypingPayload){
+    if (payload.typing){
+     this.socket.emit('user:typing', payload.roomId);
+    } else {
+      this.socket.emit('user:stop-typing', payload.roomId);
+    }
   }
 
   initializeChatGateway(){
