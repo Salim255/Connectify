@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { Logger, UseGuards } from '@nestjs/common';
 import {
   ConnectedSocket,
   MessageBody,
@@ -6,8 +6,10 @@ import {
   WebSocketGateway,
 } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
+import { JwtWsAuthGuard } from 'src/modules/auth/guard/jwt-token-ws.guard';
 
 @WebSocketGateway()
+@UseGuards(JwtWsAuthGuard)
 export class RoomsGateWay {
   private logger = new Logger('Rooms Logger');
 
