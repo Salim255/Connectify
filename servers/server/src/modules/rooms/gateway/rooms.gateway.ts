@@ -8,6 +8,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { JwtWsAuthGuard } from 'src/modules/auth/guard/jwt-token-ws.guard';
+import { MessagesService } from 'src/modules/messages/services/messages.service';
 
 @WebSocketGateway()
 export class RoomsGateWay {
@@ -15,6 +16,8 @@ export class RoomsGateWay {
   private server: Server;
 
   private logger = new Logger('Rooms Logger');
+
+  constructor(private messagesService: MessagesService) {}
 
   @UseGuards(JwtWsAuthGuard)
   @SubscribeMessage('user:joinRoom')
@@ -31,6 +34,15 @@ export class RoomsGateWay {
     const length = (await this.server.in(roomId).fetchSockets()).length;
     if (length === 2) {
       // 1 Updated all messages sent to this userId to read
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      const userId = client.data.userId as string;
+      this.logger.log('Hello ✅✅');
+      if (!roomId || !userId) return;
+      const messages = await this.messagesService.updatedMessagesToRead(
+        roomId,
+        userId,
+      );
+      this.logger.log(messages, 'Hello ✅✅');
       // 2 Sent notification to partner to so it can fetch updated messages
     }
   }
