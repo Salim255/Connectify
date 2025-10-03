@@ -4,21 +4,32 @@ import {
   MessageBody,
   SubscribeMessage,
   WebSocketGateway,
+  WebSocketServer,
 } from '@nestjs/websockets';
-import { Socket } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import { JwtWsAuthGuard } from 'src/modules/auth/guard/jwt-token-ws.guard';
 
 @WebSocketGateway()
 export class RoomsGateWay {
+  @WebSocketServer()
+  private server: Server;
+
   private logger = new Logger('Rooms Logger');
 
   @UseGuards(JwtWsAuthGuard)
   @SubscribeMessage('user:joinRoom')
-  handleJoinRoom(
+  async handleJoinRoom(
     @ConnectedSocket() client: Socket,
     @MessageBody() roomId: string,
   ) {
     this.logger.log(`Client ${client.id} joined room ${roomId}`);
+
+    // 1 Join room with chatId
+    await client.join(roomId);
+
+    if (client.rooms.has(roomId)) {
+      this.logger.log('has it');
+    }
   }
 
   @UseGuards(JwtWsAuthGuard)
@@ -50,10 +61,14 @@ export class RoomsGateWay {
 
   @UseGuards(JwtWsAuthGuard)
   @SubscribeMessage('user:send-message')
-  handleSendMessage(
+  async handleSendMessage(
     @ConnectedSocket() client: Socket,
     @MessageBody() roomId: string,
   ) {
-    this.logger.log(`Client ${client.id} send message ✅ to room ${roomId}`);
+    const res = await this.server.fetchSockets();
+    this.logger.log(
+      `Client ${client.id} send message ✅ to room ${roomId}`,
+      res,
+    );
   }
 }

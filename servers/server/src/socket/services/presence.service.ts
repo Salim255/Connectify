@@ -4,7 +4,6 @@ import {
   UpdateProfileConnectionStatusDto,
 } from 'src/modules/profiles/dto/profiles.dto';
 import { ProfilesService } from 'src/modules/profiles/services/profiles.service';
-
 @Injectable()
 export class PresenceService {
   private onlineUsers = new Map<string, string>();
