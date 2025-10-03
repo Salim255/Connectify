@@ -27,17 +27,11 @@ export class RoomsGateWay {
     // 1 Join room with chatId
     await client.join(roomId);
 
-    //
-    if (client.rooms.has(roomId)) {
-      this.logger.log('has it');
-      /* client.rooms.forEach((c) => {
-        console.log(c);
-      });// */
-      const va = await this.server.in(roomId).fetchSockets();
-      //console.log(va);
-      va.forEach((c) => {
-        console.log(c.id)
-      })
+    // 2 Check users numbers
+    const length = (await this.server.in(roomId).fetchSockets()).length;
+    if (length === 2) {
+      // 1 Updated all messages sent to this userId to read
+      // 2 Sent notification to partner to so it can fetch updated messages
     }
   }
 
