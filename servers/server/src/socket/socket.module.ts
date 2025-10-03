@@ -5,6 +5,7 @@ import { PresenceService } from './services/presence.service';
 import { ProfilesModule } from 'src/modules/profiles/profiles.module';
 // That forwardRef in NestJS is all about breaking circular dependencies between modules.
 import { RoomsModule } from 'src/modules/rooms/rooms.module';
+
 @Module({
   imports: [ProfilesModule, AuthModule, RoomsModule],
   providers: [PresenceGateWay, PresenceService],
