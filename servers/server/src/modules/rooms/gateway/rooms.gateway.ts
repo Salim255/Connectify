@@ -9,6 +9,12 @@ import {
 import { Server, Socket } from 'socket.io';
 import { JwtWsAuthGuard } from 'src/modules/auth/guard/jwt-token-ws.guard';
 import { MessagesService } from 'src/modules/messages/services/messages.service';
+import { PresenceService } from 'src/socket/services/presence.service';
+
+export type SendMessagePayload = {
+  roomId: string;
+  partnerId: string;
+};
 
 @WebSocketGateway()
 export class RoomsGateWay {
@@ -17,7 +23,10 @@ export class RoomsGateWay {
 
   private logger = new Logger('Rooms Logger');
 
-  constructor(private messagesService: MessagesService) {}
+  constructor(
+    private presenceService : PresenceService,
+    private messagesService: MessagesService,
+  ) {}
 
   @UseGuards(JwtWsAuthGuard)
   @SubscribeMessage('user:joinRoom')
@@ -83,9 +92,9 @@ export class RoomsGateWay {
   @SubscribeMessage('user:send-message')
   async handleSendMessage(
     @ConnectedSocket() client: Socket,
-    @MessageBody() roomId: string,
+    @MessageBody() payLoad: SendMessagePayload,
   ) {
-    const result = await this.server.in(roomId).fetchSockets();
+    const result = await this.server.in(payLoad.roomId).fetchSockets();
 
     this.logger.log(
       `Client ${client.id} send message ✅ to room ${roomId}`,
@@ -93,5 +102,6 @@ export class RoomsGateWay {
     );
 
     // Check if there are 2 users, then update message ti read
+    const partnerSocket = this.
   }
 }

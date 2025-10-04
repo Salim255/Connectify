@@ -211,7 +211,7 @@ export class ChatService{
         const chat: Chat = this.getActiveChat;
 
         if (chat.id) {
-          const payload: SendMessagePayload = {roomId: chat.id}
+          const payload: SendMessagePayload = {roomId: chat.id, partnerId: chat.participants[0].profile.userId}
           this.chatGatewayService.notifySendMessage(payload);
         }
         // Send Message

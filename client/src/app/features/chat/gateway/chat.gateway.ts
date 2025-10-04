@@ -15,6 +15,7 @@ export interface ChatEvent {
 
 export type SendMessagePayload = {
   roomId: string;
+  partnerId: string;
 }
 
 @Injectable({providedIn: 'root'})
