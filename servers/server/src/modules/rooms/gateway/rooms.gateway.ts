@@ -36,7 +36,6 @@ export class RoomsGateWay {
       // 1 Updated all messages sent to this userId to read
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       const userId = client.data.userId as string;
-      this.logger.log('Hello ✅✅');
       if (!roomId || !userId) return;
       const messages = await this.messagesService.updatedMessagesToRead(
         roomId,
@@ -44,6 +43,10 @@ export class RoomsGateWay {
       );
       this.logger.log(messages, 'Hello ✅✅');
       // 2 Sent notification to partner to so it can fetch updated messages
+      if (messages.length) {
+        // Send notification to partner socket
+        client.to(roomId).emit('receiver:read-messages', roomId);
+      }
     }
   }
 

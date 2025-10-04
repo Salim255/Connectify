@@ -1,4 +1,4 @@
-import { Component, input } from "@angular/core";
+import { Component, input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Chat } from "src/app/features/chat/model/chat.model";
 import { ChatService } from "src/app/features/chat/services/chat.service";
@@ -10,7 +10,7 @@ import { ChatService } from "src/app/features/chat/services/chat.service";
   standalone: false
 })
 
-export class ChatItemComponent {
+export class ChatItemComponent implements OnInit {
   chat = input<Chat>();
 
   constructor(
@@ -18,6 +18,11 @@ export class ChatItemComponent {
     private chatService : ChatService,
   ){}
 
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    console.log(this.chat());
+  }
   openChat(): void {
     const chat = this.chat();
     if(!chat) return;

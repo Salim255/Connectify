@@ -7,8 +7,8 @@ import { ChatHttpService, CreateChatPayload, GetChatResponse } from "./chat-http
 import { AccountService } from "../../account/services/account.service";
 import { Chat } from "../model/chat.model";
 import { MessageHttpService, MessagePostPayload } from "./message-http.service";
-import { AuthService } from "../../auth/services/auth.service";
 import { ChatGatewayService } from "../gateway/chat.gateway";
+
 
 @Injectable({providedIn: 'root'})
 export class ChatService{
@@ -153,10 +153,13 @@ export class ChatService{
     private chatHttpService: ChatHttpService,
     private profileService:  ProfileService,
     private accountService: AccountService,
-    private authService: AuthService,
     private chatGatewayService : ChatGatewayService,
   ){
     this.partnerProfile = this.profileService.PROFILES_PLACEHOLDER[0];
+    this.chatGatewayService.chatEvents.subscribe((data) => {
+      console.log(data)
+    })
+
   }
 
   fetchChatById(chatId: string): Observable<any>{
