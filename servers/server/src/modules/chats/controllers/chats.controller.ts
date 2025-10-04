@@ -101,7 +101,7 @@ export class ChatsController {
   @Get('/users')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({
-    summary: 'Fetch all chats route',
+    summary: 'Fetch all user chats route',
   })
   @ApiResponse({
     type: GetUserChatsResponseDto,

@@ -121,6 +121,7 @@ export class ChatsService {
           .getQuery();
         return 'chat.id IN ' + subQuery;
       })
+      .andWhere('user.id != :userId') // this filters participants by userId
       .setParameter('userId', userId)
       .getMany();
   }
