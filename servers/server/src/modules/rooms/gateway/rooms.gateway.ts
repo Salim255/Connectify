@@ -14,6 +14,7 @@ import { PresenceService } from 'src/socket/services/presence.service';
 export type SendMessagePayload = {
   roomId: string;
   partnerId: string;
+  messageId: string;
 };
 
 @WebSocketGateway()
@@ -101,11 +102,23 @@ export class RoomsGateWay {
       result.length,
     );
 
+    if (result.length === 2) {
+      // Then set message to read
+    }
+
     // Check if there are 2 users, then update message ti read
+    // Get partner socketId
     const partnerSocket = this.presenceService.getSocketByUserId(
       payLoad.partnerId,
     );
+    if (partnerSocket) {
+      // Then set messages to delivered
+    }
 
-    console.log(partnerSocket);
+    if (!partnerSocket) {
+      // Then do nothing and message stays as sent
+    }
+    //
+    this.logger.log(partnerSocket, 'hello');
   }
 }

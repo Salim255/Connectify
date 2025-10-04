@@ -11,6 +11,7 @@ import { ProfilesModule } from './modules/profiles/profiles.module';
 import { ChatUsersModule } from './modules/chat-users/chat-users.module';
 import { MessagesModule } from './modules/messages/messages.module';
 import { SocketModule } from './socket/socket.module';
+import { RoomsModule } from './modules/rooms/rooms.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { SocketModule } from './socket/socket.module';
     ChatsModule,
     DatabaseModule,
     SocketModule,
+    RoomsModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),

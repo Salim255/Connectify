@@ -16,6 +16,7 @@ export interface ChatEvent {
 export type SendMessagePayload = {
   roomId: string;
   partnerId: string;
+  messageId: string;
 }
 
 @Injectable({providedIn: 'root'})
@@ -82,7 +83,7 @@ export class ChatGatewayService {
   }
 
   notifySendMessage(payload: SendMessagePayload ){
-    this.socket.emit('user:send-message', payload.roomId);
+    this.socket.emit('user:send-message', payload);
   }
 
   initializeChatGateway(){
