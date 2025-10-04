@@ -62,7 +62,7 @@ export class Message {
   @Column({ type: 'jsonb', default: {} })
   reactions: Record<string, string[]>;
 
-  @Column({ type: 'enum', enum: MessageStatus, default: MessageStatus.SENDING })
+  @Column({ type: 'enum', enum: MessageStatus, default: MessageStatus.SENT })
   status: MessageStatus;
 
   @Column({ default: false })

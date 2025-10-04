@@ -47,13 +47,12 @@ export class ChatFomComponent {
       this.chatGatewayService.notifyTyping({roomId: chatId, typing: true});
     }
 
-
     // Clear the timer on each input event and set a new one
     if (this.typingTimer) {
       clearTimeout(this.typingTimer);
     }
 
-     // Start a timer to trigger "stop typing" after inactivity
+    // Start a timer to trigger "stop typing" after inactivity
     this.typingTimer = setTimeout(() => {
       this.stopTyping({roomId: chatId, typing:false });
     }, this.typingTimeout);

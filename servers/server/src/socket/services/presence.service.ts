@@ -38,8 +38,12 @@ export class PresenceService {
       userId,
       status,
     };
-/*     const profile =
+    /*     const profile =
       await this.profilesService.updateProfileConnectionStatus(payLoad);
     this.logger.log(profile); */
+  }
+
+  getSocketByUserId(userId: string): string | null {
+    return this.onlineUsers.get(userId) ?? null;
   }
 }

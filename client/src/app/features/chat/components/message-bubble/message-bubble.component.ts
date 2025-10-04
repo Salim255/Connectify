@@ -12,6 +12,19 @@ export class MessageBubbleComponent {
   message = input<Message>();
 
   get getIconName(): string{
-    return "checkmark";
+    switch(this.message()?.status){
+      case 'sending':
+        return 'time-outline';
+      case 'sent':
+        return 'checkmark-outline';
+      case 'delivered':
+        return 'checkmark-done-outline';
+      case 'read':
+        return 'checkmark-done-outline';
+      case 'failed':
+        return '';
+      default:
+        return ''
+    }
   }
 }

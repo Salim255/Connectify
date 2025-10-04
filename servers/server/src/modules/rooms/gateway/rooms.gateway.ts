@@ -85,7 +85,13 @@ export class RoomsGateWay {
     @ConnectedSocket() client: Socket,
     @MessageBody() roomId: string,
   ) {
-    await this.server.fetchSockets();
-    this.logger.log(`Client ${client.id} send message ✅ to room ${roomId}`);
+    const result = await this.server.in(roomId).fetchSockets();
+
+    this.logger.log(
+      `Client ${client.id} send message ✅ to room ${roomId}`,
+      result.length,
+    );
+
+    // Check if there are 2 users, then update message ti read
   }
 }

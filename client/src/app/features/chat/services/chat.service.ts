@@ -7,7 +7,7 @@ import { ChatHttpService, CreateChatPayload, GetChatResponse } from "./chat-http
 import { AccountService } from "../../account/services/account.service";
 import { Chat } from "../model/chat.model";
 import { MessageHttpService, MessagePostPayload } from "./message-http.service";
-import { ChatGatewayService } from "../gateway/chat.gateway";
+import { ChatGatewayService, SendMessagePayload } from "../gateway/chat.gateway";
 
 
 @Injectable({providedIn: 'root'})
@@ -208,8 +208,13 @@ export class ChatService{
     const payload: MessagePostPayload = { chatId, senderId: profile.userId, content }
     return this.messageHttpService.createMessage(payload).pipe(
       tap((res) => {
-        const chat = this.getActiveChat;
-        this.chatGatewayService.notifySendMessage(chat.id);
+        const chat: Chat = this.getActiveChat;
+
+        if (chat.id) {
+          const payload: SendMessagePayload = {roomId: chat.id}
+          this.chatGatewayService.notifySendMessage(payload);
+        }
+        // Send Message
         const message = res as Message;
         this.addMessageToChat(message);
       })
