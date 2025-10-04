@@ -4,7 +4,7 @@
   </ion-avatar>
 
   <ion-label>
-    <h2>{{ chat()?.title }}</h2>
+    <h2>{{ chat()?.title }} {{ partnerName }}</h2>
     <p class="last-message" [class.unread]="unreadCount > 0">
       {{  lastMessage  }}
     </p>

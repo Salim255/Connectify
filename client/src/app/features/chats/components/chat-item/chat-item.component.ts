@@ -46,5 +46,10 @@ export class ChatItemComponent implements OnInit {
   get lasMessageDate(): Date{
     return new Date();
   }
+
+  get partnerName(): string{
+    const partner = this.chat()?.participants[0];
+    return partner?.profile.name ??  '';
+  }
   //
 }
