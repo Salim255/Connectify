@@ -210,13 +210,17 @@ export class ChatService{
       tap((res) => {
         const chat: Chat = this.getActiveChat;
 
-        if (chat.id) {
-          const payload: SendMessagePayload = {roomId: chat.id, partnerId: chat.participants[0].profile.userId}
-          this.chatGatewayService.notifySendMessage(payload);
-        }
         // Send Message
         const message = res as Message;
         this.addMessageToChat(message);
+        if (chat.id) {
+          const payload: SendMessagePayload = {
+            roomId: chat.id,
+            partnerId: chat.participants[0].profile.userId,
+            messageId: message.id
+          }
+          this.chatGatewayService.notifySendMessage(payload);
+        }
       })
     );
   }

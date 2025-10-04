@@ -30,4 +30,11 @@ export class MessagesService {
       .execute();
     return result.raw as Message[];
   }
+
+  async updateMessageStatus(
+    messageId: string,
+    status: MessageStatus,
+  ) {
+    return await this.messageRepo.update(messageId, { status });
+  }
 }
