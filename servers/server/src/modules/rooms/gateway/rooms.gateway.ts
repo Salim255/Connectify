@@ -24,7 +24,7 @@ export class RoomsGateWay {
   private logger = new Logger('Rooms Logger');
 
   constructor(
-    private presenceService : PresenceService,
+    private presenceService: PresenceService,
     private messagesService: MessagesService,
   ) {}
 
@@ -97,11 +97,15 @@ export class RoomsGateWay {
     const result = await this.server.in(payLoad.roomId).fetchSockets();
 
     this.logger.log(
-      `Client ${client.id} send message ✅ to room ${roomId}`,
+      `Client ${client.id} send message ✅ to room ${payLoad.roomId}`,
       result.length,
     );
 
     // Check if there are 2 users, then update message ti read
-    const partnerSocket = this.
+    const partnerSocket = this.presenceService.getSocketByUserId(
+      payLoad.partnerId,
+    );
+
+    console.log(partnerSocket);
   }
 }
