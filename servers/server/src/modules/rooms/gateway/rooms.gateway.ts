@@ -43,6 +43,7 @@ export class RoomsGateWay {
       );
       this.logger.log(messages, 'Hello ✅✅');
       // 2 Sent notification to partner to so it can fetch updated messages
+      client.to(roomId).emit('receiver:read-messages', roomId);
       if (messages.length) {
         // Send notification to partner socket
         client.to(roomId).emit('receiver:read-messages', roomId);
@@ -84,10 +85,7 @@ export class RoomsGateWay {
     @ConnectedSocket() client: Socket,
     @MessageBody() roomId: string,
   ) {
-    const res = await this.server.fetchSockets();
-    this.logger.log(
-      `Client ${client.id} send message ✅ to room ${roomId}`,
-      res,
-    );
+    await this.server.fetchSockets();
+    this.logger.log(`Client ${client.id} send message ✅ to room ${roomId}`);
   }
 }

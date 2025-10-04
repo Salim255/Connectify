@@ -58,7 +58,7 @@ export class ChatsService {
         content: payload.content,
       });
 
-      // Commit transaction
+      // Commit transaction/
       await queryRunner.commitTransaction();
 
       // Fetch chat with details

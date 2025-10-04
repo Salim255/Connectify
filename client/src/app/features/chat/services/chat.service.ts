@@ -158,11 +158,17 @@ export class ChatService{
     this.partnerProfile = this.profileService.PROFILES_PLACEHOLDER[0];
     this.chatGatewayService.chatEvents.subscribe((data) => {
       console.log(data)
+      const chatId = this.getActiveChat.id;
+      if(data?.type !== 'messageRead' || !chatId) return;
+      this.fetchChatById(chatId).subscribe(res => {
+        console.log(res, 'response')
+        this.setActiveChat(res.data.chat);
+      });
     })
 
   }
 
-  fetchChatById(chatId: string): Observable<any>{
+  fetchChatById(chatId: string): Observable<GetChatResponse>{
     return this.chatHttpService.fetchChatByChatId(chatId);
   }
 
@@ -170,7 +176,7 @@ export class ChatService{
     const hostProfile = this.accountService.accountProfile;
     if(!hostProfile) throw of(null);
     //`547f0bd1-d544-4fa1-ac96-639fd40eb94a`
-    return this.chatHttpService.fetchChatByProfilesIds( hostProfile.id, receiverProfileId );
+    return this.chatHttpService.fetchChatByProfilesIds(hostProfile.id, receiverProfileId);
   }
 
   sendMessage(content: string): Observable<GetChatResponse | Message >{
@@ -202,7 +208,6 @@ export class ChatService{
     const payload: MessagePostPayload = { chatId, senderId: profile.userId, content }
     return this.messageHttpService.createMessage(payload).pipe(
       tap((res) => {
-        console.log('Message response:',res);
         const chat = this.getActiveChat;
         this.chatGatewayService.notifySendMessage(chat.id);
         const message = res as Message;
@@ -225,9 +230,9 @@ export class ChatService{
 
   addMessageToChat(message: Message){
     const chat: Chat = this.getActiveChat;
-    console.log(chat.messages);
+    //console.log(chat.messages);
     chat.messages = [...chat.messages, message];
-    console.log(chat.messages);
+    //console.log(chat.messages);
     this.setActiveChat(chat);
   }
 }

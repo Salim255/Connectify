@@ -26,9 +26,7 @@ export class ChatHttpService {
   constructor(private http: HttpClient){}
 
   fetchChatByChatId(chatId: string): Observable<GetChatResponse>{
-    return this.http.get<any>(`${this.baseUrl}`, {
-      params: {chatId}
-    })
+    return this.http.get<GetChatResponse>(`${this.baseUrl}/${chatId}`)
   }
 
   fetchChatByProfilesIds(

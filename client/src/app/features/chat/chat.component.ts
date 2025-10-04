@@ -32,7 +32,7 @@ export class ChatComponent implements OnInit{
 
   subscribeToActiveChat(){
     this.activeChatSubscription = this.chatService.getActiveChat$.subscribe((activeChat) => {
-      console.log( activeChat);
+      console.log(activeChat, "hello active chat");
       this.activeChat = activeChat;
     }
     )

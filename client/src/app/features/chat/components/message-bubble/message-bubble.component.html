@@ -7,5 +7,6 @@
     }">
     <p>{{ message()?.content }}</p>
     <small>{{ message()?.createdAt | date:'shortTime' }}</small>
+    <small><ion-icon [name]="getIconName"></ion-icon> </small>
   </div>
 </div>

@@ -9,5 +9,9 @@ import { Message } from "src/app/features/chat/model/message.model";
 })
 
 export class MessageBubbleComponent {
-  message = input<Message>()
+  message = input<Message>();
+
+  get getIconName(): string{
+    return "checkmark";
+  }
 }
