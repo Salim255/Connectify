@@ -8,6 +8,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { JwtWsAuthGuard } from 'src/modules/auth/guard/jwt-token-ws.guard';
+import { MessageStatus } from 'src/modules/messages/entity/message.entity';
 import { MessagesService } from 'src/modules/messages/services/messages.service';
 import { PresenceService } from 'src/socket/services/presence.service';
 
@@ -95,15 +96,21 @@ export class RoomsGateWay {
     @ConnectedSocket() client: Socket,
     @MessageBody() payLoad: SendMessagePayload,
   ) {
-    const result = await this.server.in(payLoad.roomId).fetchSockets();
+    const usersInRoom = await this.server.in(payLoad.roomId).fetchSockets();
 
     this.logger.log(
       `Client ${client.id} send message ✅ to room ${payLoad.roomId}`,
-      result.length,
+      usersInRoom.length,
     );
 
-    if (result.length === 2) {
+    if (usersInRoom.length === 2) {
       // Then set message to read
+      const message = await this.messagesService.updateMessageStatus(
+        payLoad.messageId,
+        MessageStatus.READ,
+      );
+
+      this.logger.log(message, 'hello result read');
     }
 
     // Check if there are 2 users, then update message ti read
@@ -111,14 +118,23 @@ export class RoomsGateWay {
     const partnerSocket = this.presenceService.getSocketByUserId(
       payLoad.partnerId,
     );
-    if (partnerSocket) {
+    if (partnerSocket && usersInRoom.length === 1) {
       // Then set messages to delivered
+      const message = await this.messagesService.updateMessageStatus(
+        payLoad.messageId,
+        MessageStatus.DELIVERED,
+      );
+      if (message.affected) {
+        this.server.to(partnerSocket).emit('delivered-message', {
+          roomId: payLoad.roomId,
+          messageId: payLoad.messageId,
+        });
+      }
+      this.logger.log(message, 'hello result');
     }
 
     if (!partnerSocket) {
       // Then do nothing and message stays as sent
     }
-    //
-    this.logger.log(partnerSocket, 'hello');
   }
 }
